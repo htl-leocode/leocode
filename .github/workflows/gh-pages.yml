@@ -3,7 +3,7 @@ name: GitHub Pages CD
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
   build:
