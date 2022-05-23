@@ -1,0 +1,16 @@
+@startuml
+
+left to right direction
+:Teacher:
+
+rectangle LeoCode{
+
+Teacher -- (publish coding tasks)
+Teacher -- (view current coding tasks)
+Teacher -- (edit coding tasks)
+Teacher -- (view anonymous stats)
+(edit coding tasks) .> (edit/create unit tests) : <<include>>
+
+}
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+
+left to right direction
+:Student:
+:Guest:
+rectangle LeoCode{
+
+
+Guest -up- (do coding task)
+Guest -up- (view unit test feedback)
+
+Student -- (manage own coding tasks)
+Student -- (do coding task)
+Student -- (view unit test feedback)
+Student -- (make task feedback available for Professor)
+
+}
+
+@enduml
