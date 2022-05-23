@@ -1,0 +1,4 @@
+{
+  "backendApiUrl": "http://vm147.htl-leonding.ac.at:8181",
+  "keycloakUrl": "http://vm147.htl-leonding.ac.at:8280/auth/realms/school"
+}

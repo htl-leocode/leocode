@@ -1,0 +1,19 @@
+<div style="height: 100vh" class="container mt-5">
+  <h2 class="mat-display-4" style="text-align: center">{{submissionStatus}}</h2>
+
+  <mat-card *ngIf="testResult.length > 2">
+    <mat-card-header>
+      <mat-card-title>Unit Test Results</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p  style="font-size: small;white-space: pre-line">
+        {{testResult}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-spinner *ngIf="spinnerIsVisible" style="margin:0 auto;"></mat-spinner>
+</div>
+<button mat-raised-button color="primary"
+        style="bottom: 10px;margin-left: 10px;position: absolute;"
+        (click)="(this.authService.roles.getValue()[0] === 'teacher') ? (router.navigate(['list-example/1'] )) : (router.navigate(['list-example/0']))">Back</button>

@@ -1,0 +1,29 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/list-example/0']">Examples</a>
+      <a mat-list-item [routerLink]="['/test-example']">Test Code</a>
+      <a mat-list-item [routerLink]="['/portfolio']">Profile</a>
+      <a mat-list-item [routerLink]="['/report']">Reports </a>
+      <span mat-list-item > <button class="logout" mat-raised-button color="primary" (click)="reloadPage()" [routerLink]="['/']">Logout</button></span>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>LeoCode ({{studentName}})</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,57 @@
+### Create a Example
+POST localhost:9090/upload/example
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="exampleName"
+Content-Type: text/plain
+
+Example 1
+--WebAppBoundary
+Content-Disposition: form-data; name="exampleType"
+Content-Type: text/plain
+
+MAVEN
+
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+Content-Type: text/plain
+
+The goal of this example is to create a Maven Project, which prints Hello World!
+
+--WebAppBoundary
+Content-Disposition: form-data; name="instruction"; filename="instruction.md"
+Content-Type: text/markdown
+
+< ./simulating-files/instruction.md
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="pom"; filename="pom.xml"
+Content-Type: text/xml
+
+< ./simulating-files/pom.xml
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="solution"; filename="HelloWorld.java"
+Content-Type: text/x-java
+
+< ./simulating-files/HelloWorld.java
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="test"; filename="HelloWorldTest.java"
+Content-Type: text/x-java
+
+< ./simulating-files/HelloWorldTest.java
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="jenkinsfile"; filename="Jenkinsfile"
+Content-Type: application/octet-stream
+
+< ./simulating-files/Jenkinsfile
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="username"
+Content-Type: text/plain
+
+Lehrer1

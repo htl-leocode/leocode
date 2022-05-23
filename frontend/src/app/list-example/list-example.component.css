@@ -1,0 +1,34 @@
+.full-width-table {
+  width: 100%;
+}
+
+tr{
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: lightgray;
+}
+
+div.newView{
+  margin-top: 50px;
+}
+
+.mat-selection-list{
+  float: left;
+  margin-left: 2%;
+  width: 30%;
+  height: 30%;
+  margin-top: 1%;
+}
+
+.mat-card{
+  float: right;
+  margin-right: 16%;
+  margin-top: 5%;
+  width: auto;
+}
+
+.mat-card:hover{
+  background-color: lightgrey;
+}

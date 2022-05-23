@@ -1,0 +1,36 @@
+mat-form-field{
+  padding-left: 50px;
+  padding-bottom: 0px;
+  height: 80px;
+  width: 300px;
+}
+mat-card-content{
+  padding-top: 20px;
+}
+
+span{
+  margin-left: 25px;
+}
+
+mat-icon{
+  float: right;
+  display: inline;
+  padding: 0px;
+}
+
+button.login{
+  margin-left: 50px;
+  margin-bottom: 10px;
+}
+
+button.guest{
+  margin-left: 20px;
+}
+
+mat-card{
+  width: 400px;
+  height: 320px;
+  margin: auto;
+  margin-top: 10%;
+}
+

@@ -1,0 +1,15 @@
+mat-card {
+  width: auto;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 3%;
+}
+
+mat-icon{
+  float: left;
+  font-size: 40px;
+}
+
+mat-checkbox{
+  float: right;
+}
