@@ -1,0 +1,106 @@
+= Besprechungsprotokoll 09.05.2022
+Raphael Ablinger
+1.0, 2022-05-09: Besprechungsprotokoll
+ifndef::imagesdir[:imagesdir: images]
+:icons: font
+//:sectnums:    // Nummerierung der Überschriften / section numbering
+//:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+endif::backend-html5[]
+
+
+.Teilnehmer
+|===
+|anwesend
+
+
+| Oliver Sugic
+
+| Raphael Ablinger (Schriftführer)
+
+| Florian Keintzel
+
+| Prof. Thomas Stütz
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Htl-Leonding
+
+|von-bis
+|Mo. 09.05.2022, 2. und 3. EH
+|Dauer
+|70 min
+|===
+
+
+
+== Besprochene Themen
+
+* Presentation
+** Nicht Initial Situation sondern Current Status
+** In einer Folie inhalt vom Projekt
+*** Wenn schüler frisch an die htl alles neu
+*** Erleichtern für diese neuen Schüler und auch Lehrer
+
+* Presentation - Schnittstellen Folie
+** Mit width größer machen in eckigen klammern oder als background
+** Rand entfernen bei Bild
+
+* Presentation - Usecase
+** unterscheidung zwischen 2
+*** exam
+*** practise
+** Teacher
+*** Überblick über aufgaben
+
+** Unterscheidung
+*** eigene coding Tasks
+*** public coding tasks von anderen
+
+
+* Schnittstellendoku
+** Bild zu der Schnittstellen-dockumentation
+** Bessere namen für die einzelnen Schnittstellen
+** Welche Parameter und Welche datein
+** Unübersichtlich, Genauer erklären
+** Beispiele dazu (Bei Parameter zum beispiel welche Parameter)
+** in swagger wenn möglich sonst in alter
+
+
+* Quarkus
+** Neue Version
+** Versionierung von Aufgaben
+** Tagging java 11 oder java 17 (wie bei github)
+** im backend tabelle mit settings (Urls, und einstellung alles)
+** eventuell als rest service
+
+* Jenkins
+** Performance soll optimiert werden
+*** Flo hat schon link
+*** Oder eigenes m2 anlegen im docker container
+** Template für jede sprache
+** keine datenbank
+** in jenkinsfile genauere Bezeichnung von Maven (nicht maven:3-alpine)
+
+** Backend soll sprachneutral sein also keine änderungen pro sprache
+
+** Datenmodell
+*** Beispieldaten
+
+** Systemarchitektur
+*** Jenkins rennt im docker und im docker rennt ein anderer docker
+*** Wo ist die Konfiguration der Sprachunabhöngiger container
+*** Jeder Jenkins spannt ein anderern Container auf
+
+* Allgemein
+** kommentar in der Oberfläcje oder im file
+    "Ned aunfossn, wennst di ned auskennst"
+** nur Zipfile für Test und information für Tests muss er erst in
+docker container erkannt werden

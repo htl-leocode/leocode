@@ -1,0 +1,158 @@
+= LeoCode
+Keintzel Florian, Ablinger Raphael, Sugic Oliver
+1.0.0, 2022-01-31: Jenkins fix
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Issue
+Testing any submission would always return a failed result.
+Even if the given test should always return true no matter the submission.
+
+.Frontend shows all submissions failing
+image::frontend-submission-failed.png[]
+
+== Approach
+
+=== Tried running on a different platform
+Since we thought there might be an issue with or local setup we started running the project in various environments:
+
+ - all our own laptops
+ - oracle vm (always free) -> always crashed
+ - raspberry pi 3 -> ran fine, but tests still failed, sometimes crashed
+ - oracle vm (always free) but slim ubuntu -> still always crashed upon services starting
+ - oracle vm (paid) -> ran fine, but tests still failed
+
+=== Evaluate possible submission issues
+Since our first approach didn't work we thoroughly checked our submissions
+and examples we created.
+We wrote our own sample submissions in order to eliminate possible issues
+with the ones that were already given.
+But still the tests were always failing in Leo-Code, even though we ran the tests locally, and they worked just fine.
+
+=== Evaluate possible interface communication issues
+We then analyzed issues that could appear in the submission-result-transfer from
+jenkins all the way to the front end.
+
+This is what happens after a *.java file is submitted for testing:
+
+The backend logs that it receives the submission and forwards it to the testing-api using Kafka. The backend then gets the result back from the testing-api, which is always 'FAILURE':
+
+.Backend
+image::backend-submission-failed.png[]
+
+Testing API receives the submission, copies the zip to the 'projects-in-queue' folder and sets up the testing environment and project structure. It then starts running the tests, gets the results and evaluates them. It then sends the result (which again, is always 'FAILED') back to the backend using kafka.
+
+.Testing API
+image::testing-api-submission-failed.png[]
+
+=== Search for logs
+Since the last approach didn't help us in stopping the tests from failing,
+and we were certain that the issue lies within jenkins itself we started looking for logs.
+
+It would have been a lot easier if there was documentation indicating as to where logs for each technology can be found, since the log-location was changed in code manually.
+
+Nonetheless, we found a log.txt file at
+----
+Leocode/testing-api/projects-under-test/log.txt
+----
+
+Logfile-Content:
+
+[source,text]
+----
+Started
+Resume disabled by user, switching to high-performance, low-durability mode.
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+WorkflowScript: 3: Invalid agent type "docker" specified. Must be one of [any, label, none] @ line 3, column 9.
+           docker {
+           ^
+
+1 error
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:310)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1085)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:603)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:581)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:558)
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:298)
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:268)
+	at groovy.lang.GroovyShell.parseClass(GroovyShell.java:688)
+	at groovy.lang.GroovyShell.parse(GroovyShell.java:700)
+	at org.jenkinsci.plugins.workflow.cps.CpsGroovyShell.doParse(CpsGroovyShell.java:142)
+	at org.jenkinsci.plugins.workflow.cps.CpsGroovyShell.reparse(CpsGroovyShell.java:127)
+	at org.jenkinsci.plugins.workflow.cps.CpsFlowExecution.parseScript(CpsFlowExecution.java:571)
+	at org.jenkinsci.plugins.workflow.cps.CpsFlowExecution.start(CpsFlowExecution.java:523)
+	at org.jenkinsci.plugins.workflow.job.WorkflowRun.run(WorkflowRun.java:334)
+	at hudson.model.ResourceController.execute(ResourceController.java:99)
+	at hudson.model.Executor.run(Executor.java:431)
+Finished: FAILURE
+----
+
+
+which helped in finding the actual issue.
+
+== Fix
+
+The logfile above shows that the docker agent type is not recognized by jenkins.
+
+After some research we came up with the following possible fixes:
+
+=== First approach
+Tried adding docker-pipeline plugin:
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Fix-Jenkins-Invalid-agent-type-Docker-specified-any-label-none-error
+
+=== Second Approach
+Changed agent keyword from 'docker' to 'any' in the Jenkinsfile which is specified when creating a new example as a teacher, which actually worked.
+https://stackoverflow.com/questions/62253474/jenkins-invalid-agent-type-docker-specified-must-be-one-of-any-label-none
+
+Old Jenkinsfile:
+[source,text]
+----
+pipeline {
+    agent {
+        docker { //<1>
+            image 'maven:3-alpine'
+        }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+----
+
+<1> the original agent type is docker
+
+New Jenkinsfile:
+[source,text]
+----
+pipeline {
+    agent {
+        any { //<1>
+            image 'maven:3-alpine'
+        }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+----
+
+<1> the new agent type is 'any'

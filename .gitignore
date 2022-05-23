@@ -1,5 +1,21 @@
 .idea
+.env
 
 backend/*.zip
 
 projects-in-queue
+/http-requests/simulating-files/code-examples.iml
+/frontend/package-lock.json
+
+build-docs-html/
+build-docs-pdf/
+build-docs-revealjs/
+target/
+docs/revealjs/
+revealjs.zip
+gh-pages/
+.idea/
+*.iml
+.DS_Store
+*.zip
+dist

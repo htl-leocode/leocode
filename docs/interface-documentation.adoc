@@ -1,0 +1,58 @@
+= LeoCode - Interface Documentation
+Keintzel Florian, Ablinger Raphael, Sugic Oliver
+1.0.1, 2022-01-25: Leocode
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== HTML-FORM -> Quarkus-Backend:
+Die Parameter und Dateien werden vom Html-Form über
+MultipartFormDataInput zum Quarkus-Backend geschickt.
+Files werden dann in der Datenbank gespeichert.
+Abschließend wird das abgegebene Projekt und die für das
+Testen benötigten Files in dem "project-under-test" gespeichert.
+
+== LeoCode-Backend->Testing-API:
+Über Kafka wird die Abgabe an die Testing API geschickt.
+Genauer wird die Abgabe über den "submission-input" channel weitergeschickt.
+In der Testing-API wird es dann für Jenkins vorbereitet und dann damit auch
+weitergegeben.
+
+== Testing-API -> Jenkins:
+Es wird einfach in der FileHandler Klasse ein Script
+ausgeführt, dass den Jenkins started und das dann auch
+das ganze Projekt Tested.
+
+== Jenkins -> Testing-API:
+Das Ergebnis von den Tests wird einfach in der Submission Klasse
+im Result gespeichert.
+
+== Testing-API -> LeoCode-Backend:
+Das Backend bekommt dann das ganze vollständig geprüfte Project über
+Kafka wieder zurück.
+Dies geschieht im "submission-result" channel.
+
+== Testing-API -> Frontend:
+In den Endpoints ist ebenso ein "submission-result", worüber
+Neuheiten an das Frontend übergeben werden.
+
+== Kafka -> Testing-Api
+Das Submission-Objekt wird an die Testing-Api weitergeben
+
+== Testing-Api -> Kafka
+Zurück kommt das Ergebnis der ausgeführten Tests von der Testing-Api
+
+== Kafka -> Backend
+Hier bekommt man das Ergebnis des Tests zurück
+
+== Backend -> Kafka
+Hier werden die wichtigen Files/Infos übergeben die man zur Testung braucht

@@ -1,0 +1,66 @@
+= LeoCode
+Keintzel Florian, Ablinger Raphael, Sugic Oliver
+1.0.0, 2022-03-20: Added first protocol
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Protokoll 2022-03-20
+
+|===
+|Teilnehmer |Ort |Datum - Uhrzeit |Dauer
+
+|Florian Keintzel, Ablinger Raphael, Oliver Sugic
+|Discord
+|20.03.2022 - 18:20
+|3 Stunden
+
+|===
+
+== Problem:
+
+* Probleme beim Testen von Programmen
+
+** Fehlerhafte Tests geben weiterhin Infos über die Fehler
+
+** Richtige Tests geben keine Infos über die Fehler aber schlagen mit 'ERROR' fehl
+
+** Fehlerquelle ist im Filehandler.java in der Testing-Api
+
+** Shellscript hat durch Änderungen (siehe Zeile 34) nur mehr im Falle von
+fehlerhaften Builds Daten in result.txt gespeichert. Im Falle eines erfolgreichen
+Tests wurde lediglich ein Leerstring gespeichert, wodurch die Testing-Api das Ergebnis
+falsch ausgewertet hat.
+
+== Commit der für Fehler verantwortlich war:
+[source%linenums,java]
+----
+    private final Path RUN_TEST_SCRIPT = Paths.get("../run-tests.sh");
+    private final List<String> SHELL_SCRIPT_CONTENT = Arrays.asList("cd " + PROJECT_UNDER_TEST_DIRECTORY.toString(),
+            "docker run  --rm -v "+ Paths.get("project-under-test").toString() + ":/workspace ppiper/jenkinsfile-runner > log.txt",
+            "sed -n '/T E S T S/,$p' log.txt | sed -n '/BUILD FAILURE/,$p' log.txt > " + Paths.get("../result.txt").toString());
+----
+
+image::commit-that-caused-issues-01.png[]
+
+== Fix:
+
+[source,bash]
+----
+sed -n '/T E S T S/,$p' log.txt | sed -n '/BUILD FAILURE/,$p;/BUILD SUCCESS/,$p' log.txt > result.txt
+----
+
+== Endergebnis:
+
+Leocode ist wieder lauffähig
+
+image::leocode-fixed.png[]

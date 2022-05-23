@@ -1,0 +1,56 @@
+
+:customcss: css/presentation.css
+
+// src: https://raw.githubusercontent.com/htl-leonding-college/git-intro-slides/main/asciidocs-slides/index.adoc
+
+// slides of 5ahif-team: https://musikfreunde.github.io/asciidoctor-docker-slides/
+
+= Leocode
+
+ifndef::imagesdir[:imagesdir: ../images]
+
+== Initial Situation
+* Previous Teams
+** Diploma thesis of Donnabauer
+** Leocode Team 5ahif
+* Current state:
+** upload possible
+** code can edited
+** testresult returned (but bad formatting)
+
+
+== Architecture
+
+[.column]
+image::technology-overview.png[]
+
+https://flo-kei.github.io/LeoCode/interface-documentation.html[Interface Documentation]
+
+
+== Usecase Diagrams
+
+=== Usecase Diagram Student
+
+[.column]
+["plantuml"]
+----
+include::../plantuml/student.puml[]
+----
+
+=== Usecase Diagram Teacher
+[.column]
+["plantuml"]
+----
+include::../plantuml/teacher.puml[]
+----
+
+== Our Tasks
+https://vm81.htl-leonding.ac.at/agiles/99-285/current[Youtrack]
+
+== Current Problems
+
+* Slow test performance
+* Interface-Documentation
+* Running tests in parallel
+* Error report to user
+

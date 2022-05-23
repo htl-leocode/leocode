@@ -1,0 +1,85 @@
+= LeoCode
+Keintzel Florian, Ablinger Raphael, Sugic Oliver
+1.0.1, 2022-01-25: Leocode
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== What is Leocode?
+
+.LeoCode is part of Leolearn
+image::leolearn-modules.png[]
+
+== Used Technologies:
+
+.Technology overview
+image::technology-overview.png[]
+
+== Ausgangslage 2022-01-25
+
+1. Jenkins Tests der Abgaben schlagen fehl
+2. zBeni arbeitet parallel an demselben projekt?
+3. verschiedene umgebungen getestet
+- local (läuft, aber test-ergebnis ist immer "failed")
+- Oracle always-free VM (ist während des startens immer abgestürzt)
+- Raspberry Pi 3 (ist gelaufen, aber stürzte einmal ab)
+- Oracle VM mit mehr Ressourcen (läuft, aber port-freigabe machte probleme)
+4. Begonnen Dockerfile zu schreiben und
+5. Jenkins Fehler zu evaluieren
+
+== 2022-01-31 Jenkins fix implemented
+We found a fix for jenkins, detailed documentation can be found here:
+<<jenkins-fix.adoc#_issue,Jenkins-Fix-Doc>>
+
+== Report 2022-02-07
+In cooperation with the 5ahif-LeoCode-Team we managed to
+fix various issues on the LeoCode-Virtual-Machine (vm147).
+
+It is now possible to write code in the integrated monaco-editor and submit it. The code-file then gets forwarded to our testing-api which opens up a new jenkins-runner that tests the submission. If all tests go according to plan, the test-result 'SUCCESS' is displayed on our frontend. If the tests fail, or an error occurs because of a faulty submission, the frontend shows 'FAILED' or 'ERROR'.
+
+We identified some performance issues regarding the testing-api which seem to be caused by the testing-process taking place in jenkins.
+
+.Method which takes up too much execution time
+image::testing-api-bottleneck.png[]
+
+== Meeting notes:
+
+* <<2022-03-29-minutes-of-meeting.adoc#,Meeting from 2022-03-29>>
+* <<2022-03-22-minutes-of-meeting.adoc#,Meeting from 2022-03-22>>
+* <<2022-03-20-minutes-of-meeting.adoc#,Meeting from 2022-03-20>>
+* <<2022-01-25-minutes-of-meeting.adoc#,Meeting from  2022-01-25>>
+* <<2022-01-22-minutes-of-meeting.adoc#,Meeting from 2022-01-22>>
+
+== Weiterführende Informationen
+
+* <<interface-documentation.adoc#,Interface Documentation>>
+* <<jenkins-install-guide.adoc#,Dockered-Jenkins Install Guide>>
+
+== Weiterführende Links
+
+=== Leocode-VM
+http://vm147.htl-leonding.ac.at
+
+=== Donnabauer
+https://github.com/donnabauerc/LeoCode
+
+https://donnabauerc.github.io/LeoCodeDocs/
+
+https://donnabauerc.github.io/LeoCodeDocs/instructions[Leocode v2 Instructions]
+
+=== Leocode-5ahif-Team
+
+https://htl-leonding-project.github.io/leo-code/[LeoCode AsciiDocs]
+
+https://github.com/Musikfreunde/LeoCode[LeoCode-GitHub-Repository]
+
+https://github.com/Musikfreunde/leo-code-frontend[LeoCode-Frontend-GitHub-Repository]

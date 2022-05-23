@@ -1,0 +1,40 @@
+= LeoCode - Jenkins Installation
+Keintzel Florian, Ablinger Raphael, Sugic Oliver
+1.0.2, 2022-04-25: Leocode
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Jenkins Install Guide:
+
+1.  Execute scripts:
+
+    ./install-docker.sh
+    ./install-jenkins.sh
+
+2. Make sure port 8080 is forwarded to the server
+
+3. perform first jenkins
+     - login using printed initialAdminPassword:
+        http://<hostname>/:8080 (replace <hostname> with the actual hostname (e.g. 138.223.200.17, localhost etc))
+
+4. install recommended plugins
+
+5. create first admin account
+ - use simple credentials e.g. admin [generatedPassword] admin admin.admin@admin.com
+    - example pw: ny6n4&i^yZcPydGwbNHM
+
+6. set jenkins url accordingly to your server-url with port 8080
+e.g.: http://128.128.32.32:8080/
+
+7. go to your jenkins webinterface
+ - http://<hostname>/:8080
