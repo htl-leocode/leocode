@@ -24,17 +24,17 @@ image::leolearn-modules.png[]
 .Technology overview
 image::technology-overview.png[]
 
-== Ausgangslage 2022-01-25
+== Current state as of 2022-01-25
 
-1. Jenkins Tests der Abgaben schlagen fehl
-2. zBeni arbeitet parallel an demselben projekt?
-3. verschiedene umgebungen getestet
-- local (läuft, aber test-ergebnis ist immer "failed")
-- Oracle always-free VM (ist während des startens immer abgestürzt)
-- Raspberry Pi 3 (ist gelaufen, aber stürzte einmal ab)
-- Oracle VM mit mehr Ressourcen (läuft, aber port-freigabe machte probleme)
-4. Begonnen Dockerfile zu schreiben und
-5. Jenkins Fehler zu evaluieren
+1. Jenkins-tests fail
+2. zBeni working on same project?
+3. tested various environments:
+- local (runs, but tests always fail)
+- Oracle always-free VM (always crashed during startup)
+- Raspberry Pi 3 (ran fine, but crashed once)
+- Oracle VM with more resources (runs, but had issues with port-forwarding)
+4. Started creating Dockerfile
+5. Started evaluating jenkins errors
 
 == 2022-01-31 Jenkins fix implemented
 We found a fix for jenkins, detailed documentation can be found here:
