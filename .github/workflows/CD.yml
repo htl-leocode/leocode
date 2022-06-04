@@ -47,10 +47,42 @@ jobs:
     name: Build testing
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: testing-api
+      IMAGE_NAME: leocode-testing-api
     defaults:
       run:
         working-directory: ./testing-api
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Package
+        run: mvn package -DskipTests
+      - name: Login to GitHub Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build image
+        run: docker build . -f src/main/docker/Dockerfile.jvm --tag $IMAGE_NAME
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo ${{ github.ref }} | cut -c11-)
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+  build_frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: leocode-frontend
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
