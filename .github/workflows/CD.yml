@@ -85,9 +85,9 @@ jobs:
         working-directory: ./frontend
     steps:
       - name: Check out the repo
-          uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Use Node.js $
-      - uses: actions/setup-node@v1
+        uses: actions/setup-node@v1
         with:
           node-version:
             16
@@ -98,9 +98,9 @@ jobs:
           cache-name: cache-node-modules
         with:
           # caching node_modules
-          path: node_modules # 👈 path for node_modules folder
+          path: node_modules # path for node_modules folder
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          # 👆 name of the chache key includes package-lock.json
+          # name of the chache key includes package-lock.json
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -114,7 +114,7 @@ jobs:
         run: npm run build -- --prod
 
       - name: Login to GitHub Packages
-        uses: docker/login-action@v1
+      - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
