@@ -85,9 +85,34 @@ jobs:
         working-directory: ./frontend
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Package
-        run: mvn package -DskipTests
+          uses: actions/checkout@v2
+      - name: Use Node.js $
+      - uses: actions/setup-node@v1
+        with:
+          node-version:
+            16
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules # 👈 path for node_modules folder
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          # 👆 name of the chache key includes package-lock.json
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        if:
+          steps.cache-nodemodules.outputs.cache-hit != 'true'
+        # if cache hits, skip this step.
+        run: npm ci
+      - name: Build
+        run: npm run build -- --prod
+
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
@@ -95,7 +120,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . -f src/main/docker/Dockerfile.jvm --tag $IMAGE_NAME
+        run: docker build . -f Dockerfile --tag $IMAGE_NAME
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
