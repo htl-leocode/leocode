@@ -1,5 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
+# Inspiration for frontend workflow taken from Rupesh Tiwari:
+# https://www.rupeshtiwari.com/setup-ci-cd-for-angular-app-with-github-action/
+
 name: CD
 
 # Controls when the action will run. 
@@ -83,14 +86,17 @@ jobs:
     defaults:
       run:
         working-directory: ./frontend
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Use Node.js $
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version:
-            16
+            ${{ matrix.node-version }}
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v2
