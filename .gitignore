@@ -5,7 +5,6 @@ backend/*.zip
 
 projects-in-queue
 /http-requests/simulating-files/code-examples.iml
-/frontend/package-lock.json
 
 build-docs-html/
 build-docs-pdf/
@@ -19,3 +18,4 @@ gh-pages/
 .DS_Store
 *.zip
 dist
+.angular
