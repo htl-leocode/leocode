@@ -120,7 +120,7 @@ jobs:
           # if cache hits, skip this step.
         run: npm ci
       - name: Build
-        run: npm run build -- --prod
+        run: npm run build -- --configuration=production
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
