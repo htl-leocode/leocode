@@ -1,5 +1,9 @@
 # This is a basic workflow to help you get started with Actions
 
+# Inspiration for frontend workflow taken from Rupesh Tiwari:
+# https://www.rupeshtiwari.com/setup-ci-cd-for-angular-app-with-github-action/
+
+
 name: CD
 
 # Controls when the action will run.
