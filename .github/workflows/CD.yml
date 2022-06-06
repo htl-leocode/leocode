@@ -16,6 +16,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build_backend:
+    if: ${{ false }}  # disable for now
     name: Build backend
     runs-on: ubuntu-latest
     env:
@@ -48,6 +49,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
   build_testing:
+    if: ${{ false }}  # disable for now
     name: Build testing
     runs-on: ubuntu-latest
     env:
@@ -93,11 +95,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Use Node.js 16
+      - name: Use Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v1
         with:
           node-version:
-            16
+            ${{matrix.node-version}}
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
