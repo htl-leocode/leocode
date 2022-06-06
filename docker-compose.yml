@@ -46,7 +46,7 @@ services:
       - quarkus
 
   backend:
-    image: ghcr.io/musikfreunde/leocode-backend:27.0
+    image: ghcr.io/flo-kei/leocode-backend:v1.6.13
     user: root
     container_name: backend
     volumes:
@@ -67,7 +67,7 @@ services:
       - quarkus
 
   testing:
-    image: ghcr.io/musikfreunde/testing-api:32.0
+    image: ghcr.io/flo-kei/testing-api:v1.0
     user: root
     container_name: testing
     volumes:
@@ -85,7 +85,7 @@ services:
       - quarkus
 
   frontend:
-    image: ghcr.io/musikfreunde/leocode-frontend:latest
+    image: ghcr.io/flo-kei/leocode-frontend:v1.6.13
     container_name: leofrontend
     ports:
       - "80:80"
