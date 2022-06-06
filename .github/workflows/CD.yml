@@ -16,7 +16,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build_backend:
-    if: ${{ false }}  # disable for now
+    #if: ${{ false }}  # disable for now
     name: Build backend
     runs-on: ubuntu-latest
     env:
@@ -49,7 +49,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
   build_testing:
-    if: ${{ false }}  # disable for now
+    #if: ${{ false }}  # disable for now
     name: Build testing
     runs-on: ubuntu-latest
     env:
