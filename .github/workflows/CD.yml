@@ -93,11 +93,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
           node-version:
-              ${{ matrix.node-version }}
+            16
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
