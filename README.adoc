@@ -10,6 +10,20 @@ This is the follow-up generation of leo-code, the following README.md content is
 still from the original repo of donnabauerc and will be replaced 
 with new setup instructions soon.
 
+---
+
+deployment-guide:
+
+commit and push changes to github:
+git commit
+git push
+
+create and push new tag to github: (change versions to newest + 1)
+git tag v1.x.x
+git push origin v.1.x.x
+
+---
+
 Following file only serves as a quick overview of the repository. You
 should find more specific documentation about each child directory and its purpose
 in additional README files, located in the corresponding directories.
