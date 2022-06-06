@@ -1,5 +1,3 @@
-FROM node:16-alpine3.14
-WORKDIR ./frontend
-COPY . .
-RUN npm ci && npm run build # used to be npm ci
-
+FROM nginx:1.17.1-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY /dist/LeoCode /usr/share/nginx/html
