@@ -19,3 +19,4 @@ gh-pages/
 *.zip
 dist
 .angular
+project-under-test/*

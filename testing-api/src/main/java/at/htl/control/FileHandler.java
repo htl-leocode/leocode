@@ -31,7 +31,7 @@ public class FileHandler {
     private final Path RUN_TEST_SCRIPT = Paths.get("../run-tests.sh");
     private final List<String> SHELL_SCRIPT_CONTENT = Arrays.asList("cd " + PROJECT_UNDER_TEST_DIRECTORY.toString(),
             "docker run  --rm -v "+ Paths.get("project-under-test").toString() + ":/workspace ppiper/jenkinsfile-runner > log.txt",
-            "sed -n '/BUILD FAILURE/,$p' log.txt | sed -n '/T E S T S/,$p' log.txt > " + Paths.get("../result.txt").toString());
+            "sed -n '/BUILD FAILURE/,$p' log.txt | sed -n '/BUILD SUCCESS/,$p' log.txt |sed -n '/T E S T S/,$p' log.txt > " + Paths.get("../result.txt").toString());
 
     public Path pathToProject;
     public HashMap<Path, String> currentFiles;
