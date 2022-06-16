@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="at.htl.examples.HelloWorldTest" time="0.12" tests="2" errors="0" skipped="0" failures="2">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2\target\test-classes;C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2\target\classes;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter\5.6.2\junit-jupiter-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.6.2\junit-jupiter-api-5.6.2.jar;C:\Users\flori\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\flori\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\flori\.m2\repository\org\junit\platform\junit-platform-commons\1.6.2\junit-platform-commons-1.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.6.2\junit-jupiter-params-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.6.2\junit-jupiter-engine-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\platform\junit-platform-engine\1.6.2\junit-platform-engine-1.6.2.jar;C:\Users\flori\.m2\repository\org\assertj\assertj-core\3.15.0\assertj-core-3.15.0.jar;"/>
+    <property name="java.vm.vendor" value="Amazon.com Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://aws.amazon.com/corretto/"/>
+    <property name="user.timezone" value="Europe/Berlin"/>
+    <property name="user.country.format" value="AT"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Users\flori\.jdks\corretto-11.0.15\bin"/>
+    <property name="sun.java.command" value="C:\Users\flori\AppData\Local\Temp\surefire13413005298604607192\surefirebooter8180683542026279277.jar C:\Users\flori\AppData\Local\Temp\surefire13413005298604607192 2022-06-16T16-53-32_735-jvmRun1 surefire3614338300016919505tmp surefire_03231279693418671436tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2\target\test-classes;C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2\target\classes;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter\5.6.2\junit-jupiter-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.6.2\junit-jupiter-api-5.6.2.jar;C:\Users\flori\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\flori\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\flori\.m2\repository\org\junit\platform\junit-platform-commons\1.6.2\junit-platform-commons-1.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.6.2\junit-jupiter-params-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.6.2\junit-jupiter-engine-5.6.2.jar;C:\Users\flori\.m2\repository\org\junit\platform\junit-platform-engine\1.6.2\junit-platform-engine-1.6.2.jar;C:\Users\flori\.m2\repository\org\assertj\assertj-core\3.15.0\assertj-core-3.15.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\flori"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-04-19"/>
+    <property name="java.home" value="C:\Users\flori\.jdks\corretto-11.0.15"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\flori\AppData\Local\Temp\surefire13413005298604607192\surefirebooter8180683542026279277.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.15+9-LTS"/>
+    <property name="user.name" value="flori"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Corretto-11.0.15.9.1"/>
+    <property name="localRepository" value="C:\Users\flori\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-11/issues/"/>
+    <property name="java.io.tmpdir" value="C:\Users\flori\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2022.1.2"/>
+    <property name="java.version" value="11.0.15"/>
+    <property name="user.dir" value="C:\Users\flori\Desktop\leocode\leocode\http-requests\simulating-files\HelloWorld2"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="user.language.format" value="de"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Users\flori\.jdks\corretto-11.0.15\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\ImageMagick-7.1.0-Q16-HDRI;C:\Python39\Scripts\;C:\Python39\;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\flori\.jdks\openjdk-15.0.2\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\flori\AppData\Local\Microsoft\WindowsApps;C:\Program Files\dotnet\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PuTTY\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\Graphviz 2.44.1\bin;C:\Users\flori\Downloads\ffmpeg-20191114-73ee53f-win64-static\ffmpeg-20191114-73ee53f-win64-static\bin;C:\Users\flori\AppData\Local\atom\bin;C:\Users\flori\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\flori\.dotnet\tools;C:\Users\flori\AppData\Roaming\npm;C:\mingw-w64\mingw64\x86_64-w64-mingw32\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\HP\Common\HPDestPlgIn\;C:\Program Files (x86)\HP\IdrsOCR_15.4.1132.0\;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Custom;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\dotnet\;C:\Program Files\gs\gs9.56.1\bin;C:\Users\flori\AppData\Roaming\TinyTeX\bin\win32;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\flori\.jdks\openjdk-15.0.2\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\flori\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Graphviz 2.44.1\bin;C:\Program Files\PuTTY\;C:\Program Files (x86)\Windows Live\Shared;C:\Users\flori\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\flori\.dotnet\tools;C:\mingw-w64\mingw64\x86_64-w64-mingw32\bin;C:\Users\flori\AppData\Local\Microsoft\WindowsApps;C:\Users\flori\.dotnet\tools;D:\Programs\RemoveDrive\x64;C:\Users\flori\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\LocalCache\local-packages\Python38\Scripts;C:\Program Files (x86)\HP\Common\HPDestPlgIn\;C:\Users\flori\AppData\Roaming\npm;C:\Custom;C:\Users\flori\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Amazon.com Inc."/>
+    <property name="java.vm.version" value="11.0.15+9-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="test001" classname="at.htl.examples.HelloWorldTest" time="0.09">
+    <failure type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+
+Expecting:
+ <"Hello, World!
+">
+to be equal to:
+ <"Hello, World!
+">
+but was not.
+	at at.htl.examples.HelloWorldTest.test001(HelloWorldTest.java:53)
+]]></failure>
+  </testcase>
+  <testcase name="test002" classname="at.htl.examples.HelloWorldTest" time="0.006">
+    <failure type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+
+Expecting:
+ <false>
+to be equal to:
+ <true>
+but was not.
+	at at.htl.examples.HelloWorldTest.test002(HelloWorldTest.java:58)
+]]></failure>
+  </testcase>
+</testsuite>
