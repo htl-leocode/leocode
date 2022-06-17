@@ -49,7 +49,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
   build_testing:
-    if: ${{ false }}  # disable for now
+    #if: ${{ false }}  # disable for now
     name: Build testing
     runs-on: ubuntu-latest
     env:
