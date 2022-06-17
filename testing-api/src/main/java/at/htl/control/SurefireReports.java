@@ -2,28 +2,35 @@ package at.htl.control;
 
 import at.htl.entities.FailureDetails;
 import at.htl.entities.TestCase;
+import org.jboss.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class SurefireReports {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         List<TestCase> testCases = GetTestCases();
-    }
+    }*/
 
-    private static void MoveFiles() {
+    @Inject
+    Logger logger;
+
+    private void MoveFiles() {
         File folder = new File(".");
     }
 
-    private static String GetFilename(){
+    private String GetFilename(){
         File folder = new File("../project-under-test/target/surefire-reports");
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
@@ -38,13 +45,15 @@ public class SurefireReports {
         return "";
     }
 
-    public static List<TestCase> GetTestCases(){
+    public List<TestCase> GetTestCases(){
         MoveFiles();
         String filename = GetFilename();
+        logger.info(filename);
         List<TestCase> testCases = new ArrayList<>();
 
         try {
             File fXmlFile = new File(filename);
+            logger.info(fXmlFile);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

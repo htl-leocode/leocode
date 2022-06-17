@@ -42,6 +42,9 @@ public class FileHandler {
     @Inject
     Logger log;
 
+    @Inject
+    SurefireReports surefireReports;
+
     //Pull image at the beginning, so testing goes faster
     void onStart(@Observes StartupEvent ev)  {
         File dockerPullShellscript = DOCKER_PULL_SCRIPT.toFile();
@@ -234,7 +237,7 @@ public class FileHandler {
 
     public List<TestCase> getResult(){
         log.info("getResult");
-        List<TestCase> testCases = SurefireReports.GetTestCases();
+        List<TestCase> testCases = surefireReports.GetTestCases();
         return testCases;
 
         /*try (BufferedReader br = new BufferedReader(new FileReader("../result.txt"))) {
