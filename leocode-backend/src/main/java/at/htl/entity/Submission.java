@@ -17,11 +17,12 @@ public class Submission extends PanacheEntity {
     private SubmissionStatus status; //private so the timestamp gets updated, whenever it is set => see setter
     */
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public SubmissionResult submissionResult;
 
     @Column(columnDefinition = "TIMESTAMP")
     public LocalDateTime lastTimeChanged;
+
     @ManyToOne
     @JoinColumn(name = "example")
     public Example example;

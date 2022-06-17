@@ -2,6 +2,7 @@ package at.htl.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -13,7 +14,7 @@ public class TestCase extends PanacheEntity {
     public String className;
     public String time;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public FailureDetails failure;
 
     public TestCase(String name, String className, String time) {
