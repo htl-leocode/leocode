@@ -1,7 +1,9 @@
 package at.htl.control;
 
 import at.htl.entities.ExampleType;
+import at.htl.entities.SubmissionResult;
 import at.htl.entities.SubmissionStatus;
+import at.htl.entities.TestCase;
 import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
 import org.apache.commons.io.FileUtils;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -29,8 +32,8 @@ public class FileHandler {
     private final Path BUILD_RESULT = Paths.get("../result.txt");
     private final Path DOCKER_PULL_SCRIPT = Paths.get("../pull-image.sh");
     private final Path RUN_TEST_SCRIPT = Paths.get("../run-tests.sh");
-    private final List<String> SHELL_SCRIPT_CONTENT = Arrays.asList("cd " + PROJECT_UNDER_TEST_DIRECTORY.toString(),
-            "docker run  --rm -v "+ Paths.get("project-under-test").toString() + ":/workspace ppiper/jenkinsfile-runner > log.txt",
+    private final List<String> SHELL_SCRIPT_CONTENT = Arrays.asList("cd " + PROJECT_UNDER_TEST_DIRECTORY,
+            "docker run  --rm -v "+ Paths.get("project-under-test") + ":/workspace ppiper/jenkinsfile-runner > log.txt",
             "sed -n '/BUILD FAILURE/,$p' log.txt | sed -n '/BUILD SUCCESS/,$p' log.txt |sed -n '/T E S T S/,$p' log.txt > " + Paths.get("../result.txt").toString());
 
     public Path pathToProject;
@@ -60,23 +63,25 @@ public class FileHandler {
 
     }
 
-    public String testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist) {
+    public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist) {
         setup(projectPath);
         unzipProject();
 
         String resWhitelist;
         String resBlacklist;
 
-        if((resWhitelist = checkWhiteOrBlacklist("whitelist", whitelist)) != null) {
+        //TODO: re-add white- and blacklist functionality after migration to new test-system
+        /*if((resWhitelist = checkWhiteOrBlacklist("whitelist", whitelist)) != null) {
             return resWhitelist;
         } else if ((resBlacklist = checkWhiteOrBlacklist("blacklist", blacklist)) != null) {
             return resBlacklist;
-        } else {
+        } else {*/
             try {
                 switch (type){
                     case MAVEN:
                         createMavenProjectStructure();
-                        runTests();
+                        //runTests();
+                        JenkinsRequest.sendRequest(); // tell jenkins to start testing, since the files are ready
                     break;
                     default:
                         throw new Exception("Project Type not supported yet!");
@@ -84,9 +89,12 @@ public class FileHandler {
                 return getResult();
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Oops, something went wrong!";
+                log.error("Exception in testProject() in FileHandler");
+                log.error(e);
+                //return "Oops, something went wrong!";
+                return null;
             }
-        }
+        /*}*/
 
     }
 
@@ -111,12 +119,12 @@ public class FileHandler {
                 Files.delete(BUILD_RESULT);
             }
 
-            if (!runTestsShellscript.exists()) {
+            /*if (!runTestsShellscript.exists()) {
                 log.info("creating " + runTestsShellscript.getPath());
                 runTestsShellscript.createNewFile();
                 runTestsShellscript.setExecutable(true);
                 Files.write(runTestsShellscript.toPath(), SHELL_SCRIPT_CONTENT, StandardCharsets.UTF_8);
-            }
+            }*/
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -211,7 +219,8 @@ public class FileHandler {
         Paths.get(PROJECT_UNDER_TEST_DIRECTORY.toString() + "/test").toFile().delete();
     }
 
-    public void runTests() {
+    //TODO: remove after migration to new test-system
+    /*public void runTests() {
         log.info("running tests");
         try {
             ProcessBuilder builder = new ProcessBuilder("../run-tests.sh");
@@ -221,22 +230,45 @@ public class FileHandler {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public String getResult(){
+    public List<TestCase> getResult(){
         log.info("getResult");
-        try (BufferedReader br = new BufferedReader(new FileReader("../result.txt"))) {
+        List<TestCase> testCases = SurefireReports.GetTestCases();
+        return testCases;
+
+        /*try (BufferedReader br = new BufferedReader(new FileReader("../result.txt"))) {
             return br.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {
             e.printStackTrace();
             return "Something Went Wrong";
-        }
+        }*/
     }
 
-    public SubmissionStatus evaluateStatus(String result){
+    public void evaluateStatus(SubmissionResult result){
         log.info("evaluateStatus");
+        SubmissionStatus status = SubmissionStatus.ERROR;
 
-        List<String> resultList = List.of(result.split("\n"));
+        if(result == null || result.testCases == null || result.testCases.size() == 0){
+            log.error("results are null");
+            status = SubmissionStatus.ERROR;
+        }
+
+        if(result.testCases.stream().anyMatch(new Predicate<TestCase>() {
+            @Override
+            public boolean test(TestCase testCase) {
+                return testCase.failure != null;
+            }
+        }))
+        {
+            status = SubmissionStatus.FAILED;
+        }
+        else {
+            status = SubmissionStatus.CORRECT;
+        }
+        result.submissionStatus = status;
+
+        /*List<String> resultList = List.of(result.split("\n"));
         result = resultList.get(resultList.size()-1);
 
         result = result.substring(result.lastIndexOf(" ") + 1);
@@ -253,7 +285,7 @@ public class FileHandler {
                 status = SubmissionStatus.ERROR;
                 break;
         }
-        return status;
+        return status;*/
     }
 
     public String checkWhiteOrBlacklist(String type, Set<String> list){

@@ -1,13 +1,16 @@
 package at.htl.kafka;
 
 import at.htl.control.FileHandler;
+import at.htl.entities.SubmissionResult;
 import at.htl.entities.SubmissionStatus;
 import at.htl.entities.Submission;
+import at.htl.entities.TestCase;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 
 @ApplicationScoped
 public class SubmissionListener {
@@ -26,13 +29,18 @@ public class SubmissionListener {
         if (s.getStatus().equals(SubmissionStatus.SUBMITTED)) {
             log.info("Received Message: " + s.toString());
             Runnable runnable = () -> {
-                s.result = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
+                List<TestCase> testResults = fileHandler
+                        .testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
+                s.submissionResult = new SubmissionResult(testResults);
+                //s.result = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
 
-                if(s.result.toLowerCase().contains("whitelist") || s.result.toLowerCase().contains("blacklist")){
+                //TODO: re-add whitelist and blacklist functionality after migration to new test-system
+                /*if(s.result.toLowerCase().contains("whitelist") || s.result.toLowerCase().contains("blacklist")){
                     s.setStatus(SubmissionStatus.FAILED);
                 } else {
-                    s.setStatus(fileHandler.evaluateStatus(s.result));
-                }
+                    //s.setStatus(fileHandler.evaluateStatus(s.submissionResult));
+                }*/
+                fileHandler.evaluateStatus(s.submissionResult);
 
                 submissionProducer.sendSubmition(s);
             };

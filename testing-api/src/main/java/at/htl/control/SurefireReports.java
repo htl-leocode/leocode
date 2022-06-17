@@ -1,7 +1,7 @@
-package at.htl;
+package at.htl.control;
 
-import at.htl.entity.Failure;
-import at.htl.entity.TestCase;
+import at.htl.entities.FailureDetails;
+import at.htl.entities.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,20 +13,30 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
-    public static void main(String[] args) {
-        String filename = "";
-        List<TestCase> testCases = new ArrayList<>();
+public class SurefireReports {
 
+    public static void main(String[] args) {
+        List<TestCase> testCases = GetTestCases();
+    }
+
+    private static String GetFilename(){
         File folder = new File(".");
         File[] listOfFiles = folder.listFiles();
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                if (file.getName().matches(".*xml")) {
-                    filename = file.getName();
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    if (file.getName().matches(".*Test.xml")) {
+                        return (file.getName());
+                    }
                 }
             }
         }
+        return "";
+    }
+
+    public static List<TestCase> GetTestCases(){
+        String filename = GetFilename();
+        List<TestCase> testCases = new ArrayList<>();
 
         try {
             File fXmlFile = new File(filename);
@@ -54,16 +64,16 @@ public class Main {
                         Element eeElement = (Element) failureNode;
                         var type = eeElement.getAttribute("type");
                         var message = failureNode.getTextContent();
-                        Failure failure = new Failure(type, message);
-                        testCase.failure = failure;
+                        testCase.failure = new FailureDetails(type, message);
                     }
                     testCases.add(testCase);
                 }
             }
 
-            testCases.forEach(testCase -> System.out.println(testCase));
+            testCases.forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return testCases;
     }
 }

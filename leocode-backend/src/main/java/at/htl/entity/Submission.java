@@ -11,9 +11,15 @@ import java.time.ZoneId;
 public class Submission extends PanacheEntity {
     public String pathToProject;
     public String author;
-    public String result = "";
+
+    /*public String result = "";
     @Enumerated(value = EnumType.STRING)
     private SubmissionStatus status; //private so the timestamp gets updated, whenever it is set => see setter
+    */
+
+    @OneToOne
+    public SubmissionResult submissionResult;
+
     @Column(columnDefinition = "TIMESTAMP")
     public LocalDateTime lastTimeChanged;
     @ManyToOne
@@ -32,12 +38,12 @@ public class Submission extends PanacheEntity {
     }
 
     public void setStatus(SubmissionStatus status) {
-        this.status = status;
+        this.submissionResult.submissionStatus = status;
         this.lastTimeChanged = LocalDateTime.now(ZoneId.of( "Europe/Paris" ));
     }
 
     public SubmissionStatus getStatus() {
-        return status;
+        return this.submissionResult.submissionStatus;
     }
 
     @Override
@@ -46,10 +52,9 @@ public class Submission extends PanacheEntity {
                 "id=" + id +
                 ", pathToProject='" + pathToProject + '\'' +
                 ", author='" + author + '\'' +
-                ", result='" + result + '\'' +
-                ", status=" + status +
+                ", submissionResult=" + submissionResult +
                 ", lastTimeChanged=" + lastTimeChanged +
-                ", example=" + example.id +
+                ", example=" + example +
                 '}';
     }
 }

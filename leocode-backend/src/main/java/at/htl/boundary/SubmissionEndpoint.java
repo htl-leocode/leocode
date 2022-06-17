@@ -132,7 +132,7 @@ public class SubmissionEndpoint {
             String res = String.format("%tT Uhr: %s;%s",
                     currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
                     currentSubmission.getStatus().toString(),
-                    currentSubmission.result);
+                    currentSubmission.submissionResult); //TODO: check if this works as expected
 
             sseEventSink.send(sse.newEvent(res));
             // anything other than SUBMITTED is complete
@@ -149,15 +149,17 @@ public class SubmissionEndpoint {
                     String res = String.format("%tT Uhr: %s;%s",
                             currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
                             submission.getStatus().toString(),
-                            submission.result);
+                            submission.submissionResult);
 
                     sseEventSink.send(sse.newEvent(res));
 
                     if (submission.getStatus() != SubmissionStatus.SUBMITTED) {
                         sseEventSink.close();
-                        List<String> resultList = List.of(submission.result.split("\n"));
-                        submission.result = resultList.get(resultList.size()-1);
-                        log.info(submission.result);
+
+                        //TODO: check if this is needed:
+                        /*List<String> resultList = List.of(submission.result.split("\n"));
+                        submission.result = resultList.get(resultList.size()-1);*/
+                        log.info(submission.submissionResult);
                         log.info(submission);
                     }
                 }

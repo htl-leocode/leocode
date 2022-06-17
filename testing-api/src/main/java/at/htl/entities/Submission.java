@@ -6,13 +6,17 @@ public class Submission {
     public long id;
     public String pathToProject;
     public String author;
-    public String result;
-    private SubmissionStatus status; //private so the timestamp gets updated, whenever it is set => see setter
+//    public String result;
+    //private SubmissionStatus status; //private so the timestamp gets updated, whenever it is set => see setter
+
+    // replaces submissionStatus
+    public SubmissionResult submissionResult;
     public LocalDateTime lastTimeChanged;
     public Example example;
 
     public Submission() {
-        setStatus(SubmissionStatus.CREATED);
+        this.submissionResult = new SubmissionResult();
+//        setStatus(SubmissionStatus.CREATED);
     }
 
     public Submission(String pathToProject, String author, Example example) {
@@ -23,15 +27,15 @@ public class Submission {
     }
 
     public void setStatus(SubmissionStatus status) {
-        this.status = status;
+        this.submissionResult.submissionStatus = status;
         this.lastTimeChanged = LocalDateTime.now();
     }
 
     public SubmissionStatus getStatus() {
-        return status;
+        return this.submissionResult.submissionStatus;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Submission{" +
                 "id=" + id +
@@ -41,6 +45,18 @@ public class Submission {
                 ", status=" + status +
                 ", lastTimeChanged=" + lastTimeChanged +
                 ", example=" + example.id +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "Submission{" +
+                "id=" + id +
+                ", pathToProject='" + pathToProject + '\'' +
+                ", author='" + author + '\'' +
+                ", submissionResult=" + submissionResult +
+                ", lastTimeChanged=" + lastTimeChanged +
+                ", example=" + example +
                 '}';
     }
 }
