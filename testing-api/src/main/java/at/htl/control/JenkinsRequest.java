@@ -14,7 +14,9 @@ public class JenkinsRequest {
     private static final String ADMIN_TOKEN = "11d1a936ffef3dbc7856d7d963dade76d2";
     private static final String MVN_PROJECT_TOKEN = "avFPxhFrSm6a5UQHm3Kf2Ge4oYzdz3ESuF7igg2v";
 
-    private static final String URL = "http://127.0.0.1:8081/job/mvn-project/build?token="+MVN_PROJECT_TOKEN;
+    private static final String JENKINS_URL = "http://127.0.0.1:8080";
+
+    private static final String URL = JENKINS_URL+"/job/mvn-project/build?token="+MVN_PROJECT_TOKEN;
 
     public static void main(String[] args) {
         sendRequest();
