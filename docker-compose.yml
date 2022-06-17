@@ -46,7 +46,7 @@ services:
       - quarkus
 
   backend:
-    image: ghcr.io/flo-kei/leocode-backend:v1.6.13
+    image: ghcr.io/flo-kei/leocode-backend:v1.7.1
     user: root
     container_name: backend
     volumes:
@@ -67,7 +67,7 @@ services:
       - quarkus
 
   testing:
-    image: ghcr.io/flo-kei/testing-api:v1.0
+    image: ghcr.io/flo-kei/leocode-testing-api:v1.7.1
     user: root
     container_name: testing
     volumes:
@@ -85,7 +85,7 @@ services:
       - quarkus
 
   frontend:
-    image: ghcr.io/flo-kei/leocode-frontend:v1.6.13
+    image: ghcr.io/flo-kei/leocode-frontend:v1.7.1
     container_name: leofrontend
     ports:
       - "80:80"

@@ -27,7 +27,8 @@ public class Submission extends PanacheEntity {
     public Example example;
 
     public Submission() {
-        setStatus(SubmissionStatus.CREATED);
+        this.submissionResult = new SubmissionResult();
+        //setStatus(SubmissionStatus.CREATED);
     }
 
     public Submission(String pathToProject, String author, Example example) {
