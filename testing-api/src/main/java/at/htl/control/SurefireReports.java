@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.entities.FailureDetails;
 import at.htl.entities.TestCase;
+import io.quarkus.runtime.StartupEvent;
 import org.jboss.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -9,6 +10,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,9 +21,9 @@ import java.util.List;
 @ApplicationScoped
 public class SurefireReports {
 
-    /*public static void main(String[] args) {
+    public void start(@Observes StartupEvent event) {
         List<TestCase> testCases = GetTestCases();
-    }*/
+    }
 
     @Inject
     Logger logger;
@@ -31,7 +33,7 @@ public class SurefireReports {
     }
 
     private String GetFilename(){
-        File folder = new File("../project-under-test/target/surefire-reports");
+        File folder = new File("../../project-under-test/target/surefire-reports");
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
