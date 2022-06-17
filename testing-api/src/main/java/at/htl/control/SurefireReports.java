@@ -19,14 +19,18 @@ public class SurefireReports {
         List<TestCase> testCases = GetTestCases();
     }
 
-    private static String GetFilename(){
+    private static void MoveFiles() {
         File folder = new File(".");
+    }
+
+    private static String GetFilename(){
+        File folder = new File("../project-under-test/target/surefire-reports");
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
-                    if (file.getName().matches(".*Test.xml")) {
-                        return (file.getName());
+                    if (file.getName().matches("TEST-.*.xml")) {
+                        return (file.getAbsolutePath());
                     }
                 }
             }
@@ -35,6 +39,7 @@ public class SurefireReports {
     }
 
     public static List<TestCase> GetTestCases(){
+        MoveFiles();
         String filename = GetFilename();
         List<TestCase> testCases = new ArrayList<>();
 
