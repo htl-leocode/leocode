@@ -1,15 +1,19 @@
 package at.htl.control;
 
 import com.cdancy.jenkins.rest.JenkinsClient;
-import com.cdancy.jenkins.rest.domain.system.SystemInfo;
+import io.quarkus.runtime.StartupEvent;
+import org.jboss.logging.Logger;
 
-import java.io.IOException;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 /*
 https://www.jenkins.io/doc/book/using/remote-access-api/
 https://github.com/cdancy/jenkins-rest
 * */
 
+@ApplicationScoped
 public class JenkinsRequest {
 
     //TODO: refactor these tokens into .env file
@@ -27,11 +31,15 @@ public class JenkinsRequest {
 
     private static int currentJobNumber = -1;
 
-    public static void main(String[] args) {
-        sendRequest();
+    @Inject
+    Logger log;
+
+    public void start(@Observes StartupEvent event) {
+        // for testing/dev purposes only
+        //sendRequest();
     }
 
-    public static void sendRequest() {
+    public void sendRequest() {
         // create jenkins rest-client instance
         JenkinsClient client = JenkinsClient.builder()
                 .endPoint(JENKINS_URL)
@@ -41,10 +49,13 @@ public class JenkinsRequest {
         // store current queue size
         var prevSize = client.api().queueApi().queue().size();
 
+
+        log.info("send jenkins-api build request");
         // tell jenkins to start the build
         var response = client.api().jobsApi().build(null, JENKINS_JOB);
         int currSize = Integer.MAX_VALUE;
 
+        log.info("wait for build to appear in queue");
         // wait for build to appear in queue
         while(currSize != prevSize){
             currSize = client.api().queueApi().queue().size();
@@ -55,6 +66,7 @@ public class JenkinsRequest {
             }
         }
 
+        log.info("wait for build to finish");
         // wait for build to finish
         currentJobNumber = client.api().jobsApi().lastBuildNumber(null,JENKINS_JOB);
         var buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);
@@ -66,6 +78,7 @@ public class JenkinsRequest {
                 throw new RuntimeException(e);
             }
         }
+        log.info("build finished");
 
         // log buildInfo for debugging purposes
         /*buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);

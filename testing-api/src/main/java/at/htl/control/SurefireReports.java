@@ -22,7 +22,8 @@ import java.util.List;
 public class SurefireReports {
 
     public void start(@Observes StartupEvent event) {
-        List<TestCase> testCases = GetTestCases();
+        // for test purposes only
+        //List<TestCase> testCases = GetTestCases();
     }
 
     @Inject

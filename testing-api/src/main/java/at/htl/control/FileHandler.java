@@ -45,6 +45,9 @@ public class FileHandler {
     @Inject
     SurefireReports surefireReports;
 
+    @Inject
+    JenkinsRequest jenkinsRequest;
+
     //Pull image at the beginning, so testing goes faster
     void onStart(@Observes StartupEvent ev)  {
         File dockerPullShellscript = DOCKER_PULL_SCRIPT.toFile();
@@ -84,7 +87,9 @@ public class FileHandler {
                     case MAVEN:
                         createMavenProjectStructure();
                         //runTests();
-                        JenkinsRequest.sendRequest(); // tell jenkins to start testing, since the files are ready
+                        log.info("start testing");
+                        jenkinsRequest.sendRequest(); // tell jenkins to start testing, since the files are ready
+                        log.info("finished testing");
                     break;
                     default:
                         throw new Exception("Project Type not supported yet!");
