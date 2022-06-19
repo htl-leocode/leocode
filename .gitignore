@@ -20,3 +20,4 @@ gh-pages/
 dist
 .angular
 project-under-test/*
+frontend/package-lock.json
