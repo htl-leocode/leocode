@@ -45,7 +45,8 @@ export class SubmissionStatusComponent implements OnInit {
     if (this.submissionStatus == 'CORRECT') {
       return "All tests are correct"
     } else {
-      let testreuslt: TestResult = JSON.parse(this.testResult);
+      let splitstring: string[] = this.testResult.split(';');
+      let testreuslt: TestResult = JSON.parse(splitstring[1]);
       let testreusltreturnstring:string;
       testreuslt.testCases.forEach(element => {
         testreusltreturnstring+=element.failure.message
