@@ -47,7 +47,7 @@ export class SubmissionStatusComponent implements OnInit {
   getClearResult() {
 
     if (this.submissionStatus == 'CORRECT') {
-      return "All tests are correct"
+      return "Congrats! All tests passed :)"
     } else {
       let splitstring: string[] = this.testResult.split(';');
       console.log('splitstring:',splitstring);
