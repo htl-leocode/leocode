@@ -45,7 +45,10 @@ export class SubmissionStatusComponent implements OnInit {
   }
 
   getClearResult() {
-
+    console.log("typeof result:",typeof(this.result));
+    console.log("result",this.result);
+    
+    
     if (this.submissionStatus == 'CORRECT') {
       return "Congrats! All tests passed :)"
     } else {

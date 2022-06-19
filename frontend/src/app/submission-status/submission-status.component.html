@@ -18,24 +18,27 @@
 
   <mat-spinner *ngIf="spinnerIsVisible" style="margin:0 auto;"></mat-spinner>
 
-  <ng-container *ngFor="let c of result.testCases">
-    <mat-card *ngIf="c.failure != null">
-      <mat-card-header>
-        <mat-card-title>{{c.name}}</mat-card-title>
-      </mat-card-header>
-
-
-      <mat-card-content>
-
-        <p  style="font-size: small;white-space: pre-line">
-          {{c.failure.message}}
-        </p>
-      </mat-card-content>
-
-      
-
-    </mat-card>
+  <ng-container *ngIf="result !== null && result !== undefined">
+    <ng-container *ngFor="let c of result.testCases">
+      <mat-card *ngIf="c.failure != null">
+        <mat-card-header>
+          <mat-card-title>{{c.name}}</mat-card-title>
+        </mat-card-header>
+  
+  
+        <mat-card-content>
+  
+          <p  style="font-size: small;white-space: pre-line">
+            {{c.failure.message}}
+          </p>
+        </mat-card-content>
+  
+        
+  
+      </mat-card>
+    </ng-container>
   </ng-container>
+  
 
 </div>
 <button mat-raised-button color="primary"
