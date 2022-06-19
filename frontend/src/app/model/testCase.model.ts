@@ -2,7 +2,7 @@ import { FailureDetails } from "./failureDetail.model"
 
 export interface TestCase{
     name: string,
-    classname:string,
+    className:string,
     time:string,
     failure: FailureDetails
 }

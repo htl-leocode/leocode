@@ -55,14 +55,14 @@ export class SubmissionStatusComponent implements OnInit {
       console.log('parsed plain object:',);
       let testResult: TestResult = JSON.parse(splitstring[0]);
       console.log('parsed Testresult object:',testResult);
-      console.log('x',obj.testCases[0].failure.message);
+      console.log('x',testResult.testCases[0].failure.message);
       
       let testresultreturnstring:string;
 
-      this.nrOfTests = obj.testCases.length;
-      this.testsPassed = obj.testCases.length;
+      this.nrOfTests = testResult.testCases.length;
+      this.testsPassed = testResult.testCases.length;
 
-      obj.testCases.forEach(element => {
+      testResult.testCases.forEach(element => {
         //console.log("element: ",element)
         //console.log("failure: ",element.failure)
         //console.log("message: ",element.failure.message)
