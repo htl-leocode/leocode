@@ -47,11 +47,17 @@ export class SubmissionStatusComponent implements OnInit {
     } else {
       let splitstring: string[] = this.testResult.split(';');
       console.log('splitstring:',splitstring);
-      console.log('parsed plain object:',JSON.parse(splitstring[0]));
+      let obj = JSON.parse(splitstring[0]);
+      console.log('parsed plain object:',);
       let testResult: TestResult = JSON.parse(splitstring[0]);
       console.log('parsed Testresult object:',testResult);
+      console.log('x',obj.testCases[0].failure.message);
+      
       let testresultreturnstring:string;
       testResult.testCases.forEach(element => {
+        console.log("element: ",element)
+        console.log("failure: ",element.failure)
+        console.log("message: ",element.failure.message)
         testresultreturnstring+=element.failure.message
       });
       return testresultreturnstring;
