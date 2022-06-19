@@ -9,14 +9,33 @@
 
     <mat-card-content>
       <h1> Tests passed {{testsPassed}} / {{nrOfTests}}</h1>
-
-      <p  style="font-size: small;white-space: pre-line">
-        {{getClearResult()}}
-      </p>
     </mat-card-content>
+
+
+
   </mat-card>
 
   <mat-spinner *ngIf="spinnerIsVisible" style="margin:0 auto;"></mat-spinner>
+
+  <ng-container *ngFor="let c of result.testCases">
+    <mat-card *ngIf="c.failure != null">
+      <mat-card-header>
+        <mat-card-title>{{c.name}}</mat-card-title>
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <p  style="font-size: small;white-space: pre-line">
+          {{c.failure.message}}
+        </p>
+      </mat-card-content>
+
+      
+
+    </mat-card>
+  </ng-container>
+
 </div>
 <button mat-raised-button color="primary"
         style="bottom: 10px;margin-left: 10px;position: absolute;"

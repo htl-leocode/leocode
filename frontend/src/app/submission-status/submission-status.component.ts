@@ -16,6 +16,7 @@ export class SubmissionStatusComponent implements OnInit {
   spinnerIsVisible = true;
   testResult = '';
 
+  result: TestResult;
   nrOfTests: number = 0;
   testsPassed: number = 0;
 
@@ -43,7 +44,7 @@ export class SubmissionStatusComponent implements OnInit {
 
   }
 
-  getClearResult(): string {
+  getClearResult() {
 
     if (this.submissionStatus == 'CORRECT') {
       return "All tests are correct"
@@ -52,27 +53,19 @@ export class SubmissionStatusComponent implements OnInit {
       console.log('splitstring:',splitstring);
       let obj = JSON.parse(splitstring[0]);
 
-      console.log('parsed plain object:',);
-      let testResult: TestResult = JSON.parse(splitstring[0]);
-      console.log('parsed Testresult object:',testResult);
-      console.log('x',testResult.testCases[0].failure.message);
+      this.result = JSON.parse(splitstring[0]);
+
+      console.log('parsed Testresult object:',this.result);
+      console.log('x',this.result.testCases[0].failure.message);
       
-      let testresultreturnstring:string;
+      this.nrOfTests = this.result.testCases.length;
+      this.testsPassed = this.result.testCases.length;
 
-      this.nrOfTests = testResult.testCases.length;
-      this.testsPassed = testResult.testCases.length;
-
-      testResult.testCases.forEach(element => {
-        //console.log("element: ",element)
-        //console.log("failure: ",element.failure)
-        //console.log("message: ",element.failure.message)
+      this.result.testCases.forEach(element => {
         if(element.failure != null){
-          console.log("message: ", element.failure.message)
-          testresultreturnstring+=(element.failure.message+"\n")
           this.testsPassed = this.testsPassed - 1;
         }
       });
-      return testresultreturnstring;
     }
   }
 }
