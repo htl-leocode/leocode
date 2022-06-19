@@ -28,5 +28,11 @@ public class SubmissionResult extends PanacheEntity {
         this.submissionStatus = SubmissionStatus.CREATED;
     }
 
-
+    @Override
+    public String toString() {
+        return "SubmissionResult{" +
+                "submissionStatus=" + submissionStatus +
+                ", testCases=" + testCases +
+                '}';
+    }
 }

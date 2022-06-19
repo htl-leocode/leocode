@@ -22,6 +22,7 @@ public class SubmissionListener {
 
     @Incoming("submission-result") // add @Blocking Annotation?
     public void listen(Submission s) {
+        log.info("Received result: " + s);
         if (!s.getStatus().equals(SubmissionStatus.SUBMITTED)) {
             //https://stackoverflow.com/questions/58534957/how-to-execute-jpa-entity-manager-operations-inside-quarkus-kafka-consumer-metho
             ManagedExecutor executor = ManagedExecutor.builder()

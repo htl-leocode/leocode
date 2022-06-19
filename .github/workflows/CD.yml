@@ -82,7 +82,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
   build_frontend:
-    if: ${{ false }}  # disable for now
+    #if: ${{ false }}  # disable frontend-build
     name: Build frontend
     runs-on: ubuntu-latest
     env:

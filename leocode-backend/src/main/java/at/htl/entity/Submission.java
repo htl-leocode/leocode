@@ -18,6 +18,7 @@ public class Submission extends PanacheEntity {
     */
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     public SubmissionResult submissionResult;
 
     @Column(columnDefinition = "TIMESTAMP")
