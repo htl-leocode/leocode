@@ -1,7 +1,8 @@
 <div style="height: 100vh" class="container mt-5">
   <h2 class="mat-display-4" style="text-align: center">{{submissionStatus}}</h2>
+  <p>{{getClearResult()}}</p>
 
-  <mat-card *ngIf="testResult.length > 2">
+  <mat-card *ngIf="testResult.length > 2 && !spinnerIsVisible">
     <mat-card-header>
       <mat-card-title>Unit Test Results</mat-card-title>
     </mat-card-header>
@@ -9,7 +10,6 @@
 
     <mat-card-content>
       <h1> Tests passed {{testsPassed}} / {{nrOfTests}}</h1>
-      <p>{{getClearResult()}}</p>
     </mat-card-content>
 
 
@@ -20,27 +20,26 @@
 
   <ng-container *ngIf="result !== null && result !== undefined">
     <ng-container *ngFor="let c of result.testCases">
-      <mat-card *ngIf="c.failure != null">
+      <mat-card *ngIf="c.failure != null" class="mt-2 mb-2">
         <mat-card-header>
           <mat-card-title>{{c.name}}</mat-card-title>
         </mat-card-header>
-  
-  
+
+
         <mat-card-content>
-  
-          <p  style="font-size: small;white-space: pre-line">
+
+          <p style="font-size: small;white-space: pre-line">
             {{c.failure.message}}
           </p>
         </mat-card-content>
-  
-        
-  
+
+
+
       </mat-card>
     </ng-container>
   </ng-container>
-  
+
 
 </div>
-<button mat-raised-button color="primary"
-        style="bottom: 10px;margin-left: 10px;position: absolute;"
-        (click)="(this.authService.roles.getValue()[0] === 'teacher') ? (router.navigate(['list-example/1'] )) : (router.navigate(['list-example/0']))">Back</button>
+<button mat-raised-button color="primary" style="bottom: 10px;margin-left: 10px;position: absolute;"
+  (click)="(this.authService.roles.getValue()[0] === 'teacher') ? (router.navigate(['list-example/1'] )) : (router.navigate(['list-example/0']))">Back</button>
