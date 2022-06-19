@@ -9,6 +9,8 @@ import at.htl.kafka.SubmissionProducer;
 import at.htl.repository.ExampleRepository;
 import at.htl.repository.LeocodeFileRepository;
 import at.htl.repository.SubmissionRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.groups.MultiSubscribe;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -126,13 +128,22 @@ public class SubmissionEndpoint {
         Submission currentSubmission = submissionRepository.findById(id);
         boolean canSubscribe = false;
 
+        ObjectMapper mapper = new ObjectMapper();
+
         // When someone refreshes or connects later on send them the current status
         if (currentSubmission != null) {
+            String jsonInString = "Result mapping failed";
+            try {
+                jsonInString = mapper.writeValueAsString(currentSubmission.submissionResult);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
 
             String res = String.format("%tT Uhr: %s;%s",
                     currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
                     currentSubmission.getStatus().toString(),
-                    currentSubmission.submissionResult); //TODO: check if this works as expected
+                    jsonInString);
+                    //currentSubmission.submissionResult); //TODO: check if this works as expected
 
             sseEventSink.send(sse.newEvent(res));
             // anything other than SUBMITTED is complete

@@ -15,7 +15,7 @@ public class SubmissionDTO {
     public String status;
 //    public String result;
 
-    public SubmissionResult submissionResult;
+    public SubmissionResult submissionResult; // Refactor this to SubmissionResultDTO
 
     public String lastTimeChanged;
 
