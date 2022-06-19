@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService} from '../services/http.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '../authentification/authentication.service';
+import { HttpService } from '../services/http.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '../authentification/authentication.service';
+import { TestResult } from '../model/testResult.model';
 
 @Component({
   selector: 'app-submission-status',
@@ -16,9 +17,9 @@ export class SubmissionStatusComponent implements OnInit {
   testResult = '';
 
   constructor(private http: HttpService,
-              private route: ActivatedRoute,
-              public router: Router,
-              public authService: AuthenticationService) { }
+    private route: ActivatedRoute,
+    public router: Router,
+    public authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.submissionId = +this.route.snapshot.paramMap.get('id');
@@ -30,7 +31,7 @@ export class SubmissionStatusComponent implements OnInit {
       this.submissionStatus = messageEvent.data.split(';')[0];
       this.testResult = messageEvent.data.split(';')[1] === undefined ? '' : messageEvent.data.split(';')[1];
       console.log(messageEvent.data);
-      if (!this.submissionStatus.includes('SUBMITTED')){
+      if (!this.submissionStatus.includes('SUBMITTED')) {
         this.spinnerIsVisible = false;
       }
     }, error => {
@@ -39,4 +40,17 @@ export class SubmissionStatusComponent implements OnInit {
 
   }
 
+  getClearResult(): string {
+
+    if (this.submissionStatus == 'CORRECT') {
+      return "All tests are correct"
+    } else {
+      let testreuslt: TestResult = JSON.parse(this.testResult);
+      let testreusltreturnstring:string;
+      testreuslt.testCases.forEach(element => {
+        testreusltreturnstring+=element.failure.message
+      });
+      return testreusltreturnstring;
+    }
+  }
 }
