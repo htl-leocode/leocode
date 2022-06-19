@@ -102,6 +102,7 @@ jobs:
           node-version:
             ${{matrix.node-version}}
       - name: Cache node modules
+        if: ${{ false }}
         id: cache-nodemodules
         uses: actions/cache@v2
         env:
@@ -117,7 +118,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Dependencies
         if:
-          steps.cache-nodemodules.outputs.cache-hit != 'true'
+          #steps.cache-nodemodules.outputs.cache-hit != 'true'
           # if cache hits, skip this step.
         run: npm ci --legacy-peer-deps
       - name: Build
