@@ -16,6 +16,9 @@ export class SubmissionStatusComponent implements OnInit {
   spinnerIsVisible = true;
   testResult = '';
 
+  nrOfTests: number = 0;
+  testsPassed: number = 0;
+
   constructor(private http: HttpService,
     private route: ActivatedRoute,
     public router: Router,
@@ -55,6 +58,10 @@ export class SubmissionStatusComponent implements OnInit {
       console.log('x',obj.testCases[0].failure.message);
       
       let testresultreturnstring:string;
+
+      this.nrOfTests = obj.testCases.length;
+      this.testsPassed = obj.testCases.length;
+
       obj.testCases.forEach(element => {
         //console.log("element: ",element)
         //console.log("failure: ",element.failure)
@@ -62,6 +69,7 @@ export class SubmissionStatusComponent implements OnInit {
         if(element.failure != null){
           console.log("message: ", element.failure.message)
           testresultreturnstring+=(element.failure.message+"\n")
+          this.testsPassed = this.testsPassed - 1;
         }
       });
       return testresultreturnstring;

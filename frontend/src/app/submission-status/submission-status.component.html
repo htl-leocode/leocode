@@ -5,7 +5,11 @@
     <mat-card-header>
       <mat-card-title>Unit Test Results</mat-card-title>
     </mat-card-header>
+
+
     <mat-card-content>
+      <h1> Tests passed {{testsPassed}} / {{nrOfTests}}</h1>
+
       <p  style="font-size: small;white-space: pre-line">
         {{getClearResult()}}
       </p>
