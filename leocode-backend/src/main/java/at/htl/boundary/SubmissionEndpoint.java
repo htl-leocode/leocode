@@ -143,7 +143,6 @@ public class SubmissionEndpoint {
                     currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
                     currentSubmission.getStatus().toString(),
                     jsonInString);
-                    //currentSubmission.submissionResult); //TODO: check if this works as expected
 
             sseEventSink.send(sse.newEvent(res));
             // anything other than SUBMITTED is complete
@@ -157,10 +156,18 @@ public class SubmissionEndpoint {
             subscribe.with(submission -> {
                 if (id.equals(submission.id)) {
 
+                    String jsonInString;
+                    try {
+                        jsonInString = mapper.writeValueAsString(submission.submissionResult);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     String res = String.format("%tT Uhr: %s;%s",
                             currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
                             submission.getStatus().toString(),
-                            submission.submissionResult);
+                            jsonInString);
+                            //submission.submissionResult);
 
                     sseEventSink.send(sse.newEvent(res));
 
