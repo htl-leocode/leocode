@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.dto.SubmissionDTO;
 import at.htl.entity.Example;
 import at.htl.entity.LeocodeFile;
 import at.htl.entity.Submission;
@@ -19,6 +20,8 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import javax.inject.Inject;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
@@ -27,9 +30,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseEventSink;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Path("/submission")
@@ -125,7 +132,19 @@ public class SubmissionEndpoint {
 
         // When someone refreshes or connects later on send them the current status
         if (currentSubmission != null) {
-            sendResult(sse, sseEventSink, currentSubmission, mapper, currentSubmission);
+            String jsonInString = "Result mapping failed";
+            try {
+                jsonInString = mapper.writeValueAsString(currentSubmission.submissionResult);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+            String res = String.format("%tT Uhr: %s;%s",
+                    currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
+                    currentSubmission.getStatus().toString(),
+                    jsonInString);
+
+            sseEventSink.send(sse.newEvent(res));
             // anything other than SUBMITTED is complete
             canSubscribe = currentSubmission.getStatus() == SubmissionStatus.SUBMITTED;
         }
@@ -137,7 +156,20 @@ public class SubmissionEndpoint {
             subscribe.with(submission -> {
                 if (id.equals(submission.id)) {
 
-                    sendResult(sse, sseEventSink, currentSubmission, mapper, submission);
+                    String jsonInString;
+                    try {
+                        jsonInString = mapper.writeValueAsString(submission.submissionResult);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    String res = String.format("%tT Uhr: %s;%s",
+                            currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
+                            submission.getStatus().toString(),
+                            jsonInString);
+                            //submission.submissionResult);
+
+                    sseEventSink.send(sse.newEvent(res));
 
                     if (submission.getStatus() != SubmissionStatus.SUBMITTED) {
                         sseEventSink.close();
@@ -151,21 +183,5 @@ public class SubmissionEndpoint {
                 }
             });
         }
-    }
-
-    private void sendResult(@Context Sse sse, @Context SseEventSink sseEventSink, Submission currentSubmission, ObjectMapper mapper, Submission submission) {
-        String jsonInString = "Result mapping failed";
-        try {
-            jsonInString = mapper.writeValueAsString(currentSubmission.submissionResult);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        String res = String.format("%tT Uhr: %s;%s",
-                currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
-                submission.getStatus().toString(),
-                jsonInString);
-
-        sseEventSink.send(sse.newEvent(res));
     }
 }
