@@ -107,6 +107,17 @@ services:
     networks:
       - quarkus
 
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    ports:
+      - "8081:8080"
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - project-under-test:/var/jenkins_home/workspace/mvn-project
+    networks:
+      - quarkus
+
 #  jenkins:
 #    image: zbenii/leojenkins:latest
 #    container_name: leojenkins
@@ -129,6 +140,8 @@ volumes:
         type: 'none'
         o: 'bind'
         device: './project-under-test'
+    jenkins_home:
+        external: true
 
 networks:
   quarkus:
