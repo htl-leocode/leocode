@@ -59,8 +59,10 @@ export class SubmissionStatusComponent implements OnInit {
         //console.log("element: ",element)
         //console.log("failure: ",element.failure)
         //console.log("message: ",element.failure.message)
-        console.log("message: ", element.failure.message)
-        testresultreturnstring+=(element.failure.message+"\n")
+        if(element.failure != null){
+          console.log("message: ", element.failure.message)
+          testresultreturnstring+=(element.failure.message+"\n")
+        }
       });
       return testresultreturnstring;
     }
