@@ -262,6 +262,8 @@ public class FileHandler {
             status = SubmissionStatus.ERROR;
         }
 
+        log.info(result.testCases);
+
         if(result.testCases.stream().anyMatch(new Predicate<TestCase>() {
             @Override
             public boolean test(TestCase testCase) {
@@ -270,6 +272,9 @@ public class FileHandler {
         }))
         {
             status = SubmissionStatus.FAILED;
+        }
+        else if(result == null || result.testCases == null){
+            status = SubmissionStatus.ERROR;
         }
         else {
             status = SubmissionStatus.CORRECT;
