@@ -32,6 +32,8 @@ export class SubmissionStatusComponent implements OnInit {
 
   getSubmissionStatus(id: number): void {
     this.http.getSubmissionStatusSse(id).subscribe(messageEvent => {
+      console.log("spinnerstatus: ", this.spinnerIsVisible);
+      
       this.submissionStatus = messageEvent.data.split(';')[0];
       this.testResult = messageEvent.data.split(';')[1] === undefined ? '' : messageEvent.data.split(';')[1];
       console.log(messageEvent.data);
@@ -45,9 +47,12 @@ export class SubmissionStatusComponent implements OnInit {
   }
 
   getClearResult() {
-
+    console.log("typeof result:",typeof(this.result));
+    console.log("result",this.result);
+    
+    
     if (this.submissionStatus == 'CORRECT') {
-      return "All tests are correct"
+      //return "Congrats! All tests passed :)"
     } else {
       let splitstring: string[] = this.testResult.split(';');
       console.log('splitstring:',splitstring);
