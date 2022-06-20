@@ -273,7 +273,7 @@ public class FileHandler {
         {
             status = SubmissionStatus.FAILED;
         }
-        else if(result == null || result.testCases == null){
+        else if(result == null || result.testCases == null || result.testCases.size() == 0){
             status = SubmissionStatus.ERROR;
         }
         else {
