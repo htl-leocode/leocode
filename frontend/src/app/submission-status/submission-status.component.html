@@ -38,8 +38,11 @@
       </mat-card>
     </ng-container>
   </ng-container>
-
+  
+  <mat-spinner *ngIf="spinnerIsVisible" ></mat-spinner>
 
 </div>
 <button mat-raised-button color="primary" style="bottom: 10px;margin-left: 10px;position: absolute;"
   (click)="(this.authService.roles.getValue()[0] === 'teacher') ? (router.navigate(['list-example/1'] )) : (router.navigate(['list-example/0']))">Back</button>
+
+  <mat-spinner *ngIf="spinnerIsVisible" ></mat-spinner>
