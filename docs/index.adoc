@@ -66,6 +66,9 @@ image::testing-api-bottleneck.png[]
 
 == Weiterführende Links
 
+=== Leocode Specification-Sheet
+<<spec-sheet.adoc#,Specsheet>>
+
 === Leocode-VM
 http://vm147.htl-leonding.ac.at
 

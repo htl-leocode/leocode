@@ -1,0 +1,109 @@
+= Datenblatt Leocode
+firstname lastname
+1.0, yyyy-mm-dd: Some notes
+ifndef::imagesdir[:imagesdir: images]
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc] ‏ ‏ ‎
+icon:github-square[link=https://github.com/htl-leonding-college/asciidoctor-docker-template] ‏ ‏ ‎
+icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+== Leocode-Team
+.Leocode-Team-Members
+|===
+|Teammitglieder
+
+| Oliver Sugic
+
+| Raphael Ablinger
+
+| Florian Keintzel
+|===
+
+== Allgemeine Informationen
+
+Gh-Repository-Adresse:
+https://github.com/flo-kei/leocode
+
+Link zu den Docs: https://flo-kei.github.io/leocode/
+
+Server-Adresse: http://vm147.htl-leonding.ac.at/
+
+== Information bezüglich Arbeitsweise und Commits
+
+Wichtige Informationen bezüglich Commits und Arbeitsweise:
+
+Wir können das Projekt nicht lokal ausführen, weil dies
+durch Keycloak und Frontend-Konfigurationen vorheriger Teams
+unmöglich gemacht wurde.
+
+Wir arbeiten bereits seit Wochen an der Lösung dieses Problems,
+sind jedoch bisher noch nicht in der Lage gewesen, das gesamte
+Projekt lokal auszuführen.
+
+Unsere aktuelle Arbeitsweise ist:
+
+- Änderungen auf Github pushen
+- Container mit Gh-Actions builden und auf Registry pushen
+- Auf der vm147 von ghcr.io die neusten Container pullen
+- Mit Docker-Compose alle Container neu erstellen und starten
+
+Diese arbeitsweise ist sehr ineffizient (~5min Wartezeit pro Änderung)
+
+Daher haben wir für das implementieren von Änderungen deutlich länger
+als normal benötigt und oftmals deutlich mehr Commits gemacht.
+
+== Changelog 4ahif (v.1.0 as of 2022-06-23)
+
+=== Finished tasks
+- Fixed failing tests multiple times (both 5ahif, our own mistakes and deprecated plugins)
+- Schnittstellendokumentation
+- Adoc-slides
+- Frontend refactored (ui-overhaul in progress)
+- Improved test performance (2min -> 17s)
+- Switched from jenkinsFileRunner to fully fledged jenkins
+- Enhanced models by extending testResults to include more detailed data
+(refactored result to multiple entity/dto classes which hold all information supplied by jenkins)
+(took lots of time)
+- Local execution prepared (not working yet, but currently working on it with high effort)
+
+=== Coming soon
+- Color-codes & icons for test-results
+- Submission-queue
+- More generic testing framework (support for other programming-languages)
+
+
+=== Individual Tasks
+
+==== Oliver:
+- Interface-documentation
+- Retrieved newly formatted data from backend
+- Model-klassen fürs frontend
+- Local execution testing
+
+==== Raphael:
+- Interface-documentation
+- Fixes für json parser im frontend
+- Local execution testing
+- Refined test-result output
+- Fixed exception result
+
+==== Florian:
+- Refactored testing-api & backend
+- Switched from Jenkinsfile-Runner to jenkins
+    * Improved test performance
+- Added and parsed detailed test-logs
+- Added frontend continuous deployment
+
+
+=== Questions that led to our changes
+ - How many tests ran?
+ - How many tests failed?
+ - Why did the tests fail?
