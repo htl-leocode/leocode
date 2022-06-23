@@ -64,9 +64,9 @@ als normal benötigt und oftmals deutlich mehr Commits gemacht.
 
 === Finished tasks
 - Fixed failing tests multiple times (both 5ahif, our own mistakes and deprecated plugins)
-- Schnittstellendokumentation
+- Interface-documentation
 - Adoc-slides
-- Frontend refactored (ui-overhaul in progress)
+- Refactored frontend (UI-overhaul in progress)
 - Improved test performance (2min -> 17s)
 - Switched from jenkinsFileRunner to fully fledged jenkins
 - Enhanced models by extending testResults to include more detailed data
@@ -84,8 +84,8 @@ als normal benötigt und oftmals deutlich mehr Commits gemacht.
 
 ==== Oliver:
 - Interface-documentation
-- Retrieved newly formatted data from backend
-- Model-klassen fürs frontend
+- Retrieved newly formatted data from backend and displayed it in the frontend
+- Model-classes for frontend
 - Local execution testing
 
 ==== Raphael:
