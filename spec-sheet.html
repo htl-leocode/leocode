@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="author" content="Keintzel Florian, Ablinger Raphael, Sugic Oliver">
+<meta name="author" content="firstname lastname">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>LeoCode - Interface Documentation</title>
+<title>Datenblatt Leocode</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -449,127 +449,270 @@ pre.rouge .hll * {
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>LeoCode - Interface Documentation</h1>
+<h1>Datenblatt Leocode</h1>
 <div class="details">
-<span id="author" class="author">Keintzel Florian, Ablinger Raphael, Sugic Oliver</span><br>
-<span id="revnumber">version 1.0.1,</span>
-<span id="revdate">2022-01-25</span>
-<br><span id="revremark">Leocode</span>
+<span id="author" class="author">firstname lastname</span><br>
+<span id="revnumber">version 1.0,</span>
+<span id="revdate">yyyy-mm-dd</span>
+<br><span id="revremark">Some notes</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_html_form_quarkus_backend">1. HTML-FORM &#8594; Quarkus-Backend:</a></li>
-<li><a href="#_leocode_backendtesting_api">2. LeoCode-Backend&#8594;Testing-API:</a></li>
-<li><a href="#_testing_api_jenkins">3. Testing-API &#8594; Jenkins:</a></li>
-<li><a href="#_jenkins_testing_api">4. Jenkins &#8594; Testing-API:</a></li>
-<li><a href="#_testing_api_leocode_backend">5. Testing-API &#8594; LeoCode-Backend:</a></li>
-<li><a href="#_testing_api_frontend">6. Testing-API &#8594; Frontend:</a></li>
-<li><a href="#_kafka_testing_api">7. Kafka &#8594; Testing-Api</a></li>
-<li><a href="#_testing_api_kafka">8. Testing-Api &#8594; Kafka</a></li>
-<li><a href="#_kafka_backend">9. Kafka &#8594; Backend</a></li>
-<li><a href="#_backend_kafka">10. Backend &#8594; Kafka</a></li>
+<li><a href="#_leocode_team">1. Leocode-Team</a></li>
+<li><a href="#_allgemeine_informationen">2. Allgemeine Informationen</a></li>
+<li><a href="#_information_bezüglich_arbeitsweise_und_commits">3. Information bezüglich Arbeitsweise und Commits</a></li>
+<li><a href="#_changelog_4ahif_v_1_0_as_of_2022_06_23">4. Changelog 4ahif (v.1.0 as of 2022-06-23)</a>
+<ul class="sectlevel2">
+<li><a href="#_finished_tasks">4.1. Finished tasks</a></li>
+<li><a href="#_coming_soon">4.2. Coming soon</a></li>
+<li><a href="#_individual_tasks">4.3. Individual Tasks</a></li>
+<li><a href="#_questions_that_led_to_our_changes">4.4. Questions that led to our changes</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_html_form_quarkus_backend"><a class="anchor" href="#_html_form_quarkus_backend"></a>1. HTML-FORM &#8594; Quarkus-Backend:</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Die Parameter und Dateien werden vom Html-Form über
-MultipartFormDataInput zum Quarkus-Backend geschickt.
-Files werden dann in der Datenbank gespeichert.
-Abschließend wird das abgegebene Projekt und die für das
-Testen benötigten Files in dem "project-under-test" gespeichert.</p>
+<p><span class="icon"><a class="image" href="https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/spec-sheet.adoc"><i class="fa fa-file-text-o"></i></a></span> ‏ ‏ ‎
+<span class="icon"><a class="image" href="https://github.com/htl-leonding-college/asciidoctor-docker-template"><i class="fa fa-github-square"></i></a></span> ‏ ‏ ‎
+<span class="icon"><a class="image" href="https://htl-leonding.github.io/"><i class="fa fa-home"></i></a></span></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_leocode_backendtesting_api"><a class="anchor" href="#_leocode_backendtesting_api"></a>2. LeoCode-Backend&#8594;Testing-API:</h2>
+<h2 id="_leocode_team"><a class="anchor" href="#_leocode_team"></a>1. Leocode-Team</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Leocode-Team-Members</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Teammitglieder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oliver Sugic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Raphael Ablinger</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Florian Keintzel</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_allgemeine_informationen"><a class="anchor" href="#_allgemeine_informationen"></a>2. Allgemeine Informationen</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Über Kafka wird die Abgabe an die Testing API geschickt.
-Genauer wird die Abgabe über den "submission-input" channel weitergeschickt.
-In der Testing-API wird es dann für Jenkins vorbereitet und dann damit auch
-weitergegeben.</p>
+<p>Gh-Repository-Adresse:
+<a href="https://github.com/flo-kei/leocode" class="bare">https://github.com/flo-kei/leocode</a></p>
+</div>
+<div class="paragraph">
+<p>Link zu den Docs: <a href="https://flo-kei.github.io/leocode/" class="bare">https://flo-kei.github.io/leocode/</a></p>
+</div>
+<div class="paragraph">
+<p>Server-Adresse: <a href="http://vm147.htl-leonding.ac.at/" class="bare">http://vm147.htl-leonding.ac.at/</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_testing_api_jenkins"><a class="anchor" href="#_testing_api_jenkins"></a>3. Testing-API &#8594; Jenkins:</h2>
+<h2 id="_information_bezüglich_arbeitsweise_und_commits"><a class="anchor" href="#_information_bezüglich_arbeitsweise_und_commits"></a>3. Information bezüglich Arbeitsweise und Commits</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Es wird einfach in der FileHandler Klasse ein Script
-ausgeführt, dass den Jenkins started und das dann auch
-das ganze Projekt Tested.</p>
+<p>Wichtige Informationen bezüglich Commits und Arbeitsweise:</p>
+</div>
+<div class="paragraph">
+<p>Wir können das Projekt nicht lokal ausführen, weil dies
+durch Keycloak und Frontend-Konfigurationen vorheriger Teams
+unmöglich gemacht wurde.</p>
+</div>
+<div class="paragraph">
+<p>Wir arbeiten bereits seit Wochen an der Lösung dieses Problems,
+sind jedoch bisher noch nicht in der Lage gewesen, das gesamte
+Projekt lokal auszuführen.</p>
+</div>
+<div class="paragraph">
+<p>Unsere aktuelle Arbeitsweise ist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Änderungen auf Github pushen</p>
+</li>
+<li>
+<p>Container mit Gh-Actions builden und auf Registry pushen</p>
+</li>
+<li>
+<p>Auf der vm147 von ghcr.io die neusten Container pullen</p>
+</li>
+<li>
+<p>Mit Docker-Compose alle Container neu erstellen und starten</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Diese arbeitsweise ist sehr ineffizient (~5min Wartezeit pro Änderung)</p>
+</div>
+<div class="paragraph">
+<p>Daher haben wir für das implementieren von Änderungen deutlich länger
+als normal benötigt und oftmals deutlich mehr Commits gemacht.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_jenkins_testing_api"><a class="anchor" href="#_jenkins_testing_api"></a>4. Jenkins &#8594; Testing-API:</h2>
+<h2 id="_changelog_4ahif_v_1_0_as_of_2022_06_23"><a class="anchor" href="#_changelog_4ahif_v_1_0_as_of_2022_06_23"></a>4. Changelog 4ahif (v.1.0 as of 2022-06-23)</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Das Ergebnis von den Tests wird einfach in der Submission Klasse
-im Result gespeichert.</p>
+<div class="sect2">
+<h3 id="_finished_tasks"><a class="anchor" href="#_finished_tasks"></a>4.1. Finished tasks</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Fixed failing tests multiple times (both 5ahif, our own mistakes and deprecated plugins)</p>
+</li>
+<li>
+<p>Schnittstellendokumentation</p>
+</li>
+<li>
+<p>Adoc-slides</p>
+</li>
+<li>
+<p>Frontend refactored (ui-overhaul in progress)</p>
+</li>
+<li>
+<p>Improved test performance (2min &#8594; 17s)</p>
+</li>
+<li>
+<p>Switched from jenkinsFileRunner to fully fledged jenkins</p>
+</li>
+<li>
+<p>Enhanced models by extending testResults to include more detailed data
+(refactored result to multiple entity/dto classes which hold all information supplied by jenkins)
+(took lots of time)</p>
+</li>
+<li>
+<p>Local execution prepared (not working yet, but currently working on it with high effort)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_coming_soon"><a class="anchor" href="#_coming_soon"></a>4.2. Coming soon</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Color-codes &amp; icons for test-results</p>
+</li>
+<li>
+<p>Submission-queue</p>
+</li>
+<li>
+<p>More generic testing framework (support for other programming-languages)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_individual_tasks"><a class="anchor" href="#_individual_tasks"></a>4.3. Individual Tasks</h3>
+<div class="sect3">
+<h4 id="_oliver"><a class="anchor" href="#_oliver"></a>4.3.1. Oliver:</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Interface-documentation</p>
+</li>
+<li>
+<p>Retrieved newly formatted data from backend</p>
+</li>
+<li>
+<p>Model-klassen fürs frontend</p>
+</li>
+<li>
+<p>Local execution testing</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_raphael"><a class="anchor" href="#_raphael"></a>4.3.2. Raphael:</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Interface-documentation</p>
+</li>
+<li>
+<p>Fixes für json parser im frontend</p>
+</li>
+<li>
+<p>Local execution testing</p>
+</li>
+<li>
+<p>Refined test-result output</p>
+</li>
+<li>
+<p>Fixed exception result</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_florian"><a class="anchor" href="#_florian"></a>4.3.3. Florian:</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Refactored testing-api &amp; backend</p>
+</li>
+<li>
+<p>Switched from Jenkinsfile-Runner to jenkins</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Improved test performance</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Added and parsed detailed test-logs</p>
+</li>
+<li>
+<p>Added frontend continuous deployment</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_testing_api_leocode_backend"><a class="anchor" href="#_testing_api_leocode_backend"></a>5. Testing-API &#8594; LeoCode-Backend:</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Das Backend bekommt dann das ganze vollständig geprüfte Project über
-Kafka wieder zurück.
-Dies geschieht im "submission-result" channel.</p>
+<div class="sect2">
+<h3 id="_questions_that_led_to_our_changes"><a class="anchor" href="#_questions_that_led_to_our_changes"></a>4.4. Questions that led to our changes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>How many tests ran?</p>
+</li>
+<li>
+<p>How many tests failed?</p>
+</li>
+<li>
+<p>Why did the tests fail?</p>
+</li>
+</ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_testing_api_frontend"><a class="anchor" href="#_testing_api_frontend"></a>6. Testing-API &#8594; Frontend:</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In den Endpoints ist ebenso ein "submission-result", worüber
-Neuheiten an das Frontend übergeben werden.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_kafka_testing_api"><a class="anchor" href="#_kafka_testing_api"></a>7. Kafka &#8594; Testing-Api</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Das Submission-Objekt wird an die Testing-Api weitergeben</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_testing_api_kafka"><a class="anchor" href="#_testing_api_kafka"></a>8. Testing-Api &#8594; Kafka</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Zurück kommt das Ergebnis der ausgeführten Tests von der Testing-Api</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_kafka_backend"><a class="anchor" href="#_kafka_backend"></a>9. Kafka &#8594; Backend</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Hier bekommt man das Ergebnis des Tests zurück</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_backend_kafka"><a class="anchor" href="#_backend_kafka"></a>10. Backend &#8594; Kafka</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Hier werden die wichtigen Files/Infos übergeben die man zur Testung braucht</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.1<br>
+Version 1.0<br>
 Last updated 2022-06-23 06:44:39 UTC
 </div>
 </div>
