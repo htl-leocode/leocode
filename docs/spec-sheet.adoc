@@ -36,6 +36,8 @@ Link zu den Docs: https://flo-kei.github.io/leocode/
 
 Server-Adresse: http://vm147.htl-leonding.ac.at/
 
+Youtrack: https://vm81.htl-leonding.ac.at/agiles/99-285/current
+
 == Information bezüglich Arbeitsweise und Commits
 
 Wichtige Informationen bezüglich Commits und Arbeitsweise:
