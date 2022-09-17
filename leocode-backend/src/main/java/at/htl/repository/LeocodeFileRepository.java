@@ -35,8 +35,8 @@ public class LeocodeFileRepository implements PanacheRepository<LeocodeFile> {
         Locale.setDefault(Locale.GERMANY);
     }
 
-    public final String directoryPath = "../../projects-in-queue";
-    public final String zipLocation = "../../projects-in-queue/project-under-test";
+    public final String directoryPath = "../projects-in-queue";
+    public final String zipLocation = "../projects-in-queue/project-under-test";
 
     public String getMultipartFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
