@@ -33,8 +33,8 @@ public class SurefireReports {
         File folder = new File(".");
     }
 
-    private String GetFilename(){
-        File folder = new File("../../project-under-test/target/surefire-reports");
+    private String GetFilename(String testPath){
+        File folder = new File(testPath+"/target/surefire-reports");
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
