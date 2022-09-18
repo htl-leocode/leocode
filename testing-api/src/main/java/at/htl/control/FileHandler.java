@@ -98,7 +98,7 @@ public class FileHandler {
                 FileUtils.cleanDirectory(projectDirectory);
             } else {
                 log.info("creating " + projectDirectory.getPath());
-                projectDirectory.mkdir();
+                projectDirectory.mkdirs();
             }
 
             if (BUILD_RESULT.toFile().exists()) {
