@@ -4,6 +4,7 @@ import at.htl.entities.ExampleType;
 import at.htl.entities.SubmissionResult;
 import at.htl.entities.SubmissionStatus;
 import at.htl.entities.TestCase;
+import at.htl.util.PathConverter;
 import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
 import org.apache.commons.io.FileUtils;
@@ -13,7 +14,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,15 +26,7 @@ import java.util.zip.ZipInputStream;
 @Startup
 @ApplicationScoped
 public class FileHandler {
-
-    private final String PULL_JENKINSFILERUNNER_IMAGE_SCRIPT =  "docker pull ppiper/jenkinsfile-runner";
-    private final Path PROJECT_UNDER_TEST_DIRECTORY = Paths.get("../project-under-test/");
     private final Path BUILD_RESULT = Paths.get("../result.txt");
-    private final Path DOCKER_PULL_SCRIPT = Paths.get("../pull-image.sh");
-    private final Path RUN_TEST_SCRIPT = Paths.get("../run-tests.sh");
-    private final List<String> SHELL_SCRIPT_CONTENT = Arrays.asList("cd " + PROJECT_UNDER_TEST_DIRECTORY,
-            "docker run  --rm -v "+ Paths.get("project-under-test") + ":/workspace ppiper/jenkinsfile-runner > log.txt",
-            "sed -n '/BUILD FAILURE/,$p' log.txt | sed -n '/BUILD SUCCESS/,$p' log.txt |sed -n '/T E S T S/,$p' log.txt > " + Paths.get("../result.txt").toString());
 
     public Path pathToProject;
     public HashMap<Path, String> currentFiles;
@@ -50,28 +42,15 @@ public class FileHandler {
 
     //Pull image at the beginning, so testing goes faster
     void onStart(@Observes StartupEvent ev)  {
-        File dockerPullShellscript = DOCKER_PULL_SCRIPT.toFile();
-        ProcessBuilder builder = new ProcessBuilder("../pull-image.sh");
-        try
-        {
-            dockerPullShellscript.createNewFile();
-            dockerPullShellscript.setExecutable(true);
-            Files.write(dockerPullShellscript.toPath(), Arrays.asList(PULL_JENKINSFILERUNNER_IMAGE_SCRIPT), StandardCharsets.UTF_8);
-            Process process = builder.start();
-            int exitCode = process.waitFor();
-            assert exitCode == 0;
-            log.info("Docker image pulled!");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            log.warn("Docker image couldn't be pulled!");
-        }
 
     }
 
     public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist) {
-        setup(projectPath);
-        unzipProject();
+        String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
+        String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
+
+        setup(projectPath,fullTestPath);
+        unzipProject(fullTestPath);
 
         String resWhitelist;
         String resBlacklist;
@@ -85,10 +64,10 @@ public class FileHandler {
             try {
                 switch (type){
                     case MAVEN:
-                        createMavenProjectStructure();
+                        createMavenProjectStructure(fullTestPath);
                         //runTests();
                         log.info("start testing");
-                        jenkinsRequest.sendRequest(type,projectPath); // tell jenkins to start testing, since the files are ready
+                        jenkinsRequest.sendRequest(shortTestPath); // tell jenkins to start testing, since the files are ready
                         log.info("finished testing");
                     break;
                     default:
@@ -106,14 +85,13 @@ public class FileHandler {
 
     }
 
-    public void setup(String projectPath) {
+    public void setup(String projectPath, String fullTestPath) {
         try {
             log.info("setup test environment");
             pathToProject = Paths.get(projectPath);
             currentFiles = new HashMap<Path, String>();
 
-            File projectDirectory = PROJECT_UNDER_TEST_DIRECTORY.toFile();
-            File runTestsShellscript = RUN_TEST_SCRIPT.toFile();
+            File projectDirectory = Paths.get(fullTestPath).toFile();
 
             if (projectDirectory.exists()) {
                 log.info("flushing " + projectDirectory.getPath());
@@ -127,22 +105,16 @@ public class FileHandler {
                 Files.delete(BUILD_RESULT);
             }
 
-            /*if (!runTestsShellscript.exists()) {
-                log.info("creating " + runTestsShellscript.getPath());
-                runTestsShellscript.createNewFile();
-                runTestsShellscript.setExecutable(true);
-                Files.write(runTestsShellscript.toPath(), SHELL_SCRIPT_CONTENT, StandardCharsets.UTF_8);
-            }*/
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void unzipProject() {
+    public void unzipProject(String folderName) {
         try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(pathToProject))) {
             log.info("unzipping " + pathToProject);
-            File dest = PROJECT_UNDER_TEST_DIRECTORY.toFile();
+            File dest = Paths.get(folderName).toFile();
 
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
@@ -172,12 +144,12 @@ public class FileHandler {
         }
     }
 
-    public void createMavenProjectStructure() {
+    public void createMavenProjectStructure(String fullFilePath) {
         log.info("create Maven Project Structure");
 
         currentFiles.forEach((k, v) -> {
             File file = k.toFile();
-            StringBuilder fileDestination = new StringBuilder().append(PROJECT_UNDER_TEST_DIRECTORY);
+            StringBuilder fileDestination = new StringBuilder().append(fullFilePath);
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 fileDestination.append("/src/");
@@ -224,33 +196,14 @@ public class FileHandler {
         });
 
         //Delete temporary directory
-        Paths.get(PROJECT_UNDER_TEST_DIRECTORY.toString() + "/test").toFile().delete();
+        Paths.get(fullFilePath + "/test").toFile().delete();
     }
 
-    //TODO: remove after migration to new test-system
-    /*public void runTests() {
-        log.info("running tests");
-        try {
-            ProcessBuilder builder = new ProcessBuilder("../run-tests.sh");
-            Process process = builder.start();
-            int exitCode = process.waitFor();
-            assert exitCode == 0;
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public List<TestCase> getResult(){
         log.info("getResult");
         List<TestCase> testCases = surefireReports.GetTestCases();
         return testCases;
-
-        /*try (BufferedReader br = new BufferedReader(new FileReader("../result.txt"))) {
-            return br.lines().collect(Collectors.joining(System.lineSeparator()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Something Went Wrong";
-        }*/
     }
 
     public void evaluateStatus(SubmissionResult result){

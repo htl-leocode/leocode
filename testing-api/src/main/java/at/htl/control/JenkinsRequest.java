@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.entities.ExampleType;
+import at.htl.util.PathConverter;
 import com.cdancy.jenkins.rest.JenkinsClient;
 import io.quarkus.runtime.StartupEvent;
 import org.jboss.logging.Logger;
@@ -40,11 +41,8 @@ public class JenkinsRequest {
         //sendRequest();
     }
 
-    public void sendRequest(ExampleType exampleType, String projectPath) {
-        // ../projects-in-queue/project-under-test-7.zip
-
-        projectPath = exampleType.name() + "/" + projectPath.substring(projectPath.lastIndexOf("/")+1,projectPath.lastIndexOf("."));
-        log.info("Extracted Project-path: "+projectPath);
+    public void sendRequest(String folderName) {
+        log.info("Extracted Project-path: "+folderName);
 
         // create jenkins rest-client instance
         JenkinsClient client = JenkinsClient.builder()
@@ -58,7 +56,7 @@ public class JenkinsRequest {
 
         log.info("send jenkins-api build request");
         // tell jenkins to start the build
-        var response = client.api().jobsApi().build(projectPath, JENKINS_JOB);
+        var response = client.api().jobsApi().build(folderName, JENKINS_JOB);
         //var response = client.api().jobsApi().buildWithParameters(null, JENKINS_JOB);
         int currSize = Integer.MAX_VALUE;
 
@@ -75,10 +73,10 @@ public class JenkinsRequest {
 
         log.info("wait for build to finish");
         // wait for build to finish
-        currentJobNumber = client.api().jobsApi().lastBuildNumber(projectPath,JENKINS_JOB);
-        var buildInfo = client.api().jobsApi().buildInfo(projectPath, JENKINS_JOB,currentJobNumber);
+        currentJobNumber = client.api().jobsApi().lastBuildNumber(folderName,JENKINS_JOB);
+        var buildInfo = client.api().jobsApi().buildInfo(folderName, JENKINS_JOB,currentJobNumber);
         while(buildInfo.building()){
-            buildInfo = client.api().jobsApi().buildInfo(projectPath, JENKINS_JOB,currentJobNumber);
+            buildInfo = client.api().jobsApi().buildInfo(folderName, JENKINS_JOB,currentJobNumber);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
