@@ -73,7 +73,7 @@ public class FileHandler {
                     default:
                         throw new Exception("Project Type not supported yet!");
                 }
-                return getResult();
+                return getResult(fullTestPath);
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error("Exception in testProject() in FileHandler");
@@ -200,9 +200,9 @@ public class FileHandler {
     }
 
 
-    public List<TestCase> getResult(){
+    public List<TestCase> getResult(String testPath){
         log.info("getResult");
-        List<TestCase> testCases = surefireReports.GetTestCases();
+        List<TestCase> testCases = surefireReports.GetTestCases(testPath);
         return testCases;
     }
 

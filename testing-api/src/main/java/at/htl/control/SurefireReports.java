@@ -48,9 +48,9 @@ public class SurefireReports {
         return "";
     }
 
-    public List<TestCase> GetTestCases(){
+    public List<TestCase> GetTestCases(String testPath){
         MoveFiles();
-        String filename = GetFilename();
+        String filename = GetFilename(testPath);
         logger.info(filename);
         List<TestCase> testCases = new ArrayList<>();
 
