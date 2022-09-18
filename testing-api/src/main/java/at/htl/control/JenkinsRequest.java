@@ -9,6 +9,10 @@ import org.jboss.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /*
 https://www.jenkins.io/doc/book/using/remote-access-api/
@@ -56,7 +60,9 @@ public class JenkinsRequest {
 
         log.info("send jenkins-api build request");
         // tell jenkins to start the build
-        var response = client.api().jobsApi().build(folderName, JENKINS_JOB);
+        var params = new HashMap<String, List<String>>();
+        params.put("PATH", Arrays.asList(folderName));
+        var response = client.api().jobsApi().buildWithParameters(null, JENKINS_JOB,params);
         //var response = client.api().jobsApi().buildWithParameters(null, JENKINS_JOB);
         int currSize = Integer.MAX_VALUE;
 
@@ -73,10 +79,10 @@ public class JenkinsRequest {
 
         log.info("wait for build to finish");
         // wait for build to finish
-        currentJobNumber = client.api().jobsApi().lastBuildNumber(folderName,JENKINS_JOB);
-        var buildInfo = client.api().jobsApi().buildInfo(folderName, JENKINS_JOB,currentJobNumber);
+        currentJobNumber = client.api().jobsApi().lastBuildNumber(null,JENKINS_JOB);
+        var buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);
         while(buildInfo.building()){
-            buildInfo = client.api().jobsApi().buildInfo(folderName, JENKINS_JOB,currentJobNumber);
+            buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
