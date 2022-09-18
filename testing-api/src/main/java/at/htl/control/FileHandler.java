@@ -17,6 +17,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -91,14 +92,19 @@ public class FileHandler {
             pathToProject = Paths.get(projectPath);
             currentFiles = new HashMap<Path, String>();
 
-            File projectDirectory = Paths.get(fullTestPath).toFile();
+            Path dir = Paths.get(fullTestPath);
+            File projectDirectory = dir.toFile();
 
             if (projectDirectory.exists()) {
                 log.info("flushing " + projectDirectory.getPath());
                 FileUtils.cleanDirectory(projectDirectory);
             } else {
                 log.info("creating " + projectDirectory.getPath());
-                projectDirectory.mkdirs();
+                Files.createDirectories(dir,
+                        PosixFilePermissions.asFileAttribute(
+                                PosixFilePermissions.fromString("rwxrwxrwx")
+                        ));
+
             }
 
             if (BUILD_RESULT.toFile().exists()) {
