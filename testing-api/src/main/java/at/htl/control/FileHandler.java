@@ -88,7 +88,7 @@ public class FileHandler {
                         createMavenProjectStructure();
                         //runTests();
                         log.info("start testing");
-                        jenkinsRequest.sendRequest(); // tell jenkins to start testing, since the files are ready
+                        jenkinsRequest.sendRequest(type,projectPath); // tell jenkins to start testing, since the files are ready
                         log.info("finished testing");
                     break;
                     default:

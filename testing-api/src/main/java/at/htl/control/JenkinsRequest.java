@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.entities.ExampleType;
 import com.cdancy.jenkins.rest.JenkinsClient;
 import io.quarkus.runtime.StartupEvent;
 import org.jboss.logging.Logger;
@@ -39,7 +40,12 @@ public class JenkinsRequest {
         //sendRequest();
     }
 
-    public void sendRequest() {
+    public void sendRequest(ExampleType exampleType, String projectPath) {
+        // ../projects-in-queue/project-under-test-7.zip
+
+        projectPath = exampleType.name() + "/" + projectPath.substring(projectPath.lastIndexOf("/")+1,projectPath.lastIndexOf("."));
+        log.info("Extracted Project-path: "+projectPath);
+
         // create jenkins rest-client instance
         JenkinsClient client = JenkinsClient.builder()
                 .endPoint(JENKINS_URL)
@@ -52,7 +58,8 @@ public class JenkinsRequest {
 
         log.info("send jenkins-api build request");
         // tell jenkins to start the build
-        var response = client.api().jobsApi().build(null, JENKINS_JOB);
+        var response = client.api().jobsApi().build(projectPath, JENKINS_JOB);
+        //var response = client.api().jobsApi().buildWithParameters(null, JENKINS_JOB);
         int currSize = Integer.MAX_VALUE;
 
         log.info("wait for build to appear in queue");
@@ -68,10 +75,10 @@ public class JenkinsRequest {
 
         log.info("wait for build to finish");
         // wait for build to finish
-        currentJobNumber = client.api().jobsApi().lastBuildNumber(null,JENKINS_JOB);
-        var buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);
+        currentJobNumber = client.api().jobsApi().lastBuildNumber(projectPath,JENKINS_JOB);
+        var buildInfo = client.api().jobsApi().buildInfo(projectPath, JENKINS_JOB,currentJobNumber);
         while(buildInfo.building()){
-            buildInfo = client.api().jobsApi().buildInfo(null, JENKINS_JOB,currentJobNumber);
+            buildInfo = client.api().jobsApi().buildInfo(projectPath, JENKINS_JOB,currentJobNumber);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
