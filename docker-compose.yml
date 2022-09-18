@@ -114,7 +114,7 @@ services:
       - 50000:50000
     volumes:
       - jenkins_home:/var/jenkins_home
-      - project-under-test:/var/jenkins_home/workspace/mvn-project
+      - project-under-test:/var/jenkins_home/workspace/
     networks:
       - quarkus
 
