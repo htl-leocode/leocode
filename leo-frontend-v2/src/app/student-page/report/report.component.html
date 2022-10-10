@@ -1,0 +1,19 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>summarize</mat-icon>
+    <mat-card-title>Name</mat-card-title>
+    <mat-card-subtitle>Class</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-selection-list #shoes>
+      <mat-list-option *ngFor="let ex of exercises">
+        {{ex}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color ="primary">Report</button>
+    <button mat-raised-button> Share with Teacher</button>
+  </mat-card-actions>
+</mat-card>
+

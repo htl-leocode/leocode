@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <form enctype="multipart/form-data" name="createExampleForm">
+    <label>Name of the Author:</label>
+    <input type="text" name="username" placeholder="Lehrer 1" required class="form-control"><br>
+    <label>Name of the Example:</label>
+    <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
+    <label>Type: </label>
+    <select class="form-control" name="exampleType" required>
+      <option value="MAVEN">Maven</option>
+      <option value="ANT">Ant</option>
+    </select><br>
+    <label>Short Description of the Example:</label>
+    <input type="text" name="description" placeholder="Description" required class="form-control"><br>
+    <label>Instruction File: </label>
+    <input type="file" name="instruction" placeholder="Instruction" required accept=".md" class="form-control"><br>
+    <label>Zip file (containing a pom.xml, correct Solution & Unittests): </label>
+    <input type="file" class="form-control" name="project" accept=".zip" required><br>
+    <label>Jenkinsfile: </label>
+    <input type="file" class="form-control" name="jenkinsfile" required><br>
+    <label>Whitelist: </label>
+    <input type="text" class="form-control" name="whitelist"><br>
+    <label>Blacklist: </label>
+    <input type="text" class="form-control" name="blacklist"><br>
+  </form>
+  <button mat-raised-button color="primary" (click)="upload()">Create Example</button>
+</div>
