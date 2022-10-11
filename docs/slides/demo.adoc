@@ -51,6 +51,5 @@ https://vm81.htl-leonding.ac.at/agiles/99-285/current[Youtrack]
 
 * Slow test performance
 * Interface-Documentation
-* Running tests in parallel
 * Error report to user
 
