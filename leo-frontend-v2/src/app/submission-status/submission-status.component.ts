@@ -11,12 +11,12 @@ import { TestResult } from '../model/testResult.model';
 })
 export class SubmissionStatusComponent implements OnInit {
 
-  submissionId: number;
-  submissionStatus: string;
+  submissionId: number = -1;
+  submissionStatus: string = "";
   spinnerIsVisible = true;
   testResult = '';
 
-  result: TestResult;
+  result: TestResult = {submissionStatus: "", testCases: []};
   nrOfTests: number = 0;
   testsPassed: number = 0;
 
@@ -26,14 +26,17 @@ export class SubmissionStatusComponent implements OnInit {
     public authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.submissionId = +this.route.snapshot.paramMap.get('id');
+    const res = this.route.snapshot.paramMap.get('id');
+    if(res != null){
+      this.submissionId = +res;
+    }
     this.getSubmissionStatus(this.submissionId);
   }
 
   getSubmissionStatus(id: number): void {
     this.http.getSubmissionStatusSse(id).subscribe(messageEvent => {
       console.log("spinnerstatus: ", this.spinnerIsVisible);
-      
+
       this.submissionStatus = messageEvent.data.split(';')[0];
       this.testResult = messageEvent.data.split(';')[1] === undefined ? '' : messageEvent.data.split(';')[1];
       console.log(messageEvent.data);
@@ -51,9 +54,9 @@ export class SubmissionStatusComponent implements OnInit {
     console.log("result",this.result);
 
     console.log("spinnerVisible: ", this.spinnerIsVisible);
-    
-    
-    
+
+
+
     if (this.submissionStatus == 'CORRECT') {
       //return "Congrats! All tests passed :)"
     } else {
@@ -65,7 +68,7 @@ export class SubmissionStatusComponent implements OnInit {
 
       console.log('parsed Testresult object:',this.result);
       console.log('x',this.result.testCases[0].failure.message);
-      
+
       this.nrOfTests = this.result.testCases.length;
       this.testsPassed = this.result.testCases.length;
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
@@ -13,10 +13,10 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./list-example.component.css']
 })
 export class ListExampleComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Example>;
-  dataSource: MatTableDataSource<Example>;
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort) sort: MatSort | undefined;
+  @ViewChild(MatTable) table: MatTable<Example> | undefined;
+  dataSource: MatTableDataSource<Example> = new MatTableDataSource<Example>();
   value: number;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -34,12 +34,19 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    if(this.sort == null || this.dataSource == null || this.paginator == null || this.table == null) {
+      console.log('Error: sort, dataSource, paginator or table is null');
+      return;
+    }
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
 
   refreshData(): void {
-    this.http.getExampleList().subscribe(exampleList => this.dataSource.data = exampleList, error => console.log(error));
+    if (this.dataSource == undefined) {
+      throw new Error('dataSource is undefined');
+    }
+    this.http.getExampleList().subscribe(exampleList => this.dataSource!.data = exampleList, error => console.log(error));
   }
 }

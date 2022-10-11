@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpService} from '../services/http.service';
 import {AuthenticationService} from '../authentification/authentication.service';
+import { FormsModule } from '@angular/forms';
 
 
 class Language{

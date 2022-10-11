@@ -39,6 +39,8 @@ export class AuthenticationService {
     } else {
       this.oAuthService.setupAutomaticSilentRefresh();
       const profile = await this.oAuthService.loadUserProfile();
+      // @ts-ignore
+      // TODO: check if this still functions as intended
       this.username.next(profile.preferred_username);
       this.roles.next(this.parseJwt(this.oAuthService.getAccessToken()).realm_access.roles);
       this.oidcLoaded.next(true);
@@ -46,7 +48,7 @@ export class AuthenticationService {
   }
 
   // https://stackoverflow.com/a/38552302/11125147
-  private parseJwt(token): any {
+  private parseJwt(token: string): any {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(

@@ -41,8 +41,8 @@ const EXAMPLE_DATA: PortfolioItem[] = [
  */
 export class PortfolioDataSource extends DataSource<PortfolioItem> {
   data: PortfolioItem[] = EXAMPLE_DATA;
-  paginator: MatPaginator;
-  sort: MatSort;
+  paginator: MatPaginator | undefined;
+  sort: MatSort = new MatSort();
 
   constructor() {
     super();
@@ -56,14 +56,25 @@ export class PortfolioDataSource extends DataSource<PortfolioItem> {
   connect(): Observable<PortfolioItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-    const dataMutations = [
+    if(this.paginator) {
+      throw new Error('Paginator is not defined');
+    }
+    const dataMutations: any[] = [
       observableOf(this.data),
-      this.paginator.page,
+      this.paginator!.page,
       this.sort.sortChange
     ];
 
+    if (
+      merge(...dataMutations).pipe(map(() => {
+        return this.getPagedData(this.getSortedData([...this.data]));
+      })) == undefined
+    ) {
+      throw new Error("Function returned null in portfolio-datasource")
+    }
+
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
+      return this.getPagedData(this.getSortedData([...this.data]))!;
     }));
   }
 
@@ -78,6 +89,10 @@ export class PortfolioDataSource extends DataSource<PortfolioItem> {
    * this would be replaced by requesting the appropriate data from the server.
    */
   private getPagedData(data: PortfolioItem[]) {
+    if(this.paginator == undefined) {
+      console.log('Paginator is undefined');
+      return;
+    }
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }

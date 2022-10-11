@@ -40,7 +40,7 @@ import {AuthenticationService} from './authentification/authentication.service';
 import {ConfigService} from './services/config.service';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {authModuleConfig} from './authentification/oauth-module.config';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -103,6 +103,12 @@ const appRoutes: Routes = [
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: environment.production,
           // Register the ServiceWorker as soon as the app is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: environment.production,
+          // Register the ServiceWorker as soon as the application is stable
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         })

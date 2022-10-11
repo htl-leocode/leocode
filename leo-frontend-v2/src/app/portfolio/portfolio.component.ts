@@ -14,10 +14,11 @@ import {AuthenticationService} from "../authentification/authentication.service"
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Submission>;
-  dataSource: MatTableDataSource<Submission>;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator | null = null;
+  @ViewChild(MatSort) sort: MatSort | null = null;
+  @ViewChild(MatTable) table: MatTable<Submission> | undefined;
+  dataSource!: MatTableDataSource<Submission>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'status', 'result', 'lastTimeChanged'];
@@ -35,14 +36,16 @@ export class PortfolioComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    if(this.table){
+      this.table.dataSource = this.dataSource;
+    }
   }
 
   refreshData(username: string): void {
     this.http.getFinishedSubmissions(username).subscribe(value => this.dataSource.data = value, error => console.log(error));
   }
 
-  formatResult(result): string{
+  formatResult(result: string): string{
     console.log(result);
     const resultList = result.split('\n');
     return resultList[resultList.length - 1];

@@ -8,7 +8,7 @@ import {Config} from '../model/config.model';
   providedIn: 'root'
 })
 export class ConfigService {
-  config: Config;
+  config: Config = {backendApiUrl: "", validationApiUrl: "", keycloakUrl: ""};
 
   constructor(private httpClient: HttpClient) {}
 
@@ -18,7 +18,12 @@ export class ConfigService {
       .pipe(
         tap(config => {
           this.config = config;
-          authModuleConfig.resourceServer.allowedUrls.push(config.backendApiUrl);
+          if(authModuleConfig.resourceServer.allowedUrls !== undefined){
+            authModuleConfig.resourceServer.allowedUrls.push(config.backendApiUrl);
+          }
+          else {
+            console.log("authModuleConfig.resourceServer.allowedUrls is undefined");
+          }
         })
       )
       .toPromise();
