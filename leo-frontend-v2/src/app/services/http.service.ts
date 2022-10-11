@@ -32,7 +32,7 @@ export class HttpService {
 
   getSubmissionStatusSse(id: number): Observable<MessageEvent> {
 
-    return Observable.create(observer => {
+    return Observable.create((observer: { next: (arg0: MessageEvent<any>) => void; error: (arg0: Event) => void; }) => {
       const eventSource = new EventSource(this.BASE_URL + 'submission/' + id);
       eventSource.onmessage = event => {
         this._zone.run(() => {
