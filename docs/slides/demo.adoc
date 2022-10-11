@@ -9,47 +9,48 @@
 
 ifndef::imagesdir[:imagesdir: ../images]
 
-== Initial Situation
-* Previous Teams
-** Diploma thesis of Donnabauer
-** Leocode Team 5ahif
-* Current state:
-** upload possible
-** code can edited
-** testresult returned (but bad formatting)
+== What is Leocode?
+* Platform for coding challenges
+* No development environment needed
+* Students can log-in with their school account
 
+== Usecase Diagram
+
+[.column]
+["plantuml"]
+----
+include::../plantuml/leocode-usecase-diagram.puml[]
+----
+
+== Feature-Overview
+* Implemented:
+** code can be uploaded
+** code can be edited
+** result of unit-tests is shown including detailed error-descriptions
+
+* Planned:
+** Login via school account
+** Extended programming language support
 
 == Architecture
 
-[.column]
-image::technology-overview.png[]
-
 https://flo-kei.github.io/LeoCode/interface-documentation.html[Interface Documentation]
 
-
-== Usecase Diagrams
-
-=== Usecase Diagram Student
+[%notitle]
+=== Arch
 
 [.column]
-["plantuml"]
-----
-include::../plantuml/student.puml[]
-----
+image::technology-overview.png[background, size=contain]
 
-=== Usecase Diagram Teacher
-[.column]
-["plantuml"]
-----
-include::../plantuml/teacher.puml[]
-----
+== Achievements
+* Added interface documentation
+* Drastically improved test performance
+* Improved visual test feedback
 
-== Our Tasks
+== Roadmap
+* Login via school account
+* Extended programming language support
+
+
+More on our Agile board:
 https://vm81.htl-leonding.ac.at/agiles/99-285/current[Youtrack]
-
-== Current Problems
-
-* Slow test performance
-* Interface-Documentation
-* Error report to user
-
