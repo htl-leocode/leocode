@@ -473,6 +473,15 @@ pre.rouge .hll * {
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/technology-overview.png" alt="technology overview">
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_html_form_quarkus_backend"><a class="anchor" href="#_html_form_quarkus_backend"></a>1. HTML-FORM &#8594; Quarkus-Backend:</h2>
 <div class="sectionbody">
@@ -500,9 +509,8 @@ weitergegeben.</p>
 <h2 id="_testing_api_jenkins"><a class="anchor" href="#_testing_api_jenkins"></a>3. Testing-API &#8594; Jenkins:</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Es wird einfach in der FileHandler Klasse ein Script
-ausgeführt, dass den Jenkins started und das dann auch
-das ganze Projekt Tested.</p>
+<p>Jenkins wird per REST API angesprochen und bekommt den Pfad der zu testenden Dateien übergeben.
+Jenkins führt im Anschluss die Tests aus.</p>
 </div>
 </div>
 </div>
@@ -510,8 +518,8 @@ das ganze Projekt Tested.</p>
 <h2 id="_jenkins_testing_api"><a class="anchor" href="#_jenkins_testing_api"></a>4. Jenkins &#8594; Testing-API:</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Das Ergebnis von den Tests wird einfach in der Submission Klasse
-im Result gespeichert.</p>
+<p>Das Ergebnis von den Tests wird in der Submission Klasse
+im Result-Feld gespeichert.</p>
 </div>
 </div>
 </div>
@@ -519,7 +527,7 @@ im Result gespeichert.</p>
 <h2 id="_testing_api_leocode_backend"><a class="anchor" href="#_testing_api_leocode_backend"></a>5. Testing-API &#8594; LeoCode-Backend:</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Das Backend bekommt dann das ganze vollständig geprüfte Project über
+<p>Das Backend bekommt das gesamte, vollständig geprüfte Projekt über
 Kafka wieder zurück.
 Dies geschieht im "submission-result" channel.</p>
 </div>
@@ -538,7 +546,7 @@ Neuheiten an das Frontend übergeben werden.</p>
 <h2 id="_kafka_testing_api"><a class="anchor" href="#_kafka_testing_api"></a>7. Kafka &#8594; Testing-Api</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Das Submission-Objekt wird an die Testing-Api weitergeben</p>
+<p>Das Submission-Objekt wird an die Testing-Api weitergeben.</p>
 </div>
 </div>
 </div>
@@ -546,7 +554,7 @@ Neuheiten an das Frontend übergeben werden.</p>
 <h2 id="_testing_api_kafka"><a class="anchor" href="#_testing_api_kafka"></a>8. Testing-Api &#8594; Kafka</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Zurück kommt das Ergebnis der ausgeführten Tests von der Testing-Api</p>
+<p>Das Ergebnis der ausgeführten Tests wird von der Testing-Api zurückgeliefert.</p>
 </div>
 </div>
 </div>
@@ -554,7 +562,7 @@ Neuheiten an das Frontend übergeben werden.</p>
 <h2 id="_kafka_backend"><a class="anchor" href="#_kafka_backend"></a>9. Kafka &#8594; Backend</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Hier bekommt man das Ergebnis des Tests zurück</p>
+<p>Die Testergebnisse werden zurück an das Backend übergeben.</p>
 </div>
 </div>
 </div>
@@ -562,7 +570,7 @@ Neuheiten an das Frontend übergeben werden.</p>
 <h2 id="_backend_kafka"><a class="anchor" href="#_backend_kafka"></a>10. Backend &#8594; Kafka</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Hier werden die wichtigen Files/Infos übergeben die man zur Testung braucht</p>
+<p>Hier werden die wichtigen Files/Infos übergeben die für die Tests benötigt werden.</p>
 </div>
 </div>
 </div>
@@ -570,7 +578,7 @@ Neuheiten an das Frontend übergeben werden.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.1<br>
-Last updated 2022-10-11 13:23:44 UTC
+Last updated 2022-10-12 21:24:00 UTC
 </div>
 </div>
 </body>
