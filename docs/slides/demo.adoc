@@ -5,9 +5,12 @@
 
 // slides of 5ahif-team: https://musikfreunde.github.io/asciidoctor-docker-slides/
 
+ifndef::imagesdir[:imagesdir: ../images]
+// :title-slide-background-image: leocode-background.jpg
+
+[.title-slide]
 = Leocode
 
-ifndef::imagesdir[:imagesdir: ../images]
 
 == What is Leocode?
 * Platform for coding challenges
@@ -34,10 +37,13 @@ include::../plantuml/leocode-usecase-diagram.puml[]
 
 == Architecture
 
-https://flo-kei.github.io/LeoCode/interface-documentation.html[Interface Documentation]
+https://htl-leocode.github.io/leocode/interface-documentation.html[Interface Documentation]
 
 [%notitle]
-=== Arch
+=== Architecture Diagram
+
+[.column]
+["plantuml"]
 
 [.column]
 image::technology-overview.png[background, size=contain]
@@ -48,7 +54,7 @@ image::technology-overview.png[background, size=contain]
 * Improved visual test feedback
 
 == Roadmap
-* Login via school account
+* Login via school account (using a school-internal keycloak)
 * Extended programming language support
 
 
