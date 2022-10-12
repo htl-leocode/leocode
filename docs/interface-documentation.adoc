@@ -14,6 +14,8 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
+image::technology-overview.png[]
+
 == HTML-FORM -> Quarkus-Backend:
 Die Parameter und Dateien werden vom Html-Form über
 MultipartFormDataInput zum Quarkus-Backend geschickt.
