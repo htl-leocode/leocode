@@ -1,4 +1,5 @@
 
+// :customcss: css/presentation.css
 :customcss: style.css
 
 // src: https://raw.githubusercontent.com/htl-leonding-college/git-intro-slides/main/asciidocs-slides/index.adoc
@@ -12,18 +13,25 @@ ifndef::imagesdir[:imagesdir: ../images]
 = Leocode
 
 
-== What is Leocode?
-* Platform for coding challenges
-* No development environment needed
-* Students can log-in with their school account
+== Why Leocode?
+* New student don't have experience with coding
+* Setup of a new project is time-consuming
+* We want to make it easy for students to start coding
 
-== Usecase Diagram
+[.leocode-code]
+== What can Leocode do?
 
-[.column]
-["plantuml"]
-----
-include::../plantuml/leocode-usecase-diagram.puml[]
-----
+[%notitle]
+=== Student-View-Image
+[.leocode-code]
+image::leocode-view-code.png[background,size=contain]
+
+=== How does Leocode solve problems?
+* Leocode enables teachers to build a pool of examples
+* Students can start coding without installing development-environments
+* Students can choose from a pool of examples
+
+[.leocode-code]
 
 == Feature-Overview
 * Implemented:

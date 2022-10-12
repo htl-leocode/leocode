@@ -30,16 +30,15 @@ In der Testing-API wird es dann für Jenkins vorbereitet und dann damit auch
 weitergegeben.
 
 == Testing-API -> Jenkins:
-Es wird einfach in der FileHandler Klasse ein Script
-ausgeführt, dass den Jenkins started und das dann auch
-das ganze Projekt Tested.
+Jenkins wird per REST API angesprochen und bekommt den Pfad der zu testenden Dateien übergeben.
+Jenkins führt im Anschluss die Tests aus.
 
 == Jenkins -> Testing-API:
-Das Ergebnis von den Tests wird einfach in der Submission Klasse
-im Result gespeichert.
+Das Ergebnis von den Tests wird in der Submission Klasse
+im Result-Feld gespeichert.
 
 == Testing-API -> LeoCode-Backend:
-Das Backend bekommt dann das ganze vollständig geprüfte Project über
+Das Backend bekommt das gesamte, vollständig geprüfte Projekt über
 Kafka wieder zurück.
 Dies geschieht im "submission-result" channel.
 
@@ -48,13 +47,13 @@ In den Endpoints ist ebenso ein "submission-result", worüber
 Neuheiten an das Frontend übergeben werden.
 
 == Kafka -> Testing-Api
-Das Submission-Objekt wird an die Testing-Api weitergeben
+Das Submission-Objekt wird an die Testing-Api weitergeben.
 
 == Testing-Api -> Kafka
-Zurück kommt das Ergebnis der ausgeführten Tests von der Testing-Api
+Das Ergebnis der ausgeführten Tests wird von der Testing-Api zurückgeliefert.
 
 == Kafka -> Backend
-Hier bekommt man das Ergebnis des Tests zurück
+Die Testergebnisse werden zurück an das Backend übergeben.
 
 == Backend -> Kafka
-Hier werden die wichtigen Files/Infos übergeben die man zur Testung braucht
+Hier werden die wichtigen Files/Infos übergeben die für die Tests benötigt werden.
