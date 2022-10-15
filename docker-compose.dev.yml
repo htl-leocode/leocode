@@ -48,12 +48,12 @@ services:
   backend:
     #image: ghcr.io/htl-leocode/leocode-backend:latest
     build: 
-      context: leocode-backend
-      dockerfile: Dockerfile
+      context: ./leocode-backend
+      dockerfile: src/main/docker/Dockerfile.native
     user: root
     container_name: backend
     volumes:
-      - projects-in-queue:/projects-in-queue
+      - ./projects-in-queue:/projects-in-queue
     environment:
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgres-db:5432/db
       - QUARKUS_HTTP_CORS_METHODS=*
@@ -74,9 +74,9 @@ services:
     user: root
     container_name: testing
     volumes:
-      - projects-in-queue:/projects-in-queue
+      - ./projects-in-queue:/projects-in-queue
       - /var/run/docker.sock:/var/run/docker.sock
-      - project-under-test:/project-under-test
+      - ./project-under-test:/project-under-test
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     depends_on:
@@ -88,63 +88,29 @@ services:
       - quarkus
 
   frontend:
-    image: ghcr.io/htl-leocode/leocode-frontend:latest
+    build: 
+      context: frontend
+      dockerfile: ./Dockerfile
     container_name: leofrontend
     ports:
       - "80:80"
     networks:
      - quarkus
 
-  identity-provider:
-    image: jboss/keycloak:11.0.2
-    volumes:
-      - ./school-realm.json:/tmp/school-realm.json
-    command: [ '-b', '0.0.0.0', '-Dkeycloak.migration.action=import', '-Dkeycloak.profile.feature.upload_scripts=enabled', '-Dkeycloak.migration.provider=singleFile', '-Dkeycloak.migration.file=/tmp/school-realm.json' ]
-    environment:
-      KEYCLOAK_USER: leocode
-      KEYCLOAK_PASSWORD: leocode
-      DB_VENDOR: H2
-    ports:
-      - 8280:8080
-    container_name: leocode-identity-provider
-    networks:
-      - quarkus
-
   jenkins:
     image: jenkins/jenkins:lts-jdk11
     ports:
-      - "8081:8080"
+      - "8087:8080"
       - 50000:50000
     volumes:
       - jenkins_home:/var/jenkins_home
-      - project-under-test:/var/jenkins_home/workspace/
+      - ./project-under-test:/var/jenkins_home/workspace/
     networks:
       - quarkus
 
-#  jenkins:
-#    image: zbenii/leojenkins:latest
-#    container_name: leojenkins
-#    ports:
-#    - "7070:8080"
-#    networks:
-#      - quarkus
 volumes:
-    projects-in-queue:
-      driver: local
-      name: projects-in-queue
-      driver_opts:
-        type: 'none'
-        o: 'bind'
-        device: './projects-in-queue'
-    project-under-test:
-      driver: local
-      name: project-under-test
-      driver_opts:
-        type: 'none'
-        o: 'bind'
-        device: './project-under-test'
-    jenkins_home:
-        external: true
+  jenkins_home:
+    external: true
 
 networks:
   quarkus:
