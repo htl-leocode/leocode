@@ -93,13 +93,13 @@ services:
       - quarkus
 
   frontend:
-    command: sh -c "npm start"
+    command: sh -c "npx ng serve --host 0.0.0.0"
     build: 
       context: frontend
       dockerfile: ./Dockerfile.build
     container_name: leofrontend
     ports:
-      - "80:4200"
+      - "4200:4200"
     networks:
      - quarkus
     volumes:
