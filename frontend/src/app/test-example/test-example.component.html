@@ -4,10 +4,14 @@
       <label>Example Id:</label>
       <input id="exampleId" type="text" name="example" placeholder="Example Id" required class="form-control">
     </div>
-    <label>Username:</label>
-    <input type="text" name="username" [value]="username" placeholder="Username" [disabled]="true" required class="form-control">
-    <label>Your Sourcecode: </label>
-    <input type="file" (change)="uploadFile($event)" class="form-control" name="code" accept=".java" multiple required>
+    <div class="pb-2">
+      <label>Username:</label>
+      <input type="text" name="username" [value]="username" placeholder="Username" [disabled]="true" required class="form-control">
+    </div>
+    <div class="pb-2">
+      <label>Your Sourcecode: </label>
+      <input type="file" (change)="uploadFile($event)" class="form-control" name="code" accept=".java" multiple required>
+    </div>
   </form>
   <br>
   <mat-form-field appearance="fill">
