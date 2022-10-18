@@ -93,22 +93,6 @@ services:
       - "80:80"
     networks:
      - quarkus
-
-  identity-provider:
-    image: jboss/keycloak:11.0.2
-    volumes:
-      - ./school-realm.json:/tmp/school-realm.json
-    command: [ '-b', '0.0.0.0', '-Dkeycloak.migration.action=import', '-Dkeycloak.profile.feature.upload_scripts=enabled', '-Dkeycloak.migration.provider=singleFile', '-Dkeycloak.migration.file=/tmp/school-realm.json' ]
-    environment:
-      KEYCLOAK_USER: leocode
-      KEYCLOAK_PASSWORD: leocode
-      DB_VENDOR: H2
-    ports:
-      - 8280:8080
-    container_name: leocode-identity-provider
-    networks:
-      - quarkus
-
   jenkins:
     image: jenkins/jenkins:lts-jdk11
     user: root
@@ -121,13 +105,21 @@ services:
     networks:
       - quarkus
 
-#  jenkins:
-#    image: zbenii/leojenkins:latest
-#    container_name: leojenkins
-#    ports:
-#    - "7070:8080"
-#    networks:
-#      - quarkus
+  # identity-provider:
+  #   image: jboss/keycloak:11.0.2
+  #   volumes:
+  #     - ./school-realm.json:/tmp/school-realm.json
+  #   command: [ '-b', '0.0.0.0', '-Dkeycloak.migration.action=import', '-Dkeycloak.profile.feature.upload_scripts=enabled', '-Dkeycloak.migration.provider=singleFile', '-Dkeycloak.migration.file=/tmp/school-realm.json' ]
+  #   environment:
+  #     KEYCLOAK_USER: leocode
+  #     KEYCLOAK_PASSWORD: leocode
+  #     DB_VENDOR: H2
+  #   ports:
+  #     - 8280:8080
+  #   container_name: leocode-identity-provider
+  #   networks:
+  #     - quarkus
+
 volumes:
     projects-in-queue:
       driver: local
