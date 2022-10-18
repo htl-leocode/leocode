@@ -2,7 +2,7 @@
   <h2 class="mat-display-4" style="text-align: center">{{submissionStatus}}</h2>
   <p>{{getClearResult()}}</p>
 
-  <mat-spinner *ngIf="spinnerIsVisible" ></mat-spinner>
+  <mat-spinner style="margin:0 auto;" *ngIf="spinnerIsVisible" ></mat-spinner>
 
   <mat-card *ngIf="testResult.length > 2 && !spinnerIsVisible">
     <mat-card-header>
