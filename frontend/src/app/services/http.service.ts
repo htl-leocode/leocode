@@ -3,13 +3,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Example} from '../model/example.model';
 import {Submission} from '../model/submission.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  BASE_URL = 'http://vm147.htl-leonding.ac.at:8181/';
+  BASE_URL = environment.BACKEND_URL;
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }
