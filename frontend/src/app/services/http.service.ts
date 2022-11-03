@@ -12,7 +12,7 @@ import {Repository} from "../model/repository.model";
 })
 export class HttpService {
 
-  BASE_URL = 'http://localhost:9090/';
+  BASE_URL = 'http://0.0.0.0:9090/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }
@@ -22,9 +22,8 @@ export class HttpService {
     return this.http.get<Teacher[]>(this.BASE_URL + 'teacher/allTeacher');
   }
 
-
-  getRepositories(): Observable<Repository[]>{
-    return this.http.get<Repository[]>(this.BASE_URL + 'teacher/allRepository')
+  getRepositories(teacherName: string): Observable<Repository[]>{
+    return this.http.get<Repository[]>(this.BASE_URL + 'teacher/repositoryByTeacher/'+teacherName)
   }
 
   postRepository(repository: RepositoryDTO){

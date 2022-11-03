@@ -24,6 +24,11 @@ public class TeacherRepository implements PanacheRepository<Teacher> {
         log.info(t);
 
         Repository r = new Repository(repository.name, t, repository.token);
+
+        if(!r.isValid()){
+            return;
+        }
+
         r.persist();
     }
 

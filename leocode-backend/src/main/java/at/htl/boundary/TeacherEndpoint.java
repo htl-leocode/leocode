@@ -52,5 +52,16 @@ public class TeacherEndpoint {
         return Repository.listAll();
     }
 
+    @GET
+    @Path("/repositoryByTeacher/{teacher}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Repository> getRepositorysByTeacher(@PathParam("teacher") String teacher){
+
+        List<Repository> res = Repository.find("teacher.name", teacher).list();
+        log.info(res);
+        return res;
+
+    }
+
 
 }

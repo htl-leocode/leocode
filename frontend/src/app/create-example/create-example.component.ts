@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../services/http.service';
 import {Router} from '@angular/router';
 import {Repository} from "../model/repository.model";
+import {AuthenticationService} from "../authentification/authentication.service";
 
 @Component({
   selector: 'app-create-example',
@@ -15,10 +16,12 @@ export class CreateExampleComponent implements OnInit {
   repositories: Repository[];
 
   constructor(private http: HttpService,
-              public router: Router) { }
+              public router: Router, private authService: AuthenticationService) {
+
+  }
 
   ngOnInit(): void {
-    this.http.getRepositories().subscribe({
+    this.http.getRepositories(this.authService.username.getValue()).subscribe({
       next: data =>{
         data.forEach(p => console.log(p));
         this.repositories = data;

@@ -82,6 +82,9 @@ public class SubmissionEndpoint {
             if(username.isEmpty() || example == null || codeFiles.isEmpty()) {
                 return Response.ok("Something went wrong!").build();
             }
+
+
+            // Getting files from database into files list
             //search for files in db
             files.addAll(leocodeFileRepository.getFilesRequiredForTesting(example));
             //add code from student

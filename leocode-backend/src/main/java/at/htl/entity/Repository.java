@@ -34,4 +34,8 @@ public class Repository extends PanacheEntity {
                 ", token='" + token + '\'' +
                 '}';
     }
+
+    public boolean isValid() {
+        return name != null && teacher != null && token != null;
+    }
 }
