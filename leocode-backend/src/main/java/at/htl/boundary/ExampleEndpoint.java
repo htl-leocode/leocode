@@ -31,12 +31,13 @@ public class ExampleEndpoint {
     LeocodeFileRepository leocodeFileRepository;
 
     @POST
+    @Path("/newExample")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createExample(MultipartFormDataInput input) {
         try {
             Example example = exampleRepository.createExampleFromMultipart(input);
-            log.info("createExample("+ example.toString() +")");
+            System.out.println("createExample("+ example.toString() +")");
             return Response.ok(example).build();
         } catch (Exception e) {
             e.printStackTrace();

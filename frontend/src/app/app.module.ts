@@ -43,6 +43,7 @@ import {authModuleConfig} from './authentification/oauth-module.config';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
+import { NewRepositoryComponent } from './new-repository/new-repository.component';
 
 
 const appRoutes: Routes = [
@@ -54,8 +55,10 @@ const appRoutes: Routes = [
   {path: 'test-example/:id', component: TestExampleComponent},
   {path: 'submission-status/:id', component: SubmissionStatusComponent},
   {path: 'report', component: ReportComponent},
+  {path: 'new-repository', component: NewRepositoryComponent},
   {path: '',  redirectTo: '', pathMatch: 'full' },
-  {path: '**', component: FileNotFoundComponent}
+  {path: '**', component: FileNotFoundComponent},
+
 ];
 
 @NgModule({
@@ -71,7 +74,8 @@ const appRoutes: Routes = [
     LoginPageComponent,
     StudentPageComponent,
     TeacherPageComponent,
-    ReportComponent
+    ReportComponent,
+    NewRepositoryComponent
   ],
     imports: [
         BrowserModule,

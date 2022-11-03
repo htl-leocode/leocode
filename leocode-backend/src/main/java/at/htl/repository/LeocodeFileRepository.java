@@ -55,6 +55,7 @@ public class LeocodeFileRepository implements PanacheRepository<LeocodeFile> {
 
     public List<LeocodeFile> createFilesFromInputParts(String inputType, List<InputPart> inputParts, String author, Example example) {
         List<LeocodeFile> files = new LinkedList<>();
+
         for (InputPart inputPart : inputParts) {
             try (InputStream inputStream = inputPart.getBody(InputStream.class, null)) {
                 MultivaluedMap<String, String> header = inputPart.getHeaders();
