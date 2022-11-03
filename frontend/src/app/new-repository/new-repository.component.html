@@ -1,9 +1,12 @@
 <div>
   <label class="form-check-label">Repository-Name</label>
-  <input type="text" class="form-control" [(ngModel)]="name"/>
+  <input type="text" class="form-control" [(ngModel)]="currRepo.name"/>
+
+  <label>Token (Not needed if the Repository is public)</label>
+  <input type="text" class="form-control"  [(ngModel)]="currRepo.token">
 
   <label>Teacher</label>
-  <input type="text" class="form-control" value="{{teacherName}}" disabled="true">
+  <input type="text" class="form-control" value="{{currRepo.teacher}}" disabled="true">
 
   <input type="submit" (click)="enter()">
 

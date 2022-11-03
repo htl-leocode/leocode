@@ -4,13 +4,15 @@ public class RepositoryDTO {
 
     public String teacher;
     public String name;
+    public String token;
 
     public RepositoryDTO() {
     }
 
-    public RepositoryDTO(String teacher, String name) {
+    public RepositoryDTO(String teacher, String name, String token) {
         this.teacher = teacher;
         this.name = name;
+        this.token = token;
     }
 
     @Override
@@ -18,6 +20,7 @@ public class RepositoryDTO {
         return "RepositoryDTO{" +
                 "teacher=" + teacher +
                 ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ import {Teacher} from "../model/teacher.model";
 import {HttpService} from "../services/http.service";
 import {error} from "protractor";
 import {AuthenticationService} from "../authentification/authentication.service";
+import {RepositoryDTO} from "../model/repositoryDto.model";
 
 @Component({
   selector: 'app-new-repository',
@@ -12,29 +13,22 @@ import {AuthenticationService} from "../authentification/authentication.service"
 })
 export class NewRepositoryComponent implements OnInit {
 
-  teachers: string[] = []
-
-  name: string = "";
-  teacherName: string;
+    currRepo : RepositoryDTO = {
+      name: "",
+      teacher: "",
+      token: ""
+    }
 
   constructor(public router: Router, private http: HttpService, private authService: AuthenticationService) {
-    this.teacherName = this.authService.username.getValue();
+    this.currRepo.teacher = this.authService.username.getValue();
   }
 
   ngOnInit(): void {
-    this.http.getTeacherList().subscribe({
-      next: data => this.teachers = data.map(a => a.name),
-      error: err => console.log(err)
-    })
   }
 
   enter() {
-    console.log("Teacher:",this.teacherName);
-    console.log(this.name)
+    console.log(this.currRepo)
 
-    this.http.postRepository({
-       name: this.name,
-       teacher: this.teacherName
-    }).subscribe()
+    this.http.postRepository(this.currRepo).subscribe()
   }
 }

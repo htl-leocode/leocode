@@ -11,15 +11,19 @@ public class Repository extends PanacheEntity {
 
     public String name;
 
+    public String token;
+
     @ManyToOne(cascade = CascadeType.ALL)
     public Teacher teacher;
+
 
     public Repository() {
     }
 
-    public Repository(String name, Teacher teacher) {
+    public Repository(String name, Teacher teacher, String token) {
         this.name = name;
         this.teacher = teacher;
+        this.token = token;
     }
 
     @Override
@@ -27,6 +31,7 @@ public class Repository extends PanacheEntity {
         return "Repository{" +
                 "name='" + name + '\'' +
                 ", teacher=" + teacher +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

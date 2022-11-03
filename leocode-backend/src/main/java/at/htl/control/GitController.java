@@ -21,7 +21,6 @@ public class GitController {
     Logger log;
 
     public static Git addOrInsertToGit(Git g, Example example, String token){
-        System.out.println("7");
         try {
 
             g.add().addFilepattern(Objects.requireNonNull(".")).call();
@@ -33,14 +32,21 @@ public class GitController {
         } catch (GitAPIException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("8");
+
         return g;
 
     }
 
     public Git cloneRepositoryToDir(File dir, Repository repository) {
         try {
-            log.info("2");
+            if(repository.token != null){
+                return Git.cloneRepository()
+                        .setURI("https://github.com/" + repository.teacher.ghUsername + "/" + repository.name + ".git")
+                        .setDirectory(dir)
+                        .setCredentialsProvider(
+                                new UsernamePasswordCredentialsProvider(repository.teacher.ghUsername, repository.token)
+                        ).call();
+            }
 
             return Git.cloneRepository()
                     .setURI("https://github.com/" + repository.teacher.ghUsername + "/" + repository.name + ".git")

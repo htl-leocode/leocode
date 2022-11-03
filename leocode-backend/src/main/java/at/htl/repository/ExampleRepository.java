@@ -4,8 +4,8 @@ import at.htl.control.GitController;
 import at.htl.entity.Example;
 import at.htl.entity.ExampleType;
 import at.htl.entity.Repository;
-import at.htl.entity.Teacher;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -72,30 +72,33 @@ public class ExampleRepository implements PanacheRepository<Example> {
             }
         });
 
-        log.info("1");
         Git g = gitController.cloneRepositoryToDir(new File("../tmpToPush/"+example.repository.name), example.repository);
-
-        log.info("3");
 
         files.forEach(inputParts -> saveFilesTemporary(inputParts, example));
 
-        log.info("6");
+        GitController.addOrInsertToGit(g, example, example.repository.token);
 
-        GitController.addOrInsertToGit(g,example, "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");
-
-        log.info("9");
+        g.close();
 
         if (!example.isValid()) {
             return null;
         }
 
         example.persist();
+
+
+        new File("../tmpToPush/"+example.repository.name).setWritable(true);
+
+        try {
+            FileUtils.deleteDirectory(new File("../tmpToPush/"+example.repository.name));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return example;
     }
 
     void saveFilesTemporary(List<InputPart> files, Example example){
-
-        log.info("4");
 
         for (InputPart inputPart : files) {
             try (InputStream inputStream = inputPart.getBody(InputStream.class, null)) {
@@ -121,8 +124,6 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 e.printStackTrace();
             }
         }
-
-        log.info("5");
 
     }
 
