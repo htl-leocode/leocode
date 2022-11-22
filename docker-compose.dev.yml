@@ -107,6 +107,7 @@ services:
       - ./frontend/node_modules:/home/node/app/node_modules
 
   jenkins:
+    container_name: leocode-jenkins
     image: jenkins/jenkins:lts-jdk11
     ports:
       - "8087:8080"
