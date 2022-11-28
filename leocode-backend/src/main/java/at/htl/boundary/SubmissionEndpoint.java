@@ -1,10 +1,8 @@
 package at.htl.boundary;
 
+import at.htl.control.GitController;
 import at.htl.dto.SubmissionDTO;
-import at.htl.entity.Example;
-import at.htl.entity.LeocodeFile;
-import at.htl.entity.Submission;
-import at.htl.entity.SubmissionStatus;
+import at.htl.entity.*;
 import at.htl.kafka.SubmissionProducer;
 import at.htl.repository.ExampleRepository;
 import at.htl.repository.LeocodeFileRepository;
@@ -30,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseEventSink;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -56,6 +55,9 @@ public class SubmissionEndpoint {
     LeocodeFileRepository leocodeFileRepository;
 
     @Inject
+    GitController gitController;
+
+    @Inject
     SubmissionRepository submissionRepository;
 
     @Inject
@@ -64,54 +66,68 @@ public class SubmissionEndpoint {
     @Inject
     UserTransaction transaction;
 
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("test")
+    public String test(){
+        gitController.checkoutFolder(new File(""), new Example());
+        return "dlskafj";
+    }
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response createSubmission(MultipartFormDataInput input){
-        Response res;
-        List<LeocodeFile> files = new LinkedList<>();
-        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
-        try {
-            String username = uploadForm.get("username").get(0).getBodyAsString();
-            String exampleId = uploadForm.get("example").get(0).getBodyAsString();
-            List<InputPart> codeFiles = uploadForm.get("code");
+        gitController.checkoutFolder(new File("../test/"), Example.findById(39L));
 
-            Example example = exampleRepository.findById(Long.parseLong(exampleId));
-            if(username.isEmpty() || example == null || codeFiles.isEmpty()) {
-                return Response.ok("Something went wrong!").build();
-            }
-
-
-            // Getting files from database into files list
-            //search for files in db
-            files.addAll(leocodeFileRepository.getFilesRequiredForTesting(example));
-            //add code from student
-            files.addAll(leocodeFileRepository.createFilesFromInputParts("code", codeFiles, username, example));
-
-            Submission submission = new Submission();
-            submission.author = username;
-            submission.example = example;
-            submissionRepository.persist(submission);
-
-            submission.pathToProject = leocodeFileRepository.zipLeocodeFiles(submission.id, files);
-
-            if(submission.pathToProject == null) {
-                return Response.ok("Something went wrong!").build();
-            }
-
-            submissionProducer.sendSubmission(submission);
-            submission.setStatus(SubmissionStatus.SUBMITTED);
-
-            log.info("createSubmission(" + submission + ")");
-            log.info("Running Tests");
-
-            return Response.ok(submission.id.toString()).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
-        }
+//        Response res;
+//        List<LeocodeFile> files = new LinkedList<>();
+//        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+//
+//        try {
+//            String username = uploadForm.get("username").get(0).getBodyAsString();
+//            String exampleId = uploadForm.get("example").get(0).getBodyAsString();
+//            List<InputPart> codeFiles = uploadForm.get("code");
+//
+//            Example example = exampleRepository.findById(Long.parseLong(exampleId));
+//            if(username.isEmpty() || example == null || codeFiles.isEmpty()) {
+//                return Response.ok("Something went wrong!").build();
+//            }
+//
+//
+//            //
+//
+//            // Getting files from database into files list
+//            //search for files in db
+//            //files.addAll(leocodeFileRepository.getFilesRequiredForTesting(example));
+//            //add code from student
+//            //files.addAll(leocodeFileRepository.createFilesFromInputParts("code", codeFiles, username, example));
+//
+//            Submission submission = new Submission();
+//            submission.author = username;
+//            submission.example = example;
+//            submissionRepository.persist(submission);
+//
+//            submission.pathToProject = submissionRepository.createSubmissionZip(submission, codeFiles);
+//
+//            //if(submission.pathToProject == null) {
+//            //    return Response.ok("Something went wrong!").build();
+//            //}
+//
+//            //submissionProducer.sendSubmission(submission);
+//            //submission.setStatus(SubmissionStatus.SUBMITTED);
+//
+//            //log.info("createSubmission(" + submission + ")");
+//            //log.info("Running Tests");
+//
+//            return Response.ok(submission.id.toString()).build();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+           return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Hello").build();
+//        }
     }
 
     @GET

@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "LC_Repository")
 public class Repository extends PanacheEntity {
 
-    public String name;
+    public String repoUrl;
 
     public String token;
 
@@ -20,8 +20,8 @@ public class Repository extends PanacheEntity {
     public Repository() {
     }
 
-    public Repository(String name, Teacher teacher, String token) {
-        this.name = name;
+    public Repository(String repoUrl, Teacher teacher, String token) {
+        this.repoUrl = repoUrl;
         this.teacher = teacher;
         this.token = token;
     }
@@ -29,13 +29,13 @@ public class Repository extends PanacheEntity {
     @Override
     public String toString() {
         return "Repository{" +
-                "name='" + name + '\'' +
+                "name='" + repoUrl + '\'' +
                 ", teacher=" + teacher +
                 ", token='" + token + '\'' +
                 '}';
     }
 
     public boolean isValid() {
-        return name != null && teacher != null && token != null;
+        return repoUrl != null && teacher != null && token != null;
     }
 }

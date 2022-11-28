@@ -4,10 +4,6 @@
     <label>Name of the Example:</label>
     <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
 
-    <select class="form-control" name="repository" required>
-      <option *ngFor="let repo of repositories" value="{{repo.name}}">{{repo.name}}</option>
-    </select><br>
-
     <label>Type: </label>
     <select class="form-control" name="exampleType" required>
       <option value="MAVEN">Maven</option>
@@ -16,6 +12,15 @@
 
     <label>Short Description of the Example:</label>
     <input type="text" name="description" placeholder="Description" required class="form-control"><br>
+
+    <label>Url of the Git-Repository:</label>
+    <input type="text" name="gitRepo" placeholder="Git Repository" required class="form-control"><br>
+
+    <label>Public:</label>
+    <mat-checkbox [(ngModel)]="checkPublic"></mat-checkbox><br>
+
+    <label>Git-Token:</label>
+    <input type="text" name="token" placeholder="token" required class="form-control" disabled="{{checkPublic}}}"><br>
 
     <label>Instruction File: </label>
     <input type="file" name="instruction" placeholder="Instruction" required accept=".md" class="form-control"><br>

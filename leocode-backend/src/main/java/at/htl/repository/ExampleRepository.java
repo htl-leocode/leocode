@@ -54,7 +54,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
                         example.description = inputParts.get(0).getBodyAsString();
                         break;
                     case "repository":
-                        example.repository = Repository.find("name", inputParts.get(0).getBodyAsString()).firstResult();
+                        example.repository = Repository.find("repoUrl", inputParts.get(0).getBodyAsString()).firstResult();
                         break;
                     case "exampleType":
                         example.type = ExampleType.valueOf(inputParts.get(0).getBodyAsString().toUpperCase());
@@ -74,9 +74,13 @@ public class ExampleRepository implements PanacheRepository<Example> {
             }
         });
 
-        Git g = gitController.cloneRepositoryToDir(new File("../tmpToPush/" + example.repository.name), example.repository);
+        example.persist();
+
+        Git g = gitController.cloneRepositoryToDir(new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4]), example.repository);
 
         files.forEach(inputParts -> saveFilesTemporary(inputParts, example));
+
+        log.info("Saved all files");
 
         GitController.addOrInsertToGit(g, example, example.repository.token);
 
@@ -86,16 +90,12 @@ public class ExampleRepository implements PanacheRepository<Example> {
             return null;
         }
 
-        example.persist();
-
-
-        new File("../tmpToPush/" + example.repository.name).setWritable(true);
-
         try {
-            FileUtils.deleteDirectory(new File("../tmpToPush/"+example.repository.name));
+            FileUtils.deleteDirectory(new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4]));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
         return example;
     }
@@ -115,10 +115,10 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 if (name.endsWith(".zip")) {
                     //extract zip from bytes
 
-                    unzipFolder(bytes, Path.of("../tmpToPush/" + example.repository.name + "/"+example.name));
+                    unzipFolder(bytes, Path.of("../tmpToPush/" + example.repository.repoUrl.split("/")[4] + "/"+example.name));
                 } else {
 
-                    File file = new File("../tmpToPush/" + example.repository.name + "/" + example.name);
+                    File file = new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4] + "/" + example.name);
 
                     if (!file.exists()) {
                         file.mkdirs();

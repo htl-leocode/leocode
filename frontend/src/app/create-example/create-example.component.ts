@@ -15,6 +15,8 @@ export class CreateExampleComponent implements OnInit {
 
   repositories: Repository[];
 
+  checkPublic: boolean = false;
+
   constructor(private http: HttpService,
               public router: Router, private authService: AuthenticationService) {
 
