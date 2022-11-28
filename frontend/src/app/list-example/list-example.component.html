@@ -1,36 +1,31 @@
-<div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row" >{{row.name}}</td>
+<div class="m-3">
+  <mat-grid-list cols="4" rowHeight="250px" >
+    <ng-container *ngFor="let example of examples">
+      <mat-grid-tile class="w-100 h-100">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{example.name}}</mat-card-title>
+            <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{example.description}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary">Start coding</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+
     </ng-container>
+  </mat-grid-list>
 
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-      <td mat-cell *matCellDef="let row" >{{row.description}}</td>
-    </ng-container>
 
-    <!-- Type Column -->
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-      <td mat-cell *matCellDef="let row" >{{row.type}}</td>
-    </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/example', row.id]"></tr>
-  </table>
-
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
 
   <button *ngIf="value == 1" mat-raised-button color="primary" style="margin: 10px 10px 10px 10px"
-          (click)="this.router.navigate(['/create-example'])" >Create Example</button>
+    (click)="this.router.navigate(['/create-example'])">Create Example</button>
 </div>
 
 
