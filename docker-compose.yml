@@ -5,7 +5,7 @@ services:
     container_name: postgres-db
     environment:
       - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=app
+      - POSTGRES_PASSWORD=app 
       - POSTGRES_DB=db
     volumes:
       - ./postgres-data:/var/lib/postgresql/data

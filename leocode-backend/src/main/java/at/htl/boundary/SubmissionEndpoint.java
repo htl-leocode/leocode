@@ -81,7 +81,7 @@ public class SubmissionEndpoint {
     @Transactional
     public Response createSubmission(MultipartFormDataInput input){
 
-        gitController.checkoutFolder(new File("../test/"), Example.findById(39L));
+        //gitController.checkoutFolder(new File("../test/"), Example.findById(39L));
 
         Response res;
         List<LeocodeFile> files = new LinkedList<>();
@@ -160,8 +160,12 @@ public class SubmissionEndpoint {
                 throw new RuntimeException(e);
             }
 
+            LocalDateTime time = currentSubmission.lastTimeChanged;
+            if (time == null) {
+                time = LocalDateTime.now();
+            }
             String res = String.format("%tT Uhr: %s;%s",
-                    currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
+                    time.atZone(ZoneId.of( "Europe/Paris" )),
                     currentSubmission.getStatus().toString(),
                     jsonInString);
 
@@ -184,8 +188,12 @@ public class SubmissionEndpoint {
                         throw new RuntimeException(e);
                     }
 
+                    LocalDateTime time = currentSubmission.lastTimeChanged;
+                    if (time == null) {
+                        time = LocalDateTime.now();
+                    }
                     String res = String.format("%tT Uhr: %s;%s",
-                            currentSubmission.lastTimeChanged.atZone(ZoneId.of( "Europe/Paris" )),
+                            time.atZone(ZoneId.of( "Europe/Paris" )),
                             submission.getStatus().toString(),
                             jsonInString);
                             //submission.submissionResult);

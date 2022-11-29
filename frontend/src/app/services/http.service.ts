@@ -12,7 +12,7 @@ import {Repository} from "../model/repository.model";
 })
 export class HttpService {
 
-  BASE_URL = 'http://localhost:9090/';
+  BASE_URL = 'http://backend:9090/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }

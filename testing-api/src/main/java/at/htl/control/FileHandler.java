@@ -1,13 +1,11 @@
 package at.htl.control;
 
-import at.htl.entities.ExampleType;
-import at.htl.entities.SubmissionResult;
-import at.htl.entities.SubmissionStatus;
-import at.htl.entities.TestCase;
+import at.htl.entities.*;
 import at.htl.util.PathConverter;
 import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -46,12 +44,21 @@ public class FileHandler {
 
     }
 
-    public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist) {
+    public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist, Repository repository) {
         String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
         String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
 
         setup(projectPath,fullTestPath);
-        unzipProject(fullTestPath);
+        //unzipProject(fullTestPath);
+        // asdfkl;
+        try {
+            GithubHandler.FetchFilesOfRepo(repository,fullTestPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (GitAPIException e) {
+            throw new RuntimeException(e);
+        }
+
 
         String resWhitelist;
         String resBlacklist;
