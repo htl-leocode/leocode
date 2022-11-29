@@ -15,7 +15,7 @@ public class Example extends PanacheEntity {
 
     public String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public Repository repository;
 
     @Enumerated(value = EnumType.STRING)

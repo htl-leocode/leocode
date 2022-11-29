@@ -21,8 +21,6 @@ Content-Type: text/x-java
 < ./simulating-files/HelloWorld.java
 
 --WebAppBoundary--
-#
-
 
 --Teacher--
 ### Test create new Teacher
@@ -32,6 +30,10 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Raphael",
+  "name": "teacher",
   "ghUsername": "raphaelabl"
 }
+
+
+### Test
+GET localhost:9090/submission/test

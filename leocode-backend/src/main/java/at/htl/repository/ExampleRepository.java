@@ -42,21 +42,35 @@ public class ExampleRepository implements PanacheRepository<Example> {
         Map<String, List<InputPart>> inputForm = input.getFormDataMap();
         Example example = new Example();
 
+        Repository repository = new Repository();
+
         List<List<InputPart>> files = new ArrayList<>();
 
         inputForm.forEach((inputType, inputParts) -> {
             try {
                 switch (inputType) {
+                    case "teacher":
+                        log.info("teacher:" + inputParts.get(0).getBodyAsString());
+                        repository.teacher = Teacher.find("name", inputParts.get(0).getBodyAsString()).firstResult();
+                        break;
                     case "exampleName":
+                        log.info("exampleName:" + inputParts.get(0).getBodyAsString());
                         example.name = inputParts.get(0).getBodyAsString();
                         break;
                     case "description":
+                        log.info("description:" + inputParts.get(0).getBodyAsString());
                         example.description = inputParts.get(0).getBodyAsString();
                         break;
-                    case "repository":
-                        example.repository = Repository.find("repoUrl", inputParts.get(0).getBodyAsString()).firstResult();
+                    case "gitRepo":
+                        log.info("gitRepo:" + inputParts.get(0).getBodyAsString());
+                        repository.repoUrl = inputParts.get(0).getBodyAsString();
+                        break;
+                    case "token":
+                        log.info("token:" + inputParts.get(0).getBodyAsString());
+                        repository.token = inputParts.get(0).getBodyAsString();
                         break;
                     case "exampleType":
+                        log.info("exampleType:" + inputParts.get(0).getBodyAsString());
                         example.type = ExampleType.valueOf(inputParts.get(0).getBodyAsString().toUpperCase());
                         break;
                     case "blacklist":
@@ -74,7 +88,11 @@ public class ExampleRepository implements PanacheRepository<Example> {
             }
         });
 
+
+        example.repository = repository;
+
         example.persist();
+
 
         Git g = gitController.cloneRepositoryToDir(new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4]), example.repository);
 

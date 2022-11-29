@@ -29,8 +29,7 @@ public class SubmissionListener {
         if (s.getStatus().equals(SubmissionStatus.SUBMITTED)) {
             log.info("Received Message: " + s.toString());
             Runnable runnable = () -> {
-                List<TestCase> testResults = fileHandler
-                        .testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
+                List<TestCase> testResults = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
                 s.submissionResult = new SubmissionResult(testResults);
                 //s.result = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
 

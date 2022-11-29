@@ -17,9 +17,11 @@ export class CreateExampleComponent implements OnInit {
 
   checkPublic: boolean = false;
 
+  teacherName: string = "";
+
   constructor(private http: HttpService,
               public router: Router, private authService: AuthenticationService) {
-
+    this.teacherName = this.authService.username.getValue();
   }
 
   ngOnInit(): void {

@@ -1,6 +1,9 @@
 <div class="container mt-5">
   <form enctype="multipart/form-data" name="createExampleForm">
 
+    <label>Teacher:</label>
+    <input type="text" name="teacher" required class="form-control" calss="form-control" [value]="teacherName"><br>
+
     <label>Name of the Example:</label>
     <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
 
@@ -20,7 +23,7 @@
     <mat-checkbox [(ngModel)]="checkPublic"></mat-checkbox><br>
 
     <label>Git-Token:</label>
-    <input type="text" name="token" placeholder="token" required class="form-control" disabled="{{checkPublic}}}"><br>
+    <input type="text" name="token" placeholder="token" required class="form-control"><br>
 
     <label>Instruction File: </label>
     <input type="file" name="instruction" placeholder="Instruction" required accept=".md" class="form-control"><br>
