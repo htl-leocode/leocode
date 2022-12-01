@@ -37,6 +37,8 @@ public class ExampleRepository implements PanacheRepository<Example> {
     @Inject
     LeocodeKeywordRepository leocodeKeywordRepository;
 
+    public static String tmpFolderPath = "../tmpToPush";
+
     @Transactional
     public Example createExampleFromMultipart(MultipartFormDataInput input) {
         Map<String, List<InputPart>> inputForm = input.getFormDataMap();
@@ -94,7 +96,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
         example.persist();
 
 
-        Git g = gitController.cloneRepositoryToDir(new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4]), example.repository);
+        Git g = gitController.cloneRepositoryToDir(new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]), example.repository);
 
         files.forEach(inputParts -> saveFilesTemporary(inputParts, example));
 
@@ -109,7 +111,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
         }
 
         try {
-            FileUtils.deleteDirectory(new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4]));
+            FileUtils.deleteDirectory(new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,10 +135,10 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 if (name.endsWith(".zip")) {
                     //extract zip from bytes
 
-                    unzipFolder(bytes, Path.of("../tmpToPush/" + example.repository.repoUrl.split("/")[4] + "/"+example.name));
+                    unzipFolder(bytes, Path.of(tmpFolderPath + example.repository.repoUrl.split("/")[4] + "/"+example.name));
                 } else {
 
-                    File file = new File("../tmpToPush/" + example.repository.repoUrl.split("/")[4] + "/" + example.name);
+                    File file = new File(tmpFolderPath + example.repository.repoUrl.split("/")[4] + "/" + example.name);
 
                     if (!file.exists()) {
                         file.mkdirs();
