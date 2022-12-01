@@ -22,6 +22,10 @@ export class HttpService {
     return this.http.get<Teacher[]>(this.BASE_URL + 'teacher/allTeacher');
   }
 
+  postTeacher(teacher: Teacher){
+    return this.http.post(this.BASE_URL + '/teacher', teacher);
+  }
+
   getRepositories(teacherName: string): Observable<Repository[]>{
     return this.http.get<Repository[]>(this.BASE_URL + 'teacher/repositoryByTeacher/'+teacherName)
   }

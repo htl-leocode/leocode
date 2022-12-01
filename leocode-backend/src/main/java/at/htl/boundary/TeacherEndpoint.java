@@ -25,7 +25,14 @@ public class TeacherEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public void newTeacher(Teacher teacher){
-        teacher.persist();
+
+        Teacher t = Teacher.find("name", teacher.name).firstResult();
+
+        if(t == null){
+            teacher.persist();
+        }
+        t.name = teacher.ghUsername;
+        t.persist();
     }
 
     @POST

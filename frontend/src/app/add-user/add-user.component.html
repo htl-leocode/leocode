@@ -1,0 +1,10 @@
+<div class="container mt-5">
+
+  <label>Teacher:</label>
+  <input type="text" class="form-control" [value]="teacher.name"><br>
+
+  <label>Git-Username:</label>
+  <input type="input" class="form-control" [(ngModel)]="teacher.ghUsername"><br>
+
+  <input type="submit" (click)="add()">
+</div>
