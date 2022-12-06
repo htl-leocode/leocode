@@ -23,8 +23,7 @@ export class AddUserComponent implements OnInit {
   }
 
   add(){
-    //console.log(this.teacher);
-    this.http.postTeacher(this.teacher);
+    this.http.postTeacher(this.teacher).subscribe();
   }
 
   ngOnInit(): void {

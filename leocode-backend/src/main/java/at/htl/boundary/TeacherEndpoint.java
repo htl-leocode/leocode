@@ -22,15 +22,25 @@ public class TeacherEndpoint {
     TeacherRepository teacherRepository;
 
     @POST
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public void newTeacher(Teacher teacher){
 
+
         Teacher t = Teacher.find("name", teacher.name).firstResult();
 
+
         if(t == null){
-            teacher.persist();
+            Teacher newT = new Teacher();
+
+            newT.name = teacher.name;
+            newT.ghUsername = teacher.ghUsername;
+
+            newT.persist();
+            return;
         }
+        log.info(t);
         t.name = teacher.ghUsername;
         t.persist();
     }
