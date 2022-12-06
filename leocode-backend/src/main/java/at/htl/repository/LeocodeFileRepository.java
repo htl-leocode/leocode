@@ -39,17 +39,8 @@ public class LeocodeFileRepository implements PanacheRepository<LeocodeFile> {
     public final String zipLocation = "../projects-in-queue/project-under-test";
 
     public String getMultipartFileName(MultivaluedMap<String, String> header) {
-        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
-
-        for (String filename : contentDisposition) {
-            if ((filename.trim().startsWith("filename"))) {
-                String[] name = filename.split("=");
-
-                String finalFileName = name[1].trim().replaceAll("\"", "");
-
-                return finalFileName;
-            }
-        }
+        String finalFileName = SubmissionRepository.getString(header);
+        if (finalFileName != null) return finalFileName;
         return null;
     }
 

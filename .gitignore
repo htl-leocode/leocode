@@ -22,3 +22,5 @@ dist
 project-under-test/*
 frontend/package-lock.json
 docs/slides/.asciidoctor/**
+
+restart.sh

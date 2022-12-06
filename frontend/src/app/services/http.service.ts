@@ -11,8 +11,10 @@ import {Repository} from "../model/repository.model";
   providedIn: 'root'
 })
 export class HttpService {
+  // when running outside of docker:
+  // BASE_URL = 'http://localhost:9090/';
 
-  BASE_URL = 'http://backend:9090/';
+  BASE_URL = 'http://0.0.0.0:8181/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }

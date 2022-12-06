@@ -1,0 +1,11 @@
+POST localhost:9090/teacher
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "teacher",
+  "ghUsername": "flo-kei"
+}
+
+###
+

@@ -3,3 +3,4 @@ cd leocode-backend
 
 cd ../testing-api
 ./mvnw package -DskipTests
+

@@ -111,17 +111,18 @@ public class SubmissionEndpoint {
             submission.example = example;
             submissionRepository.persist(submission);
 
-            submission.pathToProject = submissionRepository.createSubmissionZip(submission, codeFiles);
+            submission.pathToProject = submissionRepository.copyFilesToTestDir(submission, codeFiles);
+            //submission.pathToProject = submissionRepository.createSubmissionZip(submission, codeFiles);
 
-            //if(submission.pathToProject == null) {
-            //    return Response.ok("Something went wrong!").build();
-            //}
+            if(submission.pathToProject == null) {
+                return Response.serverError().build();
+            }
 
-            //submissionProducer.sendSubmission(submission);
-            //submission.setStatus(SubmissionStatus.SUBMITTED);
+            submissionProducer.sendSubmission(submission);
+            submission.setStatus(SubmissionStatus.SUBMITTED);
 
-            //log.info("createSubmission(" + submission + ")");
-            //log.info("Running Tests");
+            log.info("createSubmission(" + submission + ")");
+            log.info("Running Tests");
 
             return Response.ok(submission.id.toString()).build();
         } catch (Exception e) {

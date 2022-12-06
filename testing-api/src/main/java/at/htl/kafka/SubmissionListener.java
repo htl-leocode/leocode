@@ -26,6 +26,7 @@ public class SubmissionListener {
 
     @Incoming("submission-input")
     public void listen(Submission s) {
+        log.info("Received something: " + s.toString());
         if (s.getStatus().equals(SubmissionStatus.SUBMITTED)) {
             log.info("Received Message: " + s.toString());
             Runnable runnable = () -> {

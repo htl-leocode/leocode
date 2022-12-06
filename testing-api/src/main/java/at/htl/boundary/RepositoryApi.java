@@ -5,27 +5,31 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Set;
 
+@Produces(MediaType.APPLICATION_JSON)
 @Path("repos")
 public class RepositoryApi {
 
     @Inject
-    @RestClient
+    @RestClient()
     ExampleService exampleService;
 
-    // GET /github/repos
     @GET
     public Response getRepos() {
-        return Response.ok("not implemented yet").build();
+        return Response.ok("not implemented yet!!").build();
+    }
+
+    @GET
+    @Path("{id}")
+    public Set<Example> getExampleById(@PathParam("id") long id) {
+        return null;
     }
 
 

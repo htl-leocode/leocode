@@ -45,14 +45,20 @@ public class FileHandler {
     }
 
     public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist, Repository repository) {
-        String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
-        String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
+        log.info("Starting to test project at: "+projectPath);
 
-        setup(projectPath,fullTestPath);
+        // projectPath has been changed to match the actual path, as there is no more zipping inbetween involved
+        String shortTestPath = projectPath.replace("../project-under-test/","");
+
+        //String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
+        //String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
+
+        //setup(projectPath,fullTestPath);
         //unzipProject(fullTestPath);
         // asdfkl;
         try {
-            GithubHandler.FetchFilesOfRepo(repository,fullTestPath);
+            log.info("Fetching files from Repository");
+            GithubHandler.FetchFilesOfRepo(repository,projectPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (GitAPIException e) {
@@ -72,7 +78,7 @@ public class FileHandler {
             try {
                 switch (type){
                     case MAVEN:
-                        createMavenProjectStructure(fullTestPath);
+                        createMavenProjectStructure(projectPath);
                         //runTests();
                         log.info("start testing");
                         jenkinsRequest.sendRequest(shortTestPath); // tell jenkins to start testing, since the files are ready
@@ -81,7 +87,7 @@ public class FileHandler {
                     default:
                         throw new Exception("Project Type not supported yet!");
                 }
-                return getResult(fullTestPath);
+                return getResult(projectPath);
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error("Exception in testProject() in FileHandler");
