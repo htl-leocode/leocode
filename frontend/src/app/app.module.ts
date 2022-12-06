@@ -44,6 +44,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 const appRoutes: Routes = [
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
   {path: 'example/:id', component: DetailExampleComponent},
   {path: 'test-example/:id', component: TestExampleComponent},
   {path: 'submission-status/:id', component: SubmissionStatusComponent},
+  {path: 'add-user', component: AddUserComponent},
   {path: 'report', component: ReportComponent},
   {path: '',  redirectTo: '', pathMatch: 'full' },
   {path: '**', component: FileNotFoundComponent},
@@ -73,7 +75,8 @@ const appRoutes: Routes = [
     LoginPageComponent,
     StudentPageComponent,
     TeacherPageComponent,
-    ReportComponent
+    ReportComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
