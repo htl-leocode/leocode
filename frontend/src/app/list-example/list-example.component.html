@@ -1,7 +1,7 @@
-<div class="m-3">
-  <mat-grid-list cols="4" rowHeight="250px" >
+<div style="margin: 10px 10px 10px 10px">
+  <mat-grid-list cols="8" gutterSize="10px">
     <ng-container *ngFor="let example of examples">
-      <mat-grid-tile class="w-100 h-100">
+      <mat-grid-tile >
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{example.name}}</mat-card-title>
@@ -22,10 +22,9 @@
   </mat-grid-list>
 
 
-
-
-  <button *ngIf="value == 1" mat-raised-button color="primary" style="margin: 10px 10px 10px 10px"
-    (click)="this.router.navigate(['/create-example'])">Create Example</button>
+  <button *ngIf="value == 1" mat-raised-button color="primary"
+          (click)="this.router.navigate(['/create-example'])">Create Example
+  </button>
 </div>
 
 
