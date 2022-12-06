@@ -16,7 +16,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 export class ListExampleComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Example>;
   dataSource: MatTableDataSource<Example>;
   examples: Example[];
   value: number;
@@ -38,7 +37,6 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 
   refreshData(): void {
