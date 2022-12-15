@@ -1,4 +1,4 @@
-POST localhost:9090/teacher
+POST localhost:8181/teacher/add
 Accept: application/json
 Content-Type: application/json
 
@@ -9,3 +9,4 @@ Content-Type: application/json
 
 ###
 
+GET localhost:9090/example/list

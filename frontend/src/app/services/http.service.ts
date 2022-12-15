@@ -12,9 +12,11 @@ import {Repository} from "../model/repository.model";
 })
 export class HttpService {
   // when running outside of docker:
-  // BASE_URL = 'http://localhost:9090/';
+  //BASE_URL = 'http://localhost:9090/';
 
-  BASE_URL = 'http://0.0.0.0:8181/';
+  BASE_URL = 'http://localhost:4200/api/';
+
+  //BASE_URL = 'http://backend:9090/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }
@@ -25,7 +27,7 @@ export class HttpService {
   }
 
   postTeacher(teacher: Teacher){
-    return this.http.post(this.BASE_URL + '/teacher', teacher);
+    return this.http.post(this.BASE_URL + 'teacher/add', teacher);
   }
 
   getRepositories(teacherName: string): Observable<Repository[]>{
