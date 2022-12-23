@@ -135,10 +135,10 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 if (name.endsWith(".zip")) {
                     //extract zip from bytes
 
-                    unzipFolder(bytes, Path.of(tmpFolderPath + example.repository.repoUrl.split("/")[4] + "/"+example.name));
+                    unzipFolder(bytes, Path.of(tmpFolderPath + example.repository.repoUrl.split("/")[4] ));
                 } else {
 
-                    File file = new File(tmpFolderPath + example.repository.repoUrl.split("/")[4] + "/" + example.name);
+                    File file = new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]);
 
                     if (!file.exists()) {
                         file.mkdirs();
