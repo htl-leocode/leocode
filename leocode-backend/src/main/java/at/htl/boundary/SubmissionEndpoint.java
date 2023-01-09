@@ -94,6 +94,7 @@ public class SubmissionEndpoint {
 
             Example example = exampleRepository.findById(Long.parseLong(exampleId));
             if(username.isEmpty() || example == null || codeFiles.isEmpty()) {
+                log.error("Username or exampleId or codeFiles is empty");
                 return Response.ok("Something went wrong!").build();
             }
 

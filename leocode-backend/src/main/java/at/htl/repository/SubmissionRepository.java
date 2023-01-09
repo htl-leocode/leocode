@@ -76,11 +76,14 @@ public class SubmissionRepository implements PanacheRepository<Submission> {
 
 
     public String copyFilesToTestDir(Submission submission, List<InputPart> codeFiles) {
-        String path = String.format("../../project-under-test/%s/project-under-test-%s/",submission.example.type,submission.id);
-        logger.info("Copying files to "+path);
+        String projectPath = String.format("../../project-under-test/%s/project-under-test-%s/",
+                submission.example.type,submission.id);
+        String submittedFilesPath = String.format(projectPath + "submitted-files/");
+
+        logger.info("Copying files to "+submittedFilesPath);
 
         //new File(path).getParentFile().mkdirs();
-        new File(path).mkdirs();
+        new File(submittedFilesPath).mkdirs();
 
         for (InputPart inputPart : codeFiles) {
             try {
@@ -94,7 +97,7 @@ public class SubmissionRepository implements PanacheRepository<Submission> {
                 byte [] bytes = IOUtils.toByteArray(inputStream);
 
                 //constructs upload file path
-                fileName = path + fileName;
+                fileName = submittedFilesPath + fileName;
 
                 writeFile(bytes,fileName);
 
@@ -105,7 +108,7 @@ public class SubmissionRepository implements PanacheRepository<Submission> {
             }
         }
 
-        return path;
+        return projectPath;
     }
 
     private String getFileName(MultivaluedMap<String, String> header) {

@@ -23,10 +23,12 @@ https://github.com/cdancy/jenkins-rest
 public class JenkinsRequest {
 
     //TODO: refactor these tokens into .env file
-    private static final String ADMIN_TOKEN = "11d1a936ffef3dbc7856d7d963dade76d2";
+    //private static final String ADMIN_TOKEN = "11d1a936ffef3dbc7856d7d963dade76d2";
+    private static final String ADMIN_TOKEN = "114192d85a38eeddbe7d3be616015a4864";
+
     private static final String MVN_PROJECT_TOKEN = "avFPxhFrSm6a5UQHm3Kf2Ge4oYzdz3ESuF7igg2v";
 
-    private static final String JENKINS_JOB = "mvn-project";
+    private static final String JENKINS_JOB = "MAVEN";
 
     private static final String JENKINS_URL = "http://jenkins:8080";
 
