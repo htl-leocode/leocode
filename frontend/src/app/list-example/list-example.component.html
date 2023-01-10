@@ -1,26 +1,25 @@
-<div style="margin: 10px 10px 10px 10px">
-  <mat-grid-list cols="8" gutterSize="10px">
+<div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px 10px 10px 10px">
+  <mat-grid-list cols="6">
     <ng-container *ngFor="let example of examples">
-      <mat-grid-tile >
-        <mat-card>
+      <mat-grid-tile>
+        <mat-card style="height: 200px;width: 250px">
           <mat-card-header>
             <mat-card-title>{{example.name}}</mat-card-title>
             <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p>
+            <p style="max-width: 200px;overflow-x: scroll">
               {{example.description}}
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary">Start coding</button>
+            <button mat-raised-button  style="" color="primary">Start coding</button>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>
 
     </ng-container>
   </mat-grid-list>
-
 
   <button *ngIf="value == 1" mat-raised-button color="primary"
           (click)="this.router.navigate(['/create-example'])">Create Example
