@@ -1,4 +1,4 @@
 {
   "backendApiUrl": "http://backend:8181",
-  "keycloakUrl": "https://auth.htl-leonding.ac.at/realms/quarkus"
+  "keycloakUrl": "https://auth.htl-leonding.ac.at/realms/master"
 }
