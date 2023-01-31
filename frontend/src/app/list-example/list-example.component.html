@@ -2,18 +2,18 @@
   <mat-grid-list cols="6">
     <ng-container *ngFor="let example of examples">
       <mat-grid-tile>
-        <mat-card style="height: 200px;width: 250px">
+        <mat-card style="height: 200px;width: 250px;" class="scrollable-content">
           <mat-card-header>
-            <mat-card-title>{{example.name}}</mat-card-title>
+            <mat-card-title style="text-align: left">{{example.name}}</mat-card-title>
             <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p style="max-width: 200px;overflow-x: scroll">
+            <p style="overflow: scroll;max-width: 200px;max-height: 65px">
               {{example.description}}
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button  style="" color="primary">Start coding</button>
+            <button style="min-height: 25px;position:absolute; bottom: 10px;" mat-raised-button color="primary">Start coding</button>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>
