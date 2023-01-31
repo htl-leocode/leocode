@@ -13,7 +13,9 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button style="min-height: 25px;position:absolute; bottom: 10px;" mat-raised-button color="primary">Start coding</button>
+            <button style="min-height: 25px;position:absolute; bottom: 10px;" mat-raised-button color="primary"
+                    (click) = "this.router.navigate(['/example', example.id])"
+            >Start coding</button>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>
