@@ -17,11 +17,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.authService.roles.getValue()[0] == 'teacher'){
+    if(this.authService.roles.getValue().includes('teacher')){
       this.isTeacher = true;
       this.router.navigateByUrl('/list-example/1');
     }
-    else if(this.authService.roles.getValue()[0] == 'student'){
+    else if(this.authService.roles.getValue().includes('student')){
       this.isStudent=true;
       this.router.navigateByUrl('/list-example/0');
     }
