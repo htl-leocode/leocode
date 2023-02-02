@@ -1,0 +1,12 @@
+POST localhost:8181/teacher/add
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "teacher",
+  "ghUsername": "flo-kei"
+}
+
+###
+
+GET localhost:9090/example/list

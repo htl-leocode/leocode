@@ -26,11 +26,11 @@ public class SubmissionListener {
 
     @Incoming("submission-input")
     public void listen(Submission s) {
+        log.info("Received something: " + s.toString());
         if (s.getStatus().equals(SubmissionStatus.SUBMITTED)) {
             log.info("Received Message: " + s.toString());
             Runnable runnable = () -> {
-                List<TestCase> testResults = fileHandler
-                        .testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
+                List<TestCase> testResults = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist,s.example.repository);
                 s.submissionResult = new SubmissionResult(testResults);
                 //s.result = fileHandler.testProject(s.pathToProject, s.example.type, s.example.whitelist, s.example.blacklist);
 

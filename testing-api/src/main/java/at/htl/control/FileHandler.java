@@ -1,22 +1,18 @@
 package at.htl.control;
 
-import at.htl.entities.ExampleType;
-import at.htl.entities.SubmissionResult;
-import at.htl.entities.SubmissionStatus;
-import at.htl.entities.TestCase;
+import at.htl.entities.*;
 import at.htl.util.PathConverter;
 import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.*;
 import java.util.function.Predicate;
@@ -42,16 +38,31 @@ public class FileHandler {
     JenkinsRequest jenkinsRequest;
 
     //Pull image at the beginning, so testing goes faster
-    void onStart(@Observes StartupEvent ev)  {
+    void onStart(@Observes StartupEvent ev) {
 
     }
 
-    public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist) {
-        String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
-        String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
+    public List<TestCase> testProject(String projectPath, ExampleType type, Set<String> whitelist, Set<String> blacklist, Repository repository) {
+        log.info("Starting to test project at: " + projectPath);
 
-        setup(projectPath,fullTestPath);
-        unzipProject(fullTestPath);
+        // projectPath has been changed to match the actual path, as there is no more zipping inbetween involved
+        String shortTestPath = projectPath.replace("../../project-under-test/", "");
+
+        //String shortTestPath = PathConverter.ExtractFolderName(type,projectPath); // MAVEN/project-under-test-x
+        //String fullTestPath = "../project-under-test/"+shortTestPath; // ../projects-under-test/MAVEN/project-under-test-x
+
+        //setup(projectPath,fullTestPath);
+        //unzipProject(fullTestPath);
+        // asdfkl;
+        try {
+            log.info("Fetching files from Repository");
+            GithubHandler.FetchFilesOfRepo(repository, projectPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (GitAPIException e) {
+            throw new RuntimeException(e);
+        }
+
 
         String resWhitelist;
         String resBlacklist;
@@ -62,28 +73,72 @@ public class FileHandler {
         } else if ((resBlacklist = checkWhiteOrBlacklist("blacklist", blacklist)) != null) {
             return resBlacklist;
         } else {*/
-            try {
-                switch (type){
-                    case MAVEN:
-                        createMavenProjectStructure(fullTestPath);
-                        //runTests();
-                        log.info("start testing");
-                        jenkinsRequest.sendRequest(shortTestPath); // tell jenkins to start testing, since the files are ready
-                        log.info("finished testing");
+
+        // this will be appended to the current working directory (e.g. src/main/java/at/htl/...)
+        String baseDestination = "";
+
+        try {
+            switch (type) {
+                case MAVEN:
+                    baseDestination = "src/main/java/at/htl/examples";
+                    copySubmittedFilesToCorrectFolder(projectPath, baseDestination);
+                    //createMavenProjectStructure(projectPath);
+                    //runTests();
+                    log.info("start testing");
+                    jenkinsRequest.sendRequest(shortTestPath); // tell jenkins to start testing, since the files are ready
+                    log.info("finished testing");
                     break;
-                    default:
-                        throw new Exception("Project Type not supported yet!");
-                }
-                return getResult(fullTestPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-                log.error("Exception in testProject() in FileHandler");
-                log.error(e);
-                //return "Oops, something went wrong!";
-                return null;
+                default:
+                    throw new Exception("Project Type not supported yet!");
             }
+            return getResult(projectPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Exception in testProject() in FileHandler");
+            log.error(e);
+            //return "Oops, something went wrong!";
+            return null;
+        }
         /*}*/
 
+    }
+
+    private void copySubmittedFilesToCorrectFolder(String projectPath,String baseDestination) {
+        String originalDestination = projectPath + "/submitted-files";
+        String newDestination = projectPath+"/"+baseDestination;
+
+        Path originalPath = Paths.get(originalDestination);
+        Path newDestinationPath = Paths.get(newDestination);
+
+        File destinationFile = new File(newDestination);
+        // create dir if it doesn't exist yet
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            // clear source-code directory
+            Files.walk(newDestinationPath)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+
+            // fill source-code directory with submitted source code
+            Files.walk(originalPath)
+                    .forEach(source -> {
+                        Path destination = newDestinationPath.resolve(originalPath.relativize(source));
+                        try {
+                            // copy file and overwrite existing file, if exists
+                            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+            //Files.copy(originalPath,newDestinationPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setup(String projectPath, String fullTestPath) {
@@ -130,7 +185,7 @@ public class FileHandler {
                     if (!newFile.getParentFile().exists()) {
                         newFile.getParentFile().mkdirs();
                     }
-                    currentFiles.put(newFile.toPath() ,"test");
+                    currentFiles.put(newFile.toPath(), "test");
                 } else if (newFile.getPath().contains(".java")) {
                     currentFiles.put(newFile.toPath(), "code");
                 } else {
@@ -206,36 +261,33 @@ public class FileHandler {
     }
 
 
-    public List<TestCase> getResult(String testPath){
+    public List<TestCase> getResult(String testPath) {
         log.info("getResult");
         List<TestCase> testCases = surefireReports.GetTestCases(testPath);
         return testCases;
     }
 
-    public void evaluateStatus(SubmissionResult result){
+    public void evaluateStatus(SubmissionResult result) {
         log.info("evaluateStatus");
         SubmissionStatus status = SubmissionStatus.ERROR;
 
-        if(result == null || result.testCases == null || result.testCases.size() == 0){
+        if (result == null || result.testCases == null || result.testCases.size() == 0) {
             log.error("results are null");
             status = SubmissionStatus.ERROR;
         }
 
         log.info(result.testCases);
 
-        if(result.testCases.stream().anyMatch(new Predicate<TestCase>() {
+        if (result.testCases.stream().anyMatch(new Predicate<TestCase>() {
             @Override
             public boolean test(TestCase testCase) {
                 return testCase.failure != null;
             }
-        }))
-        {
+        })) {
             status = SubmissionStatus.FAILED;
-        }
-        else if(result == null || result.testCases == null || result.testCases.size() == 0){
+        } else if (result == null || result.testCases == null || result.testCases.size() == 0) {
             status = SubmissionStatus.ERROR;
-        }
-        else {
+        } else {
             status = SubmissionStatus.CORRECT;
         }
         result.submissionStatus = status;
@@ -260,26 +312,26 @@ public class FileHandler {
         return status;*/
     }
 
-    public String checkWhiteOrBlacklist(String type, Set<String> list){
+    public String checkWhiteOrBlacklist(String type, Set<String> list) {
         List<Map.Entry<Path, String>> currentCodeFiles = currentFiles.entrySet().stream()
                 .filter(pathStringEntry -> pathStringEntry.getValue().equals("code"))
                 .collect(Collectors.toList());
 
-        for(Map.Entry<Path, String> e: currentCodeFiles) {
-            for(String s : list) {
-                try{
-                    switch (type.toLowerCase()){
+        for (Map.Entry<Path, String> e : currentCodeFiles) {
+            for (String s : list) {
+                try {
+                    switch (type.toLowerCase()) {
                         case "blacklist":
                             log.info("checking Blacklist");
                             int c = checkForUsage(s, e.getKey().toFile());
-                            if(c >= 0){
-                                log.info("Blacklist Error: " + s + " has been used at line "+ c + "!");
-                                return "Blacklist Error: " + s + " has been used at line "+ c + "!";
+                            if (c >= 0) {
+                                log.info("Blacklist Error: " + s + " has been used at line " + c + "!");
+                                return "Blacklist Error: " + s + " has been used at line " + c + "!";
                             }
                             break;
                         case "whitelist":
                             log.info("checking Whitelist");
-                            if(checkForUsage(s, e.getKey().toFile()) < 0){
+                            if (checkForUsage(s, e.getKey().toFile()) < 0) {
                                 log.info("Whitelist Error: " + s + " has not been used!");
                                 return "Whitelist Error: " + s + " has not been used!";
                             }
@@ -299,13 +351,13 @@ public class FileHandler {
 
     public int checkForUsage(String needle, File haystack) throws IOException {
         int lineNumber = 0;
-        try(BufferedReader br = new BufferedReader(new FileReader(haystack))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(haystack))) {
             String line;
-            while((line = br.readLine())!= null) {
+            while ((line = br.readLine()) != null) {
                 lineNumber++;
                 String[] words = line.split(" ");
-                for (String w: words) {
-                    if(w.equalsIgnoreCase(needle)){
+                for (String w : words) {
+                    if (w.equalsIgnoreCase(needle)) {
                         return lineNumber;
                     }
                 }

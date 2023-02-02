@@ -1,0 +1,9 @@
+{
+    "/api/*": {
+      "target": "http://backend:9090",
+      "secure": false,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
