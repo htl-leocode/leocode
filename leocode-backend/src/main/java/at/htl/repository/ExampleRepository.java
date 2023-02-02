@@ -96,7 +96,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
         example.persist();
 
 
-        Git g = gitController.cloneRepositoryToDir(new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]), example.repository);
+        Git g = gitController.cloneRepositoryToDir(new File(tmpFolderPath), example.repository);
 
         files.forEach(inputParts -> saveFilesTemporary(inputParts, example));
 
@@ -111,7 +111,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
         }
 
         try {
-            FileUtils.deleteDirectory(new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]));
+            FileUtils.deleteDirectory(new File(tmpFolderPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -135,14 +135,17 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 if (name.endsWith(".zip")) {
                     //extract zip from bytes
 
-                    unzipFolder(bytes, Path.of(tmpFolderPath + example.repository.repoUrl.split("/")[4] ));
+                    log.info(name);
+                    unzipFolder(bytes, Path.of(tmpFolderPath), name.replace(".zip", ""));
                 } else {
 
-                    File file = new File(tmpFolderPath + example.repository.repoUrl.split("/")[4]);
+                    File file = new File(tmpFolderPath);
 
                     if (!file.exists()) {
                         file.mkdirs();
                     }
+
+                    log.info("LOLOLOLO" + file.getPath());
 
                     try (FileOutputStream fos = new FileOutputStream(file.getPath() + "/" + name)) {
                         fos.write(bytes);
@@ -156,7 +159,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
 
     }
 
-    public static void unzipFolder(byte[] bytes, Path target) throws IOException {
+    public static void unzipFolder(byte[] bytes, Path target, String name) throws IOException {
 
         try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(bytes))) {
 
@@ -172,6 +175,10 @@ public class ExampleRepository implements PanacheRepository<Example> {
 
                 Path newPath = zipSlipProtect(zipEntry, target);
 
+                newPath = Path.of(newPath.toString().replace(name, ""));
+
+                System.out.println(newPath.toString());
+
                 if (isDirectory) {
                     Files.createDirectories(newPath);
                 } else {
@@ -181,6 +188,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
                             Files.createDirectories(newPath.getParent());
                         }
                     }
+
                     Files.copy(zis, newPath, StandardCopyOption.REPLACE_EXISTING);
 
                 }
