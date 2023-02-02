@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
@@ -14,6 +14,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
   styleUrls: ['./list-example.component.css']
 })
 export class ListExampleComponent implements AfterViewInit, OnInit {
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<Example>;
@@ -29,6 +31,8 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'description', 'type'];
 
+  innerWidth = 0;
+
   constructor(private http: HttpService,
               public router: Router,
               private route: ActivatedRoute) {
@@ -38,6 +42,13 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Example>();
     this.refreshData();
+
+    this.innerWidth = window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   ngAfterViewInit(): void {
@@ -68,7 +79,15 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
     else {
       this.selectedTypes = this.selectedTypes.filter(currentType => currentType != type)
     }
+  }
 
-
+  getCols(): number {
+    if(this.innerWidth > 968) {
+      return 6;
+    }
+    if(this.innerWidth > 398) {
+      return 3;
+    }
+    return 1;
   }
 }

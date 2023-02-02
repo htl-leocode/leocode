@@ -22,11 +22,15 @@ div.newView{
   margin-top: 1%;
 }
 
-.mat-card{
+/* .mat-card{
   float: right;
   margin-right: 16%;
   margin-top: 5%;
   width: auto;
+} */
+
+::ng-deep .mat-card-header-text {
+  margin: 0px;
 }
 
 .mat-card:hover{
