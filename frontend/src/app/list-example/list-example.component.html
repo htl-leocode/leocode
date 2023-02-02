@@ -1,36 +1,31 @@
-<div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row" >{{row.name}}</td>
+<div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px 10px 10px 10px">
+  <mat-grid-list cols="6">
+    <ng-container *ngFor="let example of examples">
+      <mat-grid-tile>
+        <mat-card style="height: 200px;width: 250px;" class="scrollable-content">
+          <mat-card-header>
+            <mat-card-title style="text-align: left">{{example.name}}</mat-card-title>
+            <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p style="overflow: scroll;max-width: 200px;max-height: 65px">
+              {{example.description}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button style="min-height: 25px;position:absolute; bottom: 10px;" mat-raised-button color="primary"
+                    (click) = "this.router.navigate(['/example', example.id])"
+            >Start coding</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+
     </ng-container>
+  </mat-grid-list>
 
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-      <td mat-cell *matCellDef="let row" >{{row.description}}</td>
-    </ng-container>
-
-    <!-- Type Column -->
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-      <td mat-cell *matCellDef="let row" >{{row.type}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/example', row.id]"></tr>
-  </table>
-
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
-
-  <button *ngIf="value == 1" mat-raised-button color="primary" style="margin: 10px 10px 10px 10px"
-          (click)="this.router.navigate(['/create-example'])" >Create Example</button>
+  <button *ngIf="value == 1" mat-raised-button color="primary"
+          (click)="this.router.navigate(['/create-example'])">Create Example
+  </button>
 </div>
 
 

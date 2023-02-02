@@ -6,6 +6,7 @@ import { ListExampleDataSource, ListExampleItem } from './list-example-datasourc
 import {Example} from '../model/example.model';
 import {HttpService} from '../services/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-list-example',
@@ -15,8 +16,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ListExampleComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Example>;
   dataSource: MatTableDataSource<Example>;
+  examples: Example[];
   value: number;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -36,10 +37,10 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 
   refreshData(): void {
     this.http.getExampleList().subscribe(exampleList => this.dataSource.data = exampleList, error => console.log(error));
+    this.http.getExampleList().subscribe(exampleList => this.examples = exampleList, error => console.log(error));
   }
 }

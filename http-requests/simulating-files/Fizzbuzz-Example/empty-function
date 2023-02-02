@@ -1,0 +1,4 @@
+public static String FizzBuzz(int num) {
+	    return "";
+    }
+
