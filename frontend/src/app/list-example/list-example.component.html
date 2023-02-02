@@ -1,14 +1,19 @@
 <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px 10px 10px 10px">
+
+  <mat-chip-list >
+    <mat-chip color="primary" *ngFor="let type of types"  [selected]="selectedTypes.includes(type)" (click)="setType(type)">{{type}}</mat-chip>
+  </mat-chip-list>
+
   <mat-grid-list cols="6">
     <ng-container *ngFor="let example of examples">
-      <mat-grid-tile>
-        <mat-card style="height: 200px;width: 250px;" class="scrollable-content">
+      <mat-grid-tile *ngIf="selectedTypes.includes(example.type) || selectedTypes.length == 0">
+        <mat-card style="height: 200px;width: 250px;" class="scrollable-content" >
           <mat-card-header>
             <mat-card-title style="text-align: left">{{example.name}}</mat-card-title>
             <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p style="overflow: scroll;max-width: 200px;max-height: 65px">
+            <p style="overflow: scroll;overflow-x: unset;max-width: 200px;max-height: 65px">
               {{example.description}}
             </p>
           </mat-card-content>

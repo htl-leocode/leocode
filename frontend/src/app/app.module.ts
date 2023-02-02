@@ -46,6 +46,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddUserComponent } from './add-user/add-user.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatChipsModule} from "@angular/material/chips";
 
 
 const appRoutes: Routes = [
@@ -111,6 +112,7 @@ const appRoutes: Routes = [
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         }),
+      MatChipsModule,
       MatCheckboxModule
     ],
   providers: [
