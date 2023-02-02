@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit {
       this.isTeacher = true;
       this.router.navigateByUrl('/list-example/1');
     }
-    else if(this.authService.roles.getValue().includes('student')){
+    else if(this.authService.roles.getValue().length != 0){
       this.isStudent=true;
       this.router.navigateByUrl('/list-example/0');
     }
