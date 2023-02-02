@@ -45,6 +45,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddUserComponent } from './add-user/add-user.component';
+import { AddGhUserDialogComponent } from './create-example/add-gh-user-dialog/add-gh-user-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const appRoutes: Routes = [
@@ -76,7 +78,8 @@ const appRoutes: Routes = [
     StudentPageComponent,
     TeacherPageComponent,
     ReportComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddGhUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +113,8 @@ const appRoutes: Routes = [
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [
     {
