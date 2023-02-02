@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
-import { ListExampleDataSource, ListExampleItem } from './list-example-datasource';
+import {ListExampleDataSource, ListExampleItem} from './list-example-datasource';
 import {Example} from '../model/example.model';
 import {HttpService} from '../services/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -19,6 +19,12 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
   dataSource: MatTableDataSource<Example>;
   examples: Example[];
   value: number;
+
+  selectedType: string = "";
+  selectedTypebool: boolean = true;
+
+  public types: string[] = []
+  public selectedTypes: string[] = []
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'description', 'type'];
@@ -41,6 +47,28 @@ export class ListExampleComponent implements AfterViewInit, OnInit {
 
   refreshData(): void {
     this.http.getExampleList().subscribe(exampleList => this.dataSource.data = exampleList, error => console.log(error));
-    this.http.getExampleList().subscribe(exampleList => this.examples = exampleList, error => console.log(error));
+    this.http.getExampleList().subscribe(exampleList => {
+      this.examples = exampleList;
+      this.getAllTypes();
+    } ,error => console.log(error));
+  }
+
+  getAllTypes() {
+    this.examples.forEach((i) => {
+      if (!this.types.includes(i.type)) {  // if type is not in the list
+        this.types.push(i.type);
+      }
+    });
+  }
+
+  setType(type: string) {
+    if(!this.selectedTypes.includes(type) ){
+        this.selectedTypes.push(type);
+    }
+    else {
+      this.selectedTypes = this.selectedTypes.filter(currentType => currentType != type)
+    }
+
+
   }
 }
