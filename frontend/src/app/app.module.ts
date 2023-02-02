@@ -43,6 +43,8 @@ import {authModuleConfig} from './authentification/oauth-module.config';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AddUserComponent } from './add-user/add-user.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatChipsModule} from "@angular/material/chips";
 
@@ -55,6 +57,7 @@ const appRoutes: Routes = [
   {path: 'example/:id', component: DetailExampleComponent},
   {path: 'test-example/:id', component: TestExampleComponent},
   {path: 'submission-status/:id', component: SubmissionStatusComponent},
+  {path: 'add-user', component: AddUserComponent},
   {path: 'report', component: ReportComponent},
   {path: '',  redirectTo: '', pathMatch: 'full' },
   {path: '**', component: FileNotFoundComponent}
@@ -73,43 +76,45 @@ const appRoutes: Routes = [
     LoginPageComponent,
     StudentPageComponent,
     TeacherPageComponent,
-    ReportComponent
+    ReportComponent,
+    AddUserComponent
   ],
-  imports: [
-    BrowserModule,
-    MatExpansionModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatListModule,
-    RouterModule.forRoot(appRoutes),
-    MarkdownModule.forRoot(),
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatGridListModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MonacoEditorModule.forRoot(),
-    OAuthModule.forRoot(authModuleConfig),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-    MatChipsModule
-  ],
+    imports: [
+        BrowserModule,
+        MatExpansionModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatListModule,
+        RouterModule.forRoot(appRoutes),
+        MarkdownModule.forRoot(),
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatGridListModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MonacoEditorModule.forRoot(),
+        OAuthModule.forRoot(authModuleConfig),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: environment.production,
+          // Register the ServiceWorker as soon as the app is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
+      MatChipsModule,
+      MatCheckboxModule
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

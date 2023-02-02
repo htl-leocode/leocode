@@ -11,6 +11,7 @@ public class Example {
     public ExampleType type;
     public Set<String> whitelist;
     public Set<String> blacklist;
+    public Repository repository;
 
 }
 

@@ -4,16 +4,39 @@ import {Observable} from 'rxjs';
 import {Example} from '../model/example.model';
 import {Submission} from '../model/submission.model';
 import { environment } from 'src/environments/environment';
+import {Teacher} from "../model/teacher.model";
+import {RepositoryDTO} from "../model/repositoryDto.model";
+import {Repository} from "../model/repository.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+  // when running outside of docker:
+  //BASE_URL = 'http://localhost:9090/';
 
   BASE_URL = environment.BACKEND_URL;
+  //BASE_URL = 'http://localhost:4200/api/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }
+
+
+  getTeacherList(): Observable<Teacher[]>{
+    return this.http.get<Teacher[]>(this.BASE_URL + 'teacher/allTeacher');
+  }
+
+  postTeacher(teacher: Teacher){
+    return this.http.post(this.BASE_URL + 'teacher/add', teacher);
+  }
+
+  getRepositories(teacherName: string): Observable<Repository[]>{
+    return this.http.get<Repository[]>(this.BASE_URL + 'teacher/repositoryByTeacher/'+teacherName)
+  }
+
+  postRepository(repository: RepositoryDTO){
+    return this.http.post(this.BASE_URL + 'teacher/newRepository', repository)
+  }
 
   getExampleList(): Observable<Example[]> {
     return this.http.get<Example[]>(this.BASE_URL + 'example/list');
@@ -24,7 +47,7 @@ export class HttpService {
   }
 
   createExample(form: HTMLFormElement): Observable<Example>{
-    return this.http.post<Example>(this.BASE_URL + 'example', new FormData(form));
+    return this.http.post<Example>(this.BASE_URL + 'example/newExample', new FormData(form));
   }
 
   testExample(form: FormData): Observable<any>{
