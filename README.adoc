@@ -12,15 +12,35 @@ with new setup instructions soon.
 
 ---
 
-deployment-guide:
+## Deployment-guide:
 
-commit and push changes to github:
+1 - Commit and push changes to github:
+```
 git commit
 git push
+```
 
-create and push new tag to github: (change versions to newest + 1)
+2 - Create and push a tag for your changes:
+```
+git tag -d latest   
+git push --delete origin latest
+git tag latest 
+git push origin latest
+```
+
+3 - [on VM]: Pull newest image (after GH-Actions finished building)
+```
+docker-compose down
+docker-compose pull
+docker-compose up -d
+```
+
+
+4 - create and push new tag to github: (change versions to newest + 1)
+```
 git tag v1.x.x
 git push origin v.1.x.x
+```
 
 ---
 
@@ -28,8 +48,11 @@ Following file only serves as a quick overview of the repository. You
 should find more specific documentation about each child directory and its purpose
 in additional README files, located in the corresponding directories.
 
-If interested maybe also have a look at the documentation-only repository ->
+If interested maybe also have a look at the original documentation-only repository ->
 https://github.com/donnabauerc/LeoCodeDocs
+
+Or our own AsciiDocs -> 
+https://htl-leocode.github.io/leocode/
 
 == Structure of the Repo
 * In the **backend** directory you can find everything related to the backend e.g. a Quarkus

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Example} from '../model/example.model';
 import {Submission} from '../model/submission.model';
+import { environment } from 'src/environments/environment';
 import {Teacher} from "../model/teacher.model";
 import {RepositoryDTO} from "../model/repositoryDto.model";
 import {Repository} from "../model/repository.model";
@@ -14,9 +15,8 @@ export class HttpService {
   // when running outside of docker:
   //BASE_URL = 'http://localhost:9090/';
 
-  BASE_URL = 'http://localhost:4200/api/';
-
-  //BASE_URL = 'http://backend:9090/';
+  BASE_URL = environment.BACKEND_URL;
+  //BASE_URL = 'http://localhost:4200/api/';
 
   constructor(private http: HttpClient,
               private _zone: NgZone) { }
