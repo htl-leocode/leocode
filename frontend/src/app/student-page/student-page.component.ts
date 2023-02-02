@@ -20,7 +20,7 @@ export class StudentPageComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthenticationService) {
-    this.studentName = this.authService.username.getValue();
+    this.studentName = this.authService.name.getValue();
   }
 
   reloadPage(): void{
