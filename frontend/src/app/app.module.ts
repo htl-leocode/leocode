@@ -43,6 +43,7 @@ import {authModuleConfig} from './authentification/oauth-module.config';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MarkdownModule } from 'ngx-markdown';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 const appRoutes: Routes = [
@@ -89,6 +90,7 @@ const appRoutes: Routes = [
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
+        MatGridListModule,
         HttpClientModule,
         MatFormFieldModule,
         MatInputModule,

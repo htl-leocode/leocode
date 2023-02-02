@@ -32,3 +32,28 @@ div.newView{
 .mat-card:hover{
   background-color: lightgrey;
 }
+
+.mat-card.scrollable-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 20%;
+  vertical-align: top;
+}
+
+
+> .mat-card-title-group {
+  display: block;
+}
+
+> .mat-card-actions {
+  display: block;
+  height: 10%;
+  vertical-align: bottom;
+  position: relative;
+}
+
+> .mat-card-content {
+  overflow-y: auto;
+}
+
