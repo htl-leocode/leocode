@@ -4,6 +4,7 @@ import at.htl.entities.ExampleType;
 import at.htl.util.PathConverter;
 import com.cdancy.jenkins.rest.JenkinsClient;
 import io.quarkus.runtime.StartupEvent;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,9 +23,8 @@ https://github.com/cdancy/jenkins-rest
 @ApplicationScoped
 public class JenkinsRequest {
 
-    //TODO: refactor these tokens into .env file
-    //private static final String ADMIN_TOKEN = "11d1a936ffef3dbc7856d7d963dade76d2";
-    private static final String ADMIN_TOKEN = "114192d85a38eeddbe7d3be616015a4864";
+    @ConfigProperty(name = "JENKINS_ADMIN_TOKEN")
+    private String ADMIN_TOKEN;
 
     private static final String MVN_PROJECT_TOKEN = "avFPxhFrSm6a5UQHm3Kf2Ge4oYzdz3ESuF7igg2v";
 
@@ -43,11 +43,14 @@ public class JenkinsRequest {
     Logger log;
 
     public void start(@Observes StartupEvent event) {
+        log.info("Using admin-token: "+ADMIN_TOKEN);
         // for testing/dev purposes only
         //sendRequest();
     }
 
     public void sendRequest(String folderName) {
+        log.info("Using admin-token: "+ADMIN_TOKEN);
+
         log.info("Extracted Project-path: "+folderName);
 
         // create jenkins rest-client instance
