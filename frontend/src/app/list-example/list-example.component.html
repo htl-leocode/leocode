@@ -1,55 +1,38 @@
 <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px 10px 10px 10px">
+  <label>Select a type:</label>
 
-  <mat-chip-list >
-    <mat-chip color="primary" *ngFor="let type of types"  [selected]="selectedTypes.includes(type)" (click)="setType(type)">{{type}}</mat-chip>
+  <mat-chip-list>
+    <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedTypes.includes(type)"
+      (click)="setType(type)">{{type}}</mat-chip>
   </mat-chip-list>
 
-  <mat-grid-list cols="6">
+  <mat-grid-list [cols]="getCols()" rowHeight="230px" style="margin-top: 20px;">
     <ng-container *ngFor="let example of examples">
-      <mat-grid-tile *ngIf="selectedTypes.includes(example.type) || selectedTypes.length == 0">
-        <mat-card style="height: 200px;width: 250px;" class="scrollable-content" >
+      <mat-grid-tile *ngIf="selectedTypes.includes(example.type) || selectedTypes.length == 0"
+        style="display: inline-block;">
+        <mat-card style="height: 95%;width: 95%;">
           <mat-card-header>
-            <mat-card-title style="text-align: left">{{example.name}}</mat-card-title>
-            <mat-card-subtitle>{{example.type}}</mat-card-subtitle>
+            <mat-card-title style="text-align: left; margin-left: -8px;">{{example.name}}</mat-card-title>
+            <mat-card-subtitle style="margin-left: -8px;">{{example.type}}</mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content>
-            <p style="overflow: scroll;overflow-x: unset;max-width: 200px;max-height: 65px">
-              {{example.description}}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button style="min-height: 25px;position:absolute; bottom: 10px;" mat-raised-button color="primary"
-                    (click) = "this.router.navigate(['/example', example.id])"
-            >Start coding</button>
-          </mat-card-actions>
+          <div style="display: flex;">
+            <mat-card-content style="overflow: auto;overflow-x: unset;height:65px;width: 100%;">
+              <p>
+                {{example.description}}
+              </p>
+            </mat-card-content>
+            <mat-card-actions style="bottom: 0px; position: absolute; margin-bottom: 8px;">
+              <button mat-raised-button color="primary" (click)="this.router.navigate(['/example', example.id])">Start
+                coding</button>
+            </mat-card-actions>
+          </div>
         </mat-card>
       </mat-grid-tile>
 
     </ng-container>
   </mat-grid-list>
 
-  <button *ngIf="value == 1" mat-raised-button color="primary"
-          (click)="this.router.navigate(['/create-example'])">Create Example
+  <button *ngIf="value == 1" mat-raised-button color="primary" (click)="this.router.navigate(['/create-example'])"
+    style="margin-top: 20px;">Create Example
   </button>
 </div>
-
-
-<!--<div class="newView">
-  <mat-selection-list #exercises [multiple]="false" class="mat-elevation-z8">
-    <mat-list-option *ngFor="let exercise of dataSource.data" [value]="exercise">
-      {{exercise.name}}
-    </mat-list-option>
-  </mat-selection-list>
-
-  <mat-card [routerLink]="['/example', exercises.selectedOptions.selected[0]?.value.id]" *ngIf="!exercises.selectedOptions.isEmpty()" class="mat-elevation-z8">
-    <mat-card-header>
-      <mat-icon mat-card-avatar>assignment</mat-icon>
-      <mat-card-title>{{exercises.selectedOptions.selected[0]?.value.name}}</mat-card-title>
-      <mat-card-subtitle>
-        Type: {{exercises.selectedOptions.selected[0]?.value.type}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      Description: {{exercises.selectedOptions.selected[0]?.value.description}}
-    </mat-card-content>
-  </mat-card>
-</div>-->

@@ -8,6 +8,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class AuthenticationService {
   username = new BehaviorSubject<string>('');
+  name = new BehaviorSubject<string>('');
   roles = new BehaviorSubject<string[]>([]);
   oidcLoaded = new BehaviorSubject<boolean>(false);
 
@@ -17,6 +18,7 @@ export class AuthenticationService {
     this.oAuthService.logOut();
     this.username.unsubscribe();
     this.roles.unsubscribe();
+    this.name.unsubscribe();
   }
 
   async initializeLogin(): Promise<void> {
@@ -40,6 +42,7 @@ export class AuthenticationService {
       this.oAuthService.setupAutomaticSilentRefresh();
       const profile = await this.oAuthService.loadUserProfile();
       this.username.next(profile.preferred_username);
+      this.name.next(profile.name);
       this.roles.next(this.parseJwt(this.oAuthService.getAccessToken()).realm_access.roles);
       this.oidcLoaded.next(true);
     }
