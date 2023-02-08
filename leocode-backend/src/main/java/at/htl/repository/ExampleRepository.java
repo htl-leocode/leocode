@@ -173,9 +173,20 @@ public class ExampleRepository implements PanacheRepository<Example> {
                     isDirectory = true;
                 }
 
-                Path newPath = zipSlipProtect(zipEntry, target);
+                String[] splitPath = zipSlipProtect(zipEntry, target).toString().split("/");
 
-                newPath = Path.of(newPath.toString().replace(name, ""));
+                String createdPath = "";
+
+                for (int i = 0; i < splitPath.length; i++) {
+                    if(!splitPath[i].equals(name)){
+                        createdPath = createdPath + splitPath[i];
+                    }
+                    if(i != splitPath.length - 1){
+                        createdPath += "/";
+                    }
+                }
+
+                Path newPath = Path.of(createdPath);
 
                 System.out.println(newPath.toString());
 
