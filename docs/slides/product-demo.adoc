@@ -38,9 +38,9 @@ image::leocode-view-code.png[background,size=contain]
 ** code can be uploaded
 ** code can be edited
 ** result of unit-tests is shown including detailed error-descriptions
+** Login via school account
 
 * Planned:
-** Login via school account
 ** Extended programming language support
 
 == Architecture
@@ -60,9 +60,9 @@ image::technology-overview.png[background, size=contain]
 * Added interface documentation
 * Drastically improved test performance
 * Improved visual test feedback
+* Login via school account (using a school-wide keycloak)
 
 == Roadmap
-* Login via school account (using a school-internal keycloak)
 * Extended programming language support
 
 
