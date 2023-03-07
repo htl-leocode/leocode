@@ -18,14 +18,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 * Setup of a new project is time-consuming
 * We want to make it easy for students to start coding
 
-[.leocode-code]
-== What can Leocode do?
-
-[%notitle]
-=== Student-View-Image
-[.leocode-code]
-image::leocode-view-code.png[background,size=contain]
-
 === How does Leocode solve problems?
 * Leocode enables teachers to build a pool of examples
 * Students can start coding without installing development-environments
@@ -42,6 +34,18 @@ image::leocode-view-code.png[background,size=contain]
 
 * Planned:
 ** Extended programming language support
+
+[.leocode-code]
+== What can Leocode do?
+
+[%notitle]
+=== Student-View-Image
+[.leocode-code]
+image::leocode-view-code.png[background,size=contain]
+
+
+
+
 
 == Architecture
 
