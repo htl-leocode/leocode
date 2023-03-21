@@ -18,14 +18,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 * Setup of a new project is time-consuming
 * We want to make it easy for students to start coding
 
-[.leocode-code]
-== What can Leocode do?
-
-[%notitle]
-=== Student-View-Image
-[.leocode-code]
-image::leocode-view-code.png[background,size=contain]
-
 === How does Leocode solve problems?
 * Leocode enables teachers to build a pool of examples
 * Students can start coding without installing development-environments
@@ -38,10 +30,22 @@ image::leocode-view-code.png[background,size=contain]
 ** code can be uploaded
 ** code can be edited
 ** result of unit-tests is shown including detailed error-descriptions
+** Login via school account
 
 * Planned:
-** Login via school account
 ** Extended programming language support
+
+[.leocode-code]
+== What can Leocode do?
+
+[%notitle]
+=== Student-View-Image
+[.leocode-code]
+image::leocode-view-code.png[background,size=contain]
+
+
+
+
 
 == Architecture
 
@@ -60,9 +64,9 @@ image::technology-overview.png[background, size=contain]
 * Added interface documentation
 * Drastically improved test performance
 * Improved visual test feedback
+* Login via school account (using a school-wide keycloak)
 
 == Roadmap
-* Login via school account (using a school-internal keycloak)
 * Extended programming language support
 
 
