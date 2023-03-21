@@ -22,6 +22,10 @@ export class HttpService {
               private _zone: NgZone) { }
 
 
+  getTeacher(teacherName: string): Observable<Teacher>{
+    return this.http.get<Teacher>(this.BASE_URL + 'teacher/getGhUsername/'+teacherName);
+  }
+
   getTeacherList(): Observable<Teacher[]>{
     return this.http.get<Teacher[]>(this.BASE_URL + 'teacher/allTeacher');
   }

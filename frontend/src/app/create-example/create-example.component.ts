@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../services/http.service';
 import {Router} from '@angular/router';
-import {Repository} from "../model/repository.model";
 import {AuthenticationService} from "../authentification/authentication.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {AddGhUserDialogComponent} from "./add-gh-user-dialog/add-gh-user-dialog.component";
+import {Teacher} from "../model/teacher.model";
+
 
 @Component({
   selector: 'app-create-example',
@@ -12,25 +15,40 @@ import {AuthenticationService} from "../authentification/authentication.service"
 export class CreateExampleComponent implements OnInit {
 
   form: HTMLFormElement;
-
-  repositories: Repository[];
-
   checkPublic: boolean = false;
 
-  teacherName: string = "";
+  teacher: Teacher = {
+    name: "",
+    ghUsername: "",
+    id: 0
+  };
+
+  ghUser: string = ""
 
   constructor(private http: HttpService,
+              public dialog: MatDialog,
               public router: Router, private authService: AuthenticationService) {
-    this.teacherName = this.authService.username.getValue();
+    this.teacher.name = this.authService.username.getValue();
   }
 
   ngOnInit(): void {
-    this.http.getRepositories(this.authService.username.getValue()).subscribe({
-      next: data =>{
-        data.forEach(p => console.log(p));
-        this.repositories = data;
+
+    this.http.getTeacher(this.authService.username.getValue()).subscribe(
+      data => {
+        if (data == null) {
+          //TODO
+          const dialogRef = this.dialog.open(AddGhUserDialogComponent, {data: this.teacher});
+
+          dialogRef.afterClosed().subscribe({
+            next: value => {
+              this.teacher.ghUsername = value;
+              this.http.postTeacher(this.teacher).subscribe();
+            }
+          })
+        }
       }
-    })
+    );
+
   }
 
   upload(): void {
@@ -38,13 +56,13 @@ export class CreateExampleComponent implements OnInit {
     if (this.form.checkValidity()) {
       this.http.createExample(this.form).subscribe(
         data => {
-          this.router.navigate(['example', data.id]);
-          },
+          //this.router.navigate(['example', data.id]);
+        },
         error => {
           alert('Sorry there has been an error!');
           console.log(error);
         }
-        );
+      );
     }
   }
 
