@@ -64,6 +64,7 @@ image::technology-overview.png[background, size=contain]
 * Added interface documentation
 * Drastically improved test performance
 * Improved visual test feedback
+* Integration with GitHub
 * Login via school account (using a school-wide keycloak)
 
 == Roadmap
