@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/teacher")
@@ -43,6 +44,13 @@ public class TeacherEndpoint {
         log.info(t);
         t.name = teacher.ghUsername;
         t.persist();
+    }
+
+    @GET
+    @Path("/getGhUsername/{teacherName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Teacher GetGitHubUsername(@PathParam("teacherName") String teacherName){
+        return teacherRepository.find("name",teacherName).firstResult();
     }
 
     @POST
