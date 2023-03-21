@@ -56,7 +56,7 @@ export class CreateExampleComponent implements OnInit {
     if (this.form.checkValidity()) {
       this.http.createExample(this.form).subscribe(
         data => {
-          //this.router.navigate(['example', data.id]);
+          this.router.navigate(['example', data.id]);
         },
         error => {
           alert('Sorry there has been an error!');
