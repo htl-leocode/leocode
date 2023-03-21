@@ -47,6 +47,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddUserComponent } from './add-user/add-user.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatChipsModule} from "@angular/material/chips";
+import { AddGhUserDialogComponent } from './create-example/add-gh-user-dialog/add-gh-user-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const appRoutes: Routes = [
@@ -77,7 +79,8 @@ const appRoutes: Routes = [
     StudentPageComponent,
     TeacherPageComponent,
     ReportComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddGhUserDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -113,7 +116,9 @@ const appRoutes: Routes = [
           registrationStrategy: 'registerWhenStable:30000'
         }),
       MatChipsModule,
-      MatCheckboxModule
+      MatCheckboxModule,
+      MatCheckboxModule,
+      MatDialogModule
     ],
   providers: [
     {
