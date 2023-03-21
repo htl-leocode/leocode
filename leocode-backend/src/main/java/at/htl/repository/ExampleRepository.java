@@ -48,17 +48,28 @@ public class ExampleRepository implements PanacheRepository<Example> {
 
         List<List<InputPart>> files = new ArrayList<>();
 
+        LeocodeFile instruction = new LeocodeFile();
+
         inputForm.forEach((inputType, inputParts) -> {
             try {
                 switch (inputType) {
                     case "teacher":
                         log.info("teacher:" + inputParts.get(0).getBodyAsString());
                         repository.teacher = Teacher.find("name", inputParts.get(0).getBodyAsString()).firstResult();
+                        instruction.author = repository.teacher.name;
                         break;
                     case "exampleName":
                         log.info("exampleName:" + inputParts.get(0).getBodyAsString());
                         example.name = inputParts.get(0).getBodyAsString();
                         break;
+                    case "instruction":
+                        log.info("instruction");
+
+                        if(inputParts.get(0) != null) {
+                            instruction.content = inputParts.get(0).getBody(InputStream.class, null).readAllBytes();
+                            instruction.fileType = LeocodeFileType.INSTRUCTION;
+                            instruction.name = inputParts.get(0).getHeaders().toString().split("filename=\"")[1].split("\"")[0];
+                        }
                     case "description":
                         log.info("description:" + inputParts.get(0).getBodyAsString());
                         example.description = inputParts.get(0).getBodyAsString();
@@ -95,6 +106,8 @@ public class ExampleRepository implements PanacheRepository<Example> {
 
         example.persist();
 
+        instruction.example = example;
+        instruction.persist();
 
         Git g = gitController.cloneRepositoryToDir(new File(tmpFolderPath), example.repository);
 
