@@ -1,2 +1,2 @@
 ./convert.sh
-firefox dist/slides/product-demo.html
+firefox dist/slides/project-award-slides.html

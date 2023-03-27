@@ -1,0 +1,93 @@
+
+// :customcss: css/presentation.css
+:customcss: style.css
+
+// src: https://raw.githubusercontent.com/htl-leonding-college/git-intro-slides/main/asciidocs-slides/index.adoc
+
+// slides of 5ahif-team: https://musikfreunde.github.io/asciidoctor-docker-slides/
+
+ifndef::imagesdir[:imagesdir: ../images]
+:title-slide-background-image: leocode-background.jpg
+
+[.white-title]
+= Leocode
+
+[background-image="pexels-tim-gouw-52608.jpg"]
+
+
+[.lightbg]
+== Warum Leocode?
+
+[.black-text]
+* Neue Schüler haben kaum Programmiererfahrung
+* Das Aufsetzen von Projekten ist zeitintensiv
+//* We want to make it easy for students to start coding
+
+[background-image="books-1842261_1920.jpg"]
+[.lightbg]
+=== Welche Probleme löst Leocode?
+
+[.black-text]
+* Schüler können mit dem Programmieren beginnen, ohne IDEs zu installieren
+* Schüler haben Zugriff auf eine Sammlung an Beispielen
+* Lehrer können Beispiele zu einem gemeinsamen Pool hinzufügen
+
+[.white-title]
+[.decentlightbg]
+== Live Demo
+
+image::leocode-view-code.png[background,size=contain]
+
+
+////
+[%notitle]
+=== Student-View-Image
+image::leocode-view-code.png[background,size=contain]
+////
+
+
+[background-image="network-2402637.jpg"]
+[.white-title]
+== Architektur
+
+[%notitle]
+=== Architektur Diagramm
+
+[.column]
+["plantuml"]
+
+[.column]
+image::technology-overview.png[background, size=contain]
+
+[background-image="arm-wrestling-567950_1920.jpg"]
+[.lightbg]
+== Competition
+[.black-text]
+* GitHub Actions
+* StackBlitz
+* CodeSandbox
+
+[background-image="check-3694935_1920.jpg"]
+[.lightbg]
+=== Was macht LeoCode besser?
+[.black-text]
+* Beispiele auf Schüler abgestimmt
+* Schulintern gehostet
+* Kostenlos
+* Einbindung an AD
+
+[background-image="achievement-5597527_1920.png"]
+[.lightbg]
+[.black-title]
+== Achievements
+[.black-text]
+* Test Performance stark verbessert
+* Visuelles Test Feedback
+* GitHub Integration
+* Login mit Schulaccount (durch schul-weiten Keycloak)
+
+[background-image="road-61904_1920.jpg"]
+[.lightbg]
+== Roadmap
+[.black-text]
+* Extended programming language support

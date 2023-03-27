@@ -12,6 +12,9 @@ ifndef::imagesdir[:imagesdir: ../images]
 [.title-slide]
 = Leocode
 
+[background-image="pexels-tim-gouw-52608.jpg"]
+
+[.color-white]
 
 == Why Leocode?
 * New student don't have experience with coding
@@ -58,7 +61,7 @@ https://htl-leocode.github.io/leocode/interface-documentation.html[Interface Doc
 ["plantuml"]
 
 [.column]
-image::technology-overview.png[background, size=contain]
+image::technology-overview-apparently-bad.png[background, size=contain]
 
 == Achievements
 * Added interface documentation

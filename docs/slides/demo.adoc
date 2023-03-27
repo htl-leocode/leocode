@@ -46,7 +46,7 @@ https://htl-leocode.github.io/leocode/interface-documentation.html[Interface Doc
 ["plantuml"]
 
 [.column]
-image::technology-overview.png[background, size=contain]
+image::technology-overview-apparently-bad.png[background, size=contain]
 
 == Achievements
 * Added interface documentation

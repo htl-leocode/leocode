@@ -22,7 +22,7 @@ image::leolearn-modules.png[]
 == Used Technologies:
 
 .Technology overview
-image::technology-overview.png[]
+image::technology-overview-apparently-bad.png[]
 
 == Current state as of 2022-01-25
 

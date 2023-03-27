@@ -3,9 +3,43 @@
     box-shadow: none;
 }
 
-.slides section h1 {
-    /*text-align: left!important;*/
+/*.slides section h1 {
+    !*text-align: left!important;*!
     color: white;
+}*/
+
+.reveal .lightbg {
+    background: #fff8f1d0;
 }
 
-.reveal .lightbg { background: #fff8f1d0; }
+.reveal .decentlightbg { background: #162b8ad0; }
+
+
+.white-text {
+    color: white!important;
+}
+
+.black-text {
+    color: black!important;
+}
+
+/*.reveal h2 .white-title {
+    color: white!important;
+}*/
+
+.reveal h2 {
+    color: black!important;
+}
+
+.reveal .white-title h2 {
+    color: white!important;
+}
+
+/*
+.slides section h1 {
+    color: black!important;
+}*/
+
+.reveal .white-background {
+    background-color: white;
+}
