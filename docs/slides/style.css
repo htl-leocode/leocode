@@ -31,6 +31,10 @@
     color: black!important;
 }
 
+.reveal .white-title h1 {
+    color: white!important;
+}
+
 .reveal .white-title h2 {
     color: white!important;
 }
