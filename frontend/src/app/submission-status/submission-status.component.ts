@@ -28,12 +28,14 @@ export class SubmissionStatusComponent implements OnInit {
   ngOnInit(): void {
     this.submissionId = +this.route.snapshot.paramMap.get('id');
     this.getSubmissionStatus(this.submissionId);
+
+    document.documentElement.scrollTop = 0;
   }
 
   getSubmissionStatus(id: number): void {
     this.http.getSubmissionStatusSse(id).subscribe(messageEvent => {
       console.log("spinnerstatus: ", this.spinnerIsVisible);
-      
+
       this.submissionStatus = messageEvent.data.split(';')[0];
       this.testResult = messageEvent.data.split(';')[1] === undefined ? '' : messageEvent.data.split(';')[1];
       console.log(messageEvent.data);
@@ -51,9 +53,9 @@ export class SubmissionStatusComponent implements OnInit {
     console.log("result",this.result);
 
     console.log("spinnerVisible: ", this.spinnerIsVisible);
-    
-    
-    
+
+
+
     if (this.submissionStatus == 'CORRECT') {
       //return "Congrats! All tests passed :)"
     } else {
@@ -65,7 +67,7 @@ export class SubmissionStatusComponent implements OnInit {
 
       console.log('parsed Testresult object:',this.result);
       //console.log('x',this.result.testCases[0].failure.message);
-      
+
       this.nrOfTests = this.result.testCases.length;
       this.testsPassed = this.result.testCases.length;
 

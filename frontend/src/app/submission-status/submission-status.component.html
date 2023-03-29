@@ -5,7 +5,7 @@
   <mat-spinner style="margin:0 auto;" *ngIf="spinnerIsVisible" ></mat-spinner>
 
   <mat-card *ngIf="testResult.length > 2 && !spinnerIsVisible">
-    <mat-card-header>
+    <mat-card-header class="results">
       <mat-card-title>Unit Test Results</mat-card-title>
     </mat-card-header>
 
@@ -20,14 +20,19 @@
 
   <ng-container *ngIf="result !== null && result !== undefined">
     <ng-container *ngFor="let c of result.testCases">
-      <mat-card *ngIf="c.failure != null" class="mt-2 mb-2">
-        <mat-card-header>
+      <mat-card class="mt-2 mb-2" [style.background-color]="c.failure == null ? '#15600682' : '#d01818c9'">
+        <!-- #15600682 (greenish)-->
+        <!-- #d01818c9 (redish) -->
+        <!-- ngClass="{''}" -->
+        <style>
+
+        </style>
+        <mat-card-header class="results">
           <mat-card-title>{{c.name}}</mat-card-title>
         </mat-card-header>
 
 
-        <mat-card-content>
-
+        <mat-card-content *ngIf="c.failure != null">
           <p style="font-size: small;white-space: pre-line">
             {{c.failure.message}}
           </p>
@@ -38,7 +43,7 @@
       </mat-card>
     </ng-container>
   </ng-container>
-  
+
 
 </div>
 <button mat-raised-button color="primary" style="margin-left: 10px;position: absolute;"

@@ -11,7 +11,7 @@
       <mat-grid-tile *ngIf="selectedTypes.includes(example.type) || selectedTypes.length == 0"
         style="display: inline-block;">
         <mat-card style="height: 95%;width: 95%;">
-          <mat-card-header>
+          <mat-card-header class="overview">
             <mat-card-title style="text-align: left; margin-left: -8px;">{{example.name}}</mat-card-title>
             <mat-card-subtitle style="margin-left: -8px;">{{example.type}}</mat-card-subtitle>
           </mat-card-header>
