@@ -84,7 +84,7 @@ image::technology-overview.png[background, size=contain]
 * Test Performance stark verbessert
 * Visuelles Test Feedback
 * GitHub Integration
-* Login mit Schulaccount (durch schul-weiten Keycloak)
+* Login mit Schulaccount (durch schulweiten Keycloak)
 
 [background-image="road-61904_1920.jpg"]
 [.lightbg]
