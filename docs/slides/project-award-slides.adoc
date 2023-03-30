@@ -90,4 +90,4 @@ image::technology-overview.png[background, size=contain]
 [.lightbg]
 == Roadmap
 [.black-text]
-* Extended programming language support
+* Unterstützung weiterer Programmiersprachen
