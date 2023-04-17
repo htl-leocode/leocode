@@ -166,13 +166,10 @@ public class GitController {
 
 
     public String createRepo(String repoName, String templateRepo, List<String> collaborators) throws IOException {
-        log.info(publicRepoToken);
         GitHub github = GitHub.connect("leocode-repos", publicRepoToken);
         GHOrganization org = github.getOrganization("leocode-repos");
         GHCreateRepositoryBuilder repoBuilder = org.createRepository(repoName);
 
-        //GHCreateRepositoryBuilder repoBuilder = github.createRepository(
-        //        "leocode-repos/" + repoName);
         repoBuilder.private_(false);
         repoBuilder.fromTemplateRepository("leocode-repos", templateRepo);
         repoBuilder.owner("leocode-repos");
@@ -202,9 +199,6 @@ public class GitController {
         }
         URL url = repo.getHtmlUrl();
         return url.toString();
-
-
-        //repo.addCollaborators(github.getUser("raphaelabl"),github.getUser("flo-kei"));
 
     }
 
