@@ -4,7 +4,7 @@
     <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
 
     <label>Type: </label>
-    <mat-chip-list>
+    <mat-chip-list [multiple]="false">
       <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedTypes.includes(type)"
                 (click)="setType(type)">{{type}}</mat-chip>
     </mat-chip-list><br>
