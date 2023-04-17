@@ -16,6 +16,11 @@ export class CreateExampleComponent implements OnInit {
 
   form: HTMLFormElement;
   checkPublic: boolean = false;
+  selectedType: string = "";
+  public selectedTypes: string[] = []
+  public types: string[] = ['Java','C#','Go','Python','C','Javascript']
+
+
 
   teacher: Teacher = {
     name: "",
@@ -63,6 +68,14 @@ export class CreateExampleComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+  setType(type: string) {
+    if(!this.selectedTypes.includes(type) ){
+      this.selectedTypes.push(type);
+    }
+    else {
+      this.selectedTypes = this.selectedTypes.filter(currentType => currentType != type)
     }
   }
 

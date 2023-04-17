@@ -1,44 +1,23 @@
 <div class="container mt-5">
   <form enctype="multipart/form-data" name="createExampleForm">
-
-    <label>Teacher:</label>
-    <input type="text" name="teacher" required class="form-control" calss="form-control" [value]="teacher.name"><br>
-
     <label>Name of the Example:</label>
     <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
 
     <label>Type: </label>
-    <select class="form-control" name="exampleType" required>
-      <option value="MAVEN">Maven</option>
-      <option value="ANT">Ant</option>
-    </select><br>
+    <mat-chip-list>
+      <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedTypes.includes(type)"
+                (click)="setType(type)">{{type}}</mat-chip>
+    </mat-chip-list><br>
+
 
     <label>Short Description of the Example:</label>
     <input type="text" name="description" placeholder="Description" required class="form-control"><br>
 
-    <label>Url of the Git-Repository:</label>
-    <input type="text" name="gitRepo" placeholder="Git Repository" required class="form-control"><br>
-
-    <label>Public:</label>
+    <label>Public:</label><br>
     <mat-checkbox [(ngModel)]="checkPublic"></mat-checkbox><br>
 
     <label>Git-Token:</label>
     <input type="text" name="token" placeholder="token" required class="form-control"><br>
-
-    <label>Instruction File: </label>
-    <input type="file" name="instruction" placeholder="Instruction" required accept=".md" class="form-control"><br>
-
-    <label>Zip file (containing a pom.xml, correct Solution & Unittests): </label>
-    <input type="file" class="form-control" name="project" accept=".zip" required><br>
-
-    <!-- <label>Jenkinsfile: </label>
-    <input type="file" class="form-control" name="jenkinsfile" required><br> -->
-
-    <label>Whitelist: </label>
-    <input type="text" class="form-control" name="whitelist"><br>
-
-    <label>Blacklist: </label>
-    <input type="text" class="form-control" name="blacklist"><br>
   </form>
   <button mat-raised-button color="primary" (click)="upload()">Create Example</button>
 </div>
