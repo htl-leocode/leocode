@@ -24,3 +24,5 @@ frontend/package-lock.json
 docs/slides/.asciidoctor/**
 
 restart.sh
+
+*.pem
