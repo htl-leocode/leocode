@@ -13,9 +13,10 @@
     <label>Short Description of the Example:</label>
     <input type="text" name="description" placeholder="Description" required class="form-control"><br>
 
-    <label>Public:</label><br>
-    <mat-checkbox [(ngModel)]="checkPublic"></mat-checkbox><br>
+    <label style="margin-right: 10px; vertical-align: middle;">Public:</label>
+    <mat-checkbox [(ngModel)]="checkPublic" style="vertical-align: middle;"></mat-checkbox><br>
   </form>
+
   <button mat-raised-button color="primary" (click)="upload()">Create Example</button>
 
 </div>
