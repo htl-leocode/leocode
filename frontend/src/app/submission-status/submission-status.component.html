@@ -4,7 +4,9 @@
 
   <mat-spinner style="margin:0 auto;" *ngIf="spinnerIsVisible" ></mat-spinner>
 
-  <mat-card *ngIf="testResult.length > 2 && !spinnerIsVisible">
+  <mat-card style="
+  background-color: gray;
+  color: white;" *ngIf="testResult.length > 2 && !spinnerIsVisible">
     <mat-card-header class="results">
       <mat-card-title>Unit Test Results</mat-card-title>
     </mat-card-header>
@@ -20,15 +22,13 @@
 
   <ng-container *ngIf="result !== null && result !== undefined">
     <ng-container *ngFor="let c of result.testCases">
-      <mat-card class="mt-2 mb-2" [style.background-color]="c.failure == null ? '#15600682' : '#d01818c9'">
+      <mat-card class="mt-2 mb-2" style="color: white" [style.background-color]="c.failure == null ? '#15600682' : '#d01818c9'">
         <!-- #15600682 (greenish)-->
         <!-- #d01818c9 (redish) -->
         <!-- ngClass="{''}" -->
-        <style>
 
-        </style>
         <mat-card-header class="results">
-          <mat-card-title>{{c.name}}</mat-card-title>
+          <mat-card-title style="color: white">{{c.name}}</mat-card-title>
         </mat-card-header>
 
 
