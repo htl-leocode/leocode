@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.GitController;
+import at.htl.repository.ExampleRepository;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -18,6 +19,9 @@ public class RepoEndpoint {
 
     @Inject
     GitController gitController;
+
+    @Inject
+    ExampleRepository exampleRepository;
 
     @POST
     @Path("{name}")
@@ -41,5 +45,13 @@ public class RepoEndpoint {
 
         return Response.ok(repoUrl).build();
     }
+
+    @GET
+    @Path("{exampleId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRepoByExample(@PathParam("exampleId") Long exampleId) {
+        return Response.ok(exampleRepository.findById(exampleId).repository).build();
+    }
+
 
 }
