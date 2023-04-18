@@ -26,13 +26,19 @@
       <input type="text" name="description" placeholder="ghp_7iA3TDH6rSk7kN7QoDdFbAr532" required class="form-control"><br>
     </ng-container>
 
-  <button mat-raised-button color="primary" (click)="upload()" style="margin-top: 5px;">Create Example</button>
+  <div class="row">
+      <button mat-raised-button color="primary" (click)="upload()" style="margin-top: 5px;">Create Example</button>
+    <div *ngIf="showSpinner" style="margin: 5px">
+      <mat-spinner [diameter]="30" style="float: left"></mat-spinner>
+    </div>
+  </div>
+  <br>
+  <br>
 
-  <br>
-  <br>
+
+
   <div *ngIf="createdRepoUrl != ''">
     <label>Your Repository was created: <a href="{{createdRepoUrl}}">{{createdRepoUrl}}</a></label>
-
   </div>
 
 

@@ -24,6 +24,8 @@ export class CreateExampleComponent implements OnInit {
 
   createdRepoUrl: string = "";
 
+  showSpinner: boolean = false;
+
   public types: object[] = [{id:0,displayName:'Java'},{id:1,displayName:'C#'},{id:2,displayName:'Python'}]
 
 
@@ -51,8 +53,12 @@ export class CreateExampleComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe({
             next: value => {
-              this.teacher.ghUsername = value;
-              this.http.postTeacher(this.teacher).subscribe();
+
+              console.log(value)
+              if(value != undefined && value != ""){
+                this.teacher.ghUsername = value;
+                this.http.postTeacher(this.teacher).subscribe();
+              }
             }
           })
         }else{
@@ -64,10 +70,12 @@ export class CreateExampleComponent implements OnInit {
   }
 
   upload(): void {
+      this.showSpinner = true;
 
       this.http.createExample(this.repositoryName, this.description, this.selectedType, this.teacher.ghUsername).subscribe(
         data => {
           this.createdRepoUrl = data;
+          this.showSpinner = false;
         },
         error => {
           alert('Sorry there has been an error!');
