@@ -29,4 +29,12 @@
 
   <button mat-raised-button color="primary" (click)="upload()" style="margin-top: 5px;">Create Example</button>
 
+  <br>
+  <br>
+  <div *ngIf="createdRepoUrl != ''">
+    <label>Your Repository was created: <a href="{{createdRepoUrl}}">{{createdRepoUrl}}</a></label>
+
+  </div>
+
+
 </div>

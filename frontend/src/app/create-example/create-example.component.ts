@@ -21,6 +21,9 @@ export class CreateExampleComponent implements OnInit {
   repositoryName: string = "";
 
   description: string = "";
+
+  createdRepoUrl: string = "";
+
   public types: string[] = ['maven-template','C#','Go','Python','C','Javascript']
 
 
@@ -65,7 +68,7 @@ export class CreateExampleComponent implements OnInit {
 
       this.http.createExample(this.repositoryName, this.description, this.selectedType, this.teacher.ghUsername).subscribe(
         data => {
-          console.log("test",data)
+          this.createdRepoUrl = data;
         },
         error => {
           alert('Sorry there has been an error!');

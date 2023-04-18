@@ -50,7 +50,7 @@ export class HttpService {
     return this.http.get<Example>(this.BASE_URL  + 'example/' + id);
   }
 
-  createExample(name: string, description: string, type: string, collaborator: string): Observable<String>{
+  createExample(name: string, description: string, type: string, collaborator: string): Observable<string>{
     return this.http.post(this.BASE_URL + "repo/create",
       {
               name: name,
