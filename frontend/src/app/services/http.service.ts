@@ -13,9 +13,9 @@ import {Repository} from "../model/repository.model";
 })
 export class HttpService {
   // when running outside of docker:
-  BASE_URL = 'http://localhost:9090/';
+  //BASE_URL = 'http://localhost:9090/';
 
-  //BASE_URL = environment.BACKEND_URL;
+  BASE_URL = environment.BACKEND_URL;
   //BASE_URL = 'http://localhost:4200/api/';
 
   constructor(private http: HttpClient,
