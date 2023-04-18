@@ -15,7 +15,7 @@ import {Teacher} from "../model/teacher.model";
 export class CreateExampleComponent implements OnInit {
 
   form: HTMLFormElement;
-  checkPublic: boolean = false;
+  checkPublic: boolean = true;
   selectedType: string = "";
   public selectedTypes: string[] = []
   public types: string[] = ['Java','C#','Go','Python','C','Javascript']
