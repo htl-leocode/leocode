@@ -1,9 +1,16 @@
 package at.htl.boundary;
 
 import at.htl.control.GitController;
+import at.htl.dto.GithubExampleDTO;
+import at.htl.entity.Example;
+import at.htl.entity.ExampleType;
+import at.htl.entity.Repository;
+import at.htl.entity.Teacher;
+import at.htl.repository.TeacherRepository;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,19 +24,21 @@ public class RepoEndpoint {
     Logger logger;
 
     @Inject
+    TeacherRepository teacherRepository;
+
+    @Inject
     GitController gitController;
 
     @POST
-    @Path("{name}")
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response addRepo(@PathParam("name") String repoName,
-                            @QueryParam("template") String templateRepo,
-                            @QueryParam("collaborators") ArrayList<String> collaborators) {
+    @Transactional
+    public Response addRepo(GithubExampleDTO example) {
         String repoUrl;
 
         try {
-            repoUrl = gitController.createRepo(repoName, templateRepo, collaborators);
+            repoUrl = gitController.createRepo(example.getName(), example.getType(), example.getCollaborators());
 
             if (repoUrl.startsWith("E:")) {
                 return Response.status(400, repoUrl).build();
@@ -38,6 +47,22 @@ public class RepoEndpoint {
             logger.error(e);
             return Response.serverError().build();
         }
+
+        String username = example.getCollaborators().get(0);
+        Teacher t = username != null?teacherRepository.getTeacherByGhName(username):null;
+
+        logger.info(example.getCollaborators().get(0));
+
+        Example persistExample = new Example();
+        persistExample.name = example.getName();
+        persistExample.description = example.getDescription();
+        persistExample.repository = new Repository(
+                repoUrl,
+                t,
+                ""
+        );
+
+        persistExample.persist();
 
         return Response.ok(repoUrl).build();
     }
