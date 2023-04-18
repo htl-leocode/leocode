@@ -80,6 +80,6 @@ export class HttpService {
   }
 
   getReadmeFromRepo(repoUrl: string) {
-    return this.http.get<string>(`https://raw.githubusercontent.com/leocode-repos/${repoUrl}/main/README.md/`);
+    return this.http.get(`https://raw.githubusercontent.com/leocode-repos/${repoUrl}/main/README.md`);
   }
 }

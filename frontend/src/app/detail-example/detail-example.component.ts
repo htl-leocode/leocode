@@ -53,10 +53,10 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
         this.dataSource.data = [value];
         //this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
 
-        var readme = this.http.getReadmeFromRepo('my-testrepo1').subscribe({
+        this.http.getReadmeFromRepo('my-testrepo1').subscribe({
           next: async data => {
             console.log('data',data);
-            this.markDownFileContent = data
+            this.markDownFileContent = data.toString()
           },
           error: err => console.log(err)
         })
