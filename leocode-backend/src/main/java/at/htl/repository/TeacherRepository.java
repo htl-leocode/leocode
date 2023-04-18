@@ -32,4 +32,10 @@ public class TeacherRepository implements PanacheRepository<Teacher> {
         r.persist();
     }
 
+
+    public Teacher getTeacherByGhName(String ghUserName){
+        return Teacher.find("ghUsername", ghUserName).firstResult();
+    }
+
+
 }

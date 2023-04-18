@@ -50,8 +50,14 @@ export class HttpService {
     return this.http.get<Example>(this.BASE_URL  + 'example/' + id);
   }
 
-  createExample(form: HTMLFormElement): Observable<Example>{
-    return this.http.post<Example>(this.BASE_URL + 'example/newExample', new FormData(form));
+  createExample(name: string, description: string, type: string, collaborator: string): Observable<string>{
+    return this.http.post(this.BASE_URL + "repo/create",
+      {
+              name: name,
+              description: description,
+              type: type,
+              collaborators: [collaborator]
+      },{responseType: 'text'});
   }
 
   testExample(form: FormData): Observable<any>{
