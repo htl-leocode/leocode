@@ -17,10 +17,10 @@ export class CreateExampleComponent implements OnInit {
   form: HTMLFormElement;
   checkPublic: boolean = true;
   selectedType: number;
-
   repositoryName: string = "";
-
   description: string = "";
+  repoUrl: string = "";
+  repoToken: string = "";
 
   createdRepoUrl: string = "";
 
@@ -72,7 +72,8 @@ export class CreateExampleComponent implements OnInit {
   upload(): void {
       this.showSpinner = true;
 
-      this.http.createExample(this.repositoryName, this.description, this.selectedType, this.teacher.ghUsername).subscribe(
+      this.http.createExample(this.repositoryName, this.description, this.selectedType, this.teacher.ghUsername, this.checkPublic,
+        this.repoUrl, this.repoToken).subscribe(
         data => {
           this.createdRepoUrl = data;
           this.showSpinner = false;

@@ -59,12 +59,11 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
           next: repo => {
             //var url = "https://github.com/leocode-repos/leocode-helloworld.git"
 
-            var splitContent =  repo.repoUrl.replace('.git','').split('/')
-            var editedUrl = splitContent[splitContent.length-2]+'/'+splitContent[splitContent.length-1]
-            console.log(editedUrl);
+            //var splitContent =  repo.repoUrl.replace('.git','').split('/')
+            //var editedUrl = splitContent[splitContent.length-2]+'/'+splitContent[splitContent.length-1]
+            //console.log(editedUrl);
 
-
-            this.http.getReadmeFromRepo(editedUrl).subscribe({
+            this.http.getReadmeFromRepo(value.id).subscribe({
               next: async data => {
                 console.log('data',data);
                 this.markDownFileContent = data.toString()
