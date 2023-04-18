@@ -44,7 +44,7 @@ public class RepoEndpoint {
         try {
             repoUrl = gitController.createRepo(
                     example.getName(),
-                    ExampleType.values()[example.getType()].toString() + "-template",
+                    ExampleType.values()[example.getType()].toString().toLowerCase() + "-template",
                     example.getCollaborators()
             );
 
