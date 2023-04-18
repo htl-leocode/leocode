@@ -85,8 +85,12 @@ export class HttpService {
     return this.http.get<Submission[]>(this.BASE_URL + 'submission/history/' + username);
   }
 
+  getRepoByExample(exampleId: number) {
+    return this.http.get<Repository>(this.BASE_URL + 'repo/'+exampleId);
+  }
+
   getReadmeFromRepo(repoUrl: string) {
-    return this.http.get(`https://raw.githubusercontent.com/leocode-repos/${repoUrl}/main/README.md`,
+    return this.http.get(`https://raw.githubusercontent.com/${repoUrl}/main/README.md`,
     {responseType: 'text'});
   }
 }
