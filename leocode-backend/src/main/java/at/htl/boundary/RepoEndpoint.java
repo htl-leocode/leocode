@@ -42,7 +42,11 @@ public class RepoEndpoint {
         String repoUrl;
 
         try {
-            repoUrl = gitController.createRepo(example.getName(), example.getType(), example.getCollaborators());
+            repoUrl = gitController.createRepo(
+                    example.getName(),
+                    ExampleType.values()[example.getType()].toString() + "-template",
+                    example.getCollaborators()
+            );
 
             if (repoUrl.startsWith("E:")) {
                 return Response.status(400, repoUrl).build();
@@ -60,6 +64,7 @@ public class RepoEndpoint {
         Example persistExample = new Example();
         persistExample.name = example.getName();
         persistExample.description = example.getDescription();
+        persistExample.type = ExampleType.values()[example.getType()];
         persistExample.repository = new Repository(
                 repoUrl,
                 t,

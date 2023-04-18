@@ -16,7 +16,7 @@ export class CreateExampleComponent implements OnInit {
 
   form: HTMLFormElement;
   checkPublic: boolean = true;
-  selectedType: string = "";
+  selectedType: number;
 
   repositoryName: string = "";
 
@@ -24,7 +24,7 @@ export class CreateExampleComponent implements OnInit {
 
   createdRepoUrl: string = "";
 
-  public types: string[] = ['maven-template','C#','Go','Python','C','Javascript']
+  public types: object[] = [{id:0,displayName:'Java'},{id:1,displayName:'C#'},{id:2,displayName:'Python'}]
 
 
 
@@ -47,7 +47,6 @@ export class CreateExampleComponent implements OnInit {
     this.http.getTeacher(this.authService.username.getValue()).subscribe(
       data => {
         if (data == null) {
-          //TODO
           const dialogRef = this.dialog.open(AddGhUserDialogComponent, {data: this.teacher});
 
           dialogRef.afterClosed().subscribe({
@@ -78,8 +77,8 @@ export class CreateExampleComponent implements OnInit {
   }
 
 
-  setType(type: string) {
-      this.selectedType = type;
+  setType(id) {
+      this.selectedType = id;
   }
 
 

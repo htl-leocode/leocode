@@ -6,7 +6,7 @@ public class GithubExampleDTO {
 
     String name;
     String description;
-    String type;
+    int type;
     List<String> collaborators;
 
 
@@ -26,11 +26,11 @@ public class GithubExampleDTO {
         this.description = description;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -45,7 +45,7 @@ public class GithubExampleDTO {
     public GithubExampleDTO() {
     }
 
-    public GithubExampleDTO(String name, String description, String type, List<String> collaborators) {
+    public GithubExampleDTO(String name, String description, int type, List<String> collaborators) {
         this.name = name;
         this.description = description;
         this.type = type;

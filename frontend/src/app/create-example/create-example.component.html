@@ -4,8 +4,8 @@
 
   <label>Type: </label>
   <mat-chip-list [multiple]="false">
-    <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedType === type"
-              (click)="setType(type)">{{type}}</mat-chip>
+    <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedType === type.id"
+              (click)="setType(type.id)">{{type.displayName}}</mat-chip>
   </mat-chip-list><br>
 
   <label>Short Description of the Example:</label>
@@ -13,7 +13,6 @@
 
   <label>Collaborator</label>
   <input type="text" name="collaborator" value="{{teacher.ghUsername}}" disabled="true" class="form-control">
-
   <br/>
 
     <label style="margin-right: 10px; vertical-align: middle;">Public:</label>
