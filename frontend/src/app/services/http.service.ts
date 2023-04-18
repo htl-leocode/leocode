@@ -84,4 +84,9 @@ export class HttpService {
   getFinishedSubmissions(username: string): Observable<Submission[]> {
     return this.http.get<Submission[]>(this.BASE_URL + 'submission/history/' + username);
   }
+
+  getReadmeFromRepo(repoUrl: string) {
+    return this.http.get(`https://raw.githubusercontent.com/leocode-repos/${repoUrl}/main/README.md`,
+    {responseType: 'text'});
+  }
 }

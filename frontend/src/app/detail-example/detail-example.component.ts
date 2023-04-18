@@ -7,6 +7,7 @@ import {Example} from '../model/example.model';
 import {HttpService} from '../services/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LeoCodeFile} from "../model/leocodefile.model";
+import { RepositoryDTO } from '../model/repositoryDto.model';
 
 @Component({
   selector: 'app-detail-example',
@@ -23,6 +24,8 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
   displayedColumns = ['id', 'name', 'description', 'type', 'files', 'test'];
 
   markDownFileContent = '';
+
+  repository: RepositoryDTO
 
   constructor(private route: ActivatedRoute,
               public router: Router,
@@ -48,7 +51,15 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
         this.router.navigate(['NotFound']);
       } else {
         this.dataSource.data = [value];
-        this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
+        //this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
+
+        this.http.getReadmeFromRepo('my-testrepo1').subscribe({
+          next: async data => {
+            console.log('data',data);
+            this.markDownFileContent = data.toString()
+          },
+          error: err => console.log(err)
+        })
       }
     }, error => {
       console.log(error);

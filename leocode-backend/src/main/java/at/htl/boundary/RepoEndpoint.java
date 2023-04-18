@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.GitController;
+import at.htl.repository.ExampleRepository;
 import at.htl.dto.GithubExampleDTO;
 import at.htl.entity.Example;
 import at.htl.entity.ExampleType;
@@ -28,6 +29,9 @@ public class RepoEndpoint {
 
     @Inject
     GitController gitController;
+
+    @Inject
+    ExampleRepository exampleRepository;
 
     @POST
     @Path("/create")
@@ -66,5 +70,13 @@ public class RepoEndpoint {
 
         return Response.ok(repoUrl).build();
     }
+
+    @GET
+    @Path("{exampleId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRepoByExample(@PathParam("exampleId") Long exampleId) {
+        return Response.ok(exampleRepository.findById(exampleId).repository).build();
+    }
+
 
 }
