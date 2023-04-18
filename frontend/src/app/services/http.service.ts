@@ -53,13 +53,14 @@ export class HttpService {
 
   createExample(name: string, description: string, type: number, collaborator: string,
       isPublic: boolean, repoUrl: string, repoToken: string): Observable<string>{
+        console.log('isPublic',isPublic);
     return this.http.post(this.BASE_URL + "repo/create",
       {
               name: name,
               description: description,
               type: type,
               collaborators: [collaborator],
-              isPublic: isPublic,
+              publ: isPublic,
               repoUrl: repoUrl,
               repoToken: repoToken
       },{responseType: 'text'});

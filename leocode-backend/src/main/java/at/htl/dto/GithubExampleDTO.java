@@ -9,7 +9,7 @@ public class GithubExampleDTO {
     int type;
     List<String> collaborators;
 
-    boolean isPublic;
+    boolean publ;
 
     String repoUrl;
 
@@ -31,12 +31,12 @@ public class GithubExampleDTO {
         this.repoToken = repoToken;
     }
 
-    public boolean isPublic() {
-        return isPublic;
+    public boolean isPubl() {
+        return publ;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPubl(boolean publ) {
+        this.publ = publ;
     }
 
     public String getName() {
@@ -74,12 +74,12 @@ public class GithubExampleDTO {
     public GithubExampleDTO() {
     }
 
-    public GithubExampleDTO(String name, String description, int type, List<String> collaborators, boolean isPublic, String repoUrl, String repoToken) {
+    public GithubExampleDTO(String name, String description, int type, List<String> collaborators, boolean publ, String repoUrl, String repoToken) {
         this.name = name;
         this.description = description;
         this.type = type;
         this.collaborators = collaborators;
-        this.isPublic = isPublic;
+        this.publ = publ;
         this.repoUrl = repoUrl;
         this.repoToken = repoToken;
     }

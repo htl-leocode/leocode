@@ -40,7 +40,8 @@ public class RepoEndpoint {
     public Response addRepo(GithubExampleDTO example) {
         String repoUrl;
 
-        if (example.isPublic()) {
+        if (example.isPubl()) {
+            logger.info("Creating public repo");
             try {
                 repoUrl = gitController.createRepo(
                         example.getName(),
@@ -56,6 +57,7 @@ public class RepoEndpoint {
                 return Response.serverError().build();
             }
         } else {
+            logger.info("Creating private repo");
             repoUrl = example.getRepoUrl();
         }
 
