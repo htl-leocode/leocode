@@ -103,7 +103,7 @@ export class TestExampleComponent implements OnInit {
             console.log(editedUrl);
 
 
-            this.http.getReadmeFromRepo(editedUrl).subscribe({
+            this.http.getReadmeFromRepo(value.id).subscribe({
               next: async data => {
                 console.log('data',data);
                 this.markDownFileContent = data.toString()

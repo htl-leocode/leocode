@@ -86,5 +86,18 @@ public class RepoEndpoint {
         return Response.ok(exampleRepository.findById(exampleId).repository).build();
     }
 
+    @GET
+    @Path("/getReadmeOfExample/{exampleId}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getReadmeOfRepo(@PathParam("exampleId") long exampleId) throws IOException {
+        Repository repo = exampleRepository.findById(exampleId).repository;
+        String repoUrl = repo.repoUrl;
+        var splitContent = repoUrl.replace(".git", "").split("/");
+        var editedUrl = splitContent[splitContent.length - 2] + "/" + splitContent[splitContent.length - 1];
+        logger.info(repo.token);
 
+        String readme = gitController.getReadmeOfRepo(editedUrl, repo.token);
+
+        return Response.ok(readme).build();
+    }
 }

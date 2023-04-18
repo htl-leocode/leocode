@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.entity.Example;
 import at.htl.entity.Repository;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -21,7 +22,9 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -200,6 +203,18 @@ public class GitController {
         URL url = repo.getHtmlUrl();
         return url.toString();
 
+    }
+
+    public String getReadmeOfRepo(String shortenedRepoUrl, String repoToken) throws IOException {
+        if (repoToken == null || repoToken.trim().equals("")) {
+            repoToken = publicRepoToken;
+        }
+        GitHub github = GitHub.connect("leocode-repos", repoToken);
+
+        GHRepository repo = github.getRepository(shortenedRepoUrl);
+        try (InputStream fileContent = repo.getFileContent("README.md").read()) {
+            return IOUtils.toString(fileContent, StandardCharsets.UTF_8);
+        }
     }
 
 }

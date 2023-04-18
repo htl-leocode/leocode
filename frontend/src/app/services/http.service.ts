@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import {Teacher} from "../model/teacher.model";
 import {RepositoryDTO} from "../model/repositoryDto.model";
 import {Repository} from "../model/repository.model";
+import { Octokit } from 'octokit';
 
 @Injectable({
   providedIn: 'root'
@@ -93,8 +94,12 @@ export class HttpService {
     return this.http.get<Repository>(this.BASE_URL + 'repo/'+exampleId);
   }
 
-  getReadmeFromRepo(repoUrl: string) {
-    return this.http.get(`https://raw.githubusercontent.com/${repoUrl}/main/README.md`,
-    {responseType: 'text'});
+  getReadmeFromRepo(exampleId: number) {
+    return this.http.get(this.BASE_URL + 'repo/getReadmeOfExample/'+exampleId,
+      {responseType: 'text'})
+    //return this.http.get(`https://raw.githubusercontent.com/${repoUrl}/main/README.md`,
+    //{responseType: 'text'});
   }
+
+
 }
