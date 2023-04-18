@@ -13,9 +13,9 @@ import {Repository} from "../model/repository.model";
 })
 export class HttpService {
   // when running outside of docker:
-  //BASE_URL = 'http://localhost:9090/';
+  BASE_URL = 'http://localhost:9090/';
 
-  BASE_URL = environment.BACKEND_URL;
+  //BASE_URL = environment.BACKEND_URL;
   //BASE_URL = 'http://localhost:4200/api/';
 
   constructor(private http: HttpClient,
@@ -50,8 +50,14 @@ export class HttpService {
     return this.http.get<Example>(this.BASE_URL  + 'example/' + id);
   }
 
-  createExample(form: HTMLFormElement): Observable<Example>{
-    return this.http.post<Example>(this.BASE_URL + 'example/newExample', new FormData(form));
+  createExample(name: string, description: string, type: string, collaborator: string): Observable<string>{
+    return this.http.post(this.BASE_URL + "repo/create",
+      {
+              name: name,
+              description: description,
+              type: type,
+              collaborators: [collaborator]
+      },{responseType: 'text'});
   }
 
   testExample(form: FormData): Observable<any>{
