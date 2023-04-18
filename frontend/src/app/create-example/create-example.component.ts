@@ -17,8 +17,11 @@ export class CreateExampleComponent implements OnInit {
   form: HTMLFormElement;
   checkPublic: boolean = true;
   selectedType: string = "";
-  public selectedTypes: string[] = []
-  public types: string[] = ['Java','C#','Go','Python','C','Javascript']
+
+  repositoryName: string = "";
+
+  description: string = "";
+  public types: string[] = ['maven-template','C#','Go','Python','C','Javascript']
 
 
 
@@ -50,6 +53,8 @@ export class CreateExampleComponent implements OnInit {
               this.http.postTeacher(this.teacher).subscribe();
             }
           })
+        }else{
+          this.teacher = data;
         }
       }
     );
@@ -57,26 +62,21 @@ export class CreateExampleComponent implements OnInit {
   }
 
   upload(): void {
-    this.form = document.forms.namedItem('createExampleForm');
-    if (this.form.checkValidity()) {
-      this.http.createExample(this.form).subscribe(
+
+      this.http.createExample(this.repositoryName, this.description, this.selectedType, this.teacher.ghUsername).subscribe(
         data => {
-          this.router.navigate(['example', data.id]);
+          console.log("test",data)
         },
         error => {
           alert('Sorry there has been an error!');
           console.log(error);
         }
       );
-    }
   }
+
+
   setType(type: string) {
-    if(!this.selectedTypes.includes(type) ){
-      this.selectedTypes.push(type);
-    }
-    else {
-      this.selectedTypes = this.selectedTypes.filter(currentType => currentType != type)
-    }
+      this.selectedType = type;
   }
 
 

@@ -1,20 +1,23 @@
 <div class="container mt-5">
-  <form enctype="multipart/form-data" name="createExampleForm">
-    <label>Name of the Example:</label>
-    <input type="text" name="exampleName" placeholder="Example Name" required class="form-control"><br>
+  <label>Name of the Example:</label>
+  <input type="text" [(ngModel)]="repositoryName" placeholder="Example Name" required class="form-control"><br>
 
-    <label>Type: </label>
-    <mat-chip-list [multiple]="false">
-      <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedTypes.includes(type)"
-                (click)="setType(type)">{{type}}</mat-chip>
-    </mat-chip-list><br>
+  <label>Type: </label>
+  <mat-chip-list [multiple]="false">
+    <mat-chip color="primary" *ngFor="let type of types" [selected]="selectedType === type"
+              (click)="setType(type)">{{type}}</mat-chip>
+  </mat-chip-list><br>
 
+  <label>Short Description of the Example:</label>
+  <input type="text" [(ngModel)]="description" placeholder="Description" required class="form-control"><br>
 
-    <label>Short Description of the Example:</label>
-    <input type="text" name="description" placeholder="Description" required class="form-control"><br>
+  <label>Collaborator</label>
+  <input type="text" name="collaborator" value="{{teacher.ghUsername}}" disabled="true" class="form-control">
+
+  <br/>
 
     <label style="margin-right: 10px; vertical-align: middle;">Public:</label>
-    <mat-checkbox [(ngModel)]="checkPublic" style="vertical-align: middle;" #public [(ngModel)]="checkPublic"></mat-checkbox><br>
+    <mat-checkbox [(ngModel)]="checkPublic" style="vertical-align: middle;" #public ></mat-checkbox><br>
 
     <ng-container *ngIf="!public.checked">
       <label>Repository URL:</label>
@@ -23,7 +26,6 @@
       <label>Git Token for accessing the repository:</label>
       <input type="text" name="description" placeholder="ghp_7iA3TDH6rSk7kN7QoDdFbAr532" required class="form-control"><br>
     </ng-container>
-  </form>
 
   <button mat-raised-button color="primary" (click)="upload()" style="margin-top: 5px;">Create Example</button>
 
