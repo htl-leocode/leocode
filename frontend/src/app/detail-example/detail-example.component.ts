@@ -53,10 +53,24 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
         this.dataSource.data = [value];
         //this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
 
-        this.http.getReadmeFromRepo('my-testrepo1').subscribe({
-          next: async data => {
-            console.log('data',data);
-            this.markDownFileContent = data.toString()
+        console.log('example',value);
+
+        this.http.getRepoByExample(value.id).subscribe({
+          next: repo => {
+            //var url = "https://github.com/leocode-repos/leocode-helloworld.git"
+
+            var splitContent =  repo.repoUrl.replace('.git','').split('/')
+            var editedUrl = splitContent[splitContent.length-2]+'/'+splitContent[splitContent.length-1]
+            console.log(editedUrl);
+
+
+            this.http.getReadmeFromRepo(editedUrl).subscribe({
+              next: async data => {
+                console.log('data',data);
+                this.markDownFileContent = data.toString()
+              },
+              error: err => console.log(err)
+            })
           },
           error: err => console.log(err)
         })

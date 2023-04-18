@@ -8,5 +8,5 @@ export interface Example{
   type: any;
   whitelist: string[];
   blacklist: string[];
-  files: LeoCodeFile[];
+  //files: LeoCodeFile[];
 }

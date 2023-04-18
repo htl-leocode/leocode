@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 @ApplicationScoped
@@ -65,7 +63,7 @@ public class ExampleRepository implements PanacheRepository<Example> {
                     case "instruction":
                         log.info("instruction");
 
-                        if(inputParts.get(0) != null) {
+                        if (inputParts.get(0) != null) {
                             instruction.content = inputParts.get(0).getBody(InputStream.class, null).readAllBytes();
                             instruction.fileType = LeocodeFileType.INSTRUCTION;
                             instruction.name = inputParts.get(0).getHeaders().toString().split("filename=\"")[1].split("\"")[0];
@@ -191,10 +189,10 @@ public class ExampleRepository implements PanacheRepository<Example> {
                 String createdPath = "";
 
                 for (int i = 0; i < splitPath.length; i++) {
-                    if(!splitPath[i].equals(name)){
+                    if (!splitPath[i].equals(name)) {
                         createdPath = createdPath + splitPath[i];
                     }
-                    if(i != splitPath.length - 1){
+                    if (i != splitPath.length - 1) {
                         createdPath += "/";
                     }
                 }

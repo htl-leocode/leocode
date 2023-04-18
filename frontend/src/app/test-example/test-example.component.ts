@@ -91,7 +91,7 @@ export class TestExampleComponent implements OnInit {
     this.username = this.authService.username.getValue();
     this.checkPathParam();
     this.http.getExampleById(this.exampleId).subscribe(value => {
-        this.markDownFileContent = value.files.find(f => f.fileType === 'INSTRUCTION').content;
+        //this.markDownFileContent = value.files.find(f => f.fileType === 'INSTRUCTION').content;
         this.exampleDescription = value.description;
     }, error => {
       console.log(error);
