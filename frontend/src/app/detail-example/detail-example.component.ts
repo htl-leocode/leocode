@@ -51,13 +51,15 @@ export class DetailExampleComponent implements AfterViewInit, OnInit {
         this.router.navigate(['NotFound']);
       } else {
         this.dataSource.data = [value];
-        this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
+        //this.markDownFileContent = this.dataSource.data[0].files.find(f => f.fileType === 'INSTRUCTION').content;
 
-        this.http.getRepositories()
-
-        this.http.getReadmeFromRepo()
-
-        this.markDownFileContent = this.
+        var readme = this.http.getReadmeFromRepo('my-testrepo1').subscribe({
+          next: async data => {
+            console.log('data',data);
+            this.markDownFileContent = data
+          },
+          error: err => console.log(err)
+        })
       }
     }, error => {
       console.log(error);
