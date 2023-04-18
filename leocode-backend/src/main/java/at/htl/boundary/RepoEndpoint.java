@@ -1,12 +1,12 @@
 package at.htl.boundary;
 
 import at.htl.control.GitController;
-import at.htl.repository.ExampleRepository;
 import at.htl.dto.GithubExampleDTO;
 import at.htl.entity.Example;
 import at.htl.entity.ExampleType;
 import at.htl.entity.Repository;
 import at.htl.entity.Teacher;
+import at.htl.repository.ExampleRepository;
 import at.htl.repository.TeacherRepository;
 import org.jboss.logging.Logger;
 
@@ -16,7 +16,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @Path("/repo")
 public class RepoEndpoint {
@@ -41,23 +40,27 @@ public class RepoEndpoint {
     public Response addRepo(GithubExampleDTO example) {
         String repoUrl;
 
-        try {
-            repoUrl = gitController.createRepo(
-                    example.getName(),
-                    ExampleType.values()[example.getType()].toString().toLowerCase() + "-template",
-                    example.getCollaborators()
-            );
+        if (example.isPublic()) {
+            try {
+                repoUrl = gitController.createRepo(
+                        example.getName(),
+                        ExampleType.values()[example.getType()].toString().toLowerCase() + "-template",
+                        example.getCollaborators()
+                );
 
-            if (repoUrl.startsWith("E:")) {
-                return Response.status(400, repoUrl).build();
+                if (repoUrl.startsWith("E:")) {
+                    return Response.status(400, repoUrl).build();
+                }
+            } catch (IOException e) {
+                logger.error(e);
+                return Response.serverError().build();
             }
-        } catch (IOException e) {
-            logger.error(e);
-            return Response.serverError().build();
+        } else {
+            repoUrl = example.getRepoUrl();
         }
 
         String username = example.getCollaborators().get(0);
-        Teacher t = username != null?teacherRepository.getTeacherByGhName(username):null;
+        Teacher t = username != null ? teacherRepository.getTeacherByGhName(username) : null;
 
         logger.info(example.getCollaborators().get(0));
 
@@ -68,7 +71,7 @@ public class RepoEndpoint {
         persistExample.repository = new Repository(
                 repoUrl,
                 t,
-                ""
+                example.getRepoToken()
         );
 
         persistExample.persist();

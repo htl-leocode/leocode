@@ -50,13 +50,17 @@ export class HttpService {
     return this.http.get<Example>(this.BASE_URL  + 'example/' + id);
   }
 
-  createExample(name: string, description: string, type: number, collaborator: string): Observable<string>{
+  createExample(name: string, description: string, type: number, collaborator: string,
+      isPublic: boolean, repoUrl: string, repoToken: string): Observable<string>{
     return this.http.post(this.BASE_URL + "repo/create",
       {
               name: name,
               description: description,
               type: type,
-              collaborators: [collaborator]
+              collaborators: [collaborator],
+              isPublic: isPublic,
+              repoUrl: repoUrl,
+              repoToken: repoToken
       },{responseType: 'text'});
   }
 

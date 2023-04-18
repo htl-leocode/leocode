@@ -20,10 +20,10 @@
 
     <ng-container *ngIf="!public.checked">
       <label>Repository URL:</label>
-      <input type="text" name="description" placeholder="https://github.com/leocode-repos/my-testrepo1.git" required class="form-control"><br>
+      <input type="text" name="description" placeholder="https://github.com/leocode-repos/my-testrepo1.git" required class="form-control" [(ngModel)]="repoUrl"><br>
 
       <label>Git Token for accessing the repository:</label>
-      <input type="text" name="description" placeholder="ghp_7iA3TDH6rSk7kN7QoDdFbAr532" required class="form-control"><br>
+      <input type="text" name="description" placeholder="ghp_7iA3TDH6rSk7kN7QoDdFbAr532" required class="form-control" [(ngModel)]="repoToken"><br>
     </ng-container>
 
   <button mat-raised-button color="primary" (click)="upload()" style="margin-top: 5px;">Create Example</button>
